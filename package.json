@@ -18,10 +18,12 @@
     "eslint": "latest",
     "eslint-config-next": "latest",
     "formik": "^2.4.3",
+    "mui-color-input": "^2.0.0",
     "next": "13.x",
     "react": "18.x",
     "react-dom": "18.x",
     "react-hot-toast": "^2.4.1",
+    "socket.io-client": "^4.7.2",
     "yup": "^1.2.0"
   }
 }

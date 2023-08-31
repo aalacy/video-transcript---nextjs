@@ -18,6 +18,9 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 // import SettingsIcon from '@mui/icons-material/Settings';
 // import SupportIcon from '@mui/icons-material/Support';
 // import LogoutIcon from '@mui/icons-material/Logout';
+
+import { Toaster } from "react-hot-toast";
+
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 
 export const metadata = {
@@ -52,6 +55,7 @@ export default function RootLayout({ children }) {
               </Typography>
             </Toolbar>
           </AppBar>
+          <Toaster position='top-center' />
           {/* <Drawer
             sx={{
               width: DRAWER_WIDTH,

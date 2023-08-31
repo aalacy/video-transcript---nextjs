@@ -1,6 +1,6 @@
 "use client"
 import * as React from 'react';
-
+import { io } from 'socket.io-client'
 import {
   Alert,
   AlertTitle,
@@ -10,8 +10,9 @@ import {
   useMediaQuery,
   FormHelperText,
   CircularProgress,
+  Typography,
 } from "@mui/material";
-
+import { MuiColorInput } from 'mui-color-input'
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import toast from "react-hot-toast";
@@ -22,24 +23,36 @@ const client = new APIClient()
 
 export default function HomePage() {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [name, setName] = React.useState("a92fac80-bf22-4102-8375-e90b2b770b6c")
+  const [name, setName] = React.useState()
+  const [status, setStatus] = React.useState(false)
+
+  React.useEffect(()=>{
+    const socket = io('http://localhost:3000')
+    socket.on('connect', ()=>console.log('connect ', socket.id))
+    socket.on('connect_error', ()=>{
+      setTimeout(()=>socket.connect(),5000)
+    })
+   socket.on('monster', (data)=> {
+    const { status, processId } = data;
+    console.log('[socket] ', data)
+    if (status === 'completed') {
+      setName(processId)
+      setStatus(true)
+      toast.success('Conversion Completed!')
+    }
+   })
+   socket.on('disconnect',()=> console.error('server disconnected'))
+ },[])
 
   const handleFormSubmit = async (values, helpers) => {
-    try {
-      await submitForm({ ...values });
-      toast.success("Successfully created.");
-    } catch (err) {
-      const { message } = err?.response?.data;
-      const submit = Array.isArray(message) ? err.message : message;
-      helpers.setErrors({ submit });
-    }
+    await submitForm({ ...values });
   };
   const initialValues = {
     language: "en-US",
-    backgroundColour: "0x4d1a7f",
-    fontColour: "0x4d1a7f",
+    backgroundColour: "#4d1a7f",
+    fontColour: "#4d1a7f",
     font: "DejaVu Serif",
-    fontSize: 50,
+    fontSize: 24,
     alignment: 5,
     width: 720,
     height: 1280,
@@ -47,23 +60,23 @@ export default function HomePage() {
   };
   const checkoutSchema = yup.object().shape({
     language: yup.string(),
-    backgroundColour: yup.string(),
-    fontColour: yup.string(),
+    backgroundColour: yup.string().required("Required"),
+    fontColour: yup.string().required("Required"),
     font: yup.string(),
-    font_size: yup.number(),
-    width: yup.number(),
-    alignment: yup.number(),
-    height: yup.number(),
+    font_size: yup.number().min(11).max(46),
+    alignment: yup.number().min(1),
+    width: yup.number().min(426).max(3840), // min: 426x240, max: 3840×2160
+    height: yup.number().min(240).max(2160),
   });
 
   const submitForm = async (values) => {
     try {
-      setName('')
       const { data } = await client.upload(values);
       toast.success(data.message);
       setName(data.processId)
     } catch(error) {
-      toast.error(error?.message || 'Something wrong happened.')
+      console.log('error', error)
+      toast.error(error.response?.data?.message || 'Something wrong happened.')
     }
   };
 
@@ -122,32 +135,6 @@ export default function HomePage() {
                 fullWidth
                 type="text"
                 size="small"
-                label="Background Color"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.backgroundColour}
-                name="backgroundColour"
-                error={!!touched.backgroundColour && !!errors.backgroundColour}
-                helperText={touched.backgroundColour && errors.backgroundColour}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                type="text"
-                size="small"
-                label="Font Color"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.fontColour}
-                name="fontColour"
-                error={!!touched.fontColour && !!errors.fontColour}
-                helperText={touched.fontColour && errors.fontColour}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                type="text"
-                size="small"
                 label="Font"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -155,6 +142,30 @@ export default function HomePage() {
                 name="font"
                 error={!!touched.font && !!errors.font}
                 helperText={touched.font && errors.font}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <MuiColorInput 
+                fullWidth
+                size="small"
+                format='hex'
+                name="backgroundColour"
+                label="Background Color"
+                value={values.backgroundColour} 
+                onChange={(color) => setFieldValue('backgroundColour', color)} 
+                error={!!touched.backgroundColour && !!errors.backgroundColour}
+                helperText={touched.backgroundColour && errors.backgroundColour}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <MuiColorInput 
+                fullWidth
+                size="small"
+                format='hex'
+                name="fontColour"
+                label="Font Color"
+                value={values.fontColour} 
+                onChange={(color) => setFieldValue('fontColour', color)} 
+                error={!!touched.fontColour && !!errors.fontColour}
+                helperText={touched.fontColour && errors.fontColour}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -210,24 +221,29 @@ export default function HomePage() {
                 sx={{ gridColumn: "span 2" }}
               />
 
-              <input 
-                name="file" 
-                type="file" 
-                onBlur={handleBlur}  
-                onChange={(event) => {
-                  setTouched({
-                    ...touched,
-                    file: true,
-                  });
-                  setFieldValue(
-                    "file",
-                    event.target.files[0]
-                  );
-                }}
-                error={!!touched.file && !!errors.file}
-                helperText={touched.file && errors.file}
-                sx={{ gridColumn: "span 4" }}
-              />
+              <Box>
+                <Typography>Please upload a video/audio file</Typography>
+                <input 
+                  name="file" 
+                  type="file" 
+                  onBlur={handleBlur}  
+                  onChange={(event) => {
+                    setName('');
+                    setTouched({
+                      ...touched,
+                      file: true,
+                    });
+                    setFieldValue(
+                      "file",
+                      event.target.files[0]
+                    );
+                  }}
+                  error={!!touched.file && !!errors.file}
+                  helperText={touched.file && errors.file}
+                  sx={{ gridColumn: "span 4", width: '100%' }}
+                  accept='.m4a, .mov, .mp3, .mp4, .mpeg, .mpga, .wav, .webm, .ogg'
+                />
+              </Box>
             </Box>
               {errors.submit && (
               <Box sx={{ mt: 3 }}>
@@ -239,14 +255,14 @@ export default function HomePage() {
                 type="submit" 
                 color="secondary" 
                 variant="contained"
-                disabled={!!!values.file}
+                disabled={!!!values.file || isSubmitting}
               >
                 {isSubmitting && (
                   <CircularProgress sx={{ mr: 1 }} color="inherit" size={20} />
                 )}{" "}
                 Upload
               </Button>
-              <Button variant="contained" onClick={downloadFile}>Download</Button>
+              <Button variant="contained" onClick={downloadFile} disabled={!!!name || !status}>Download</Button>
             </Box>
           </Form>
         )}
