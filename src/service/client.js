@@ -15,7 +15,7 @@ export class APIClient {
 
     upload(fileData) {
         const formData = new FormData();
-        let url = '/upload';
+        let url = '/api/upload';
         for (let key in fileData) {
           formData.append(key, fileData[key])
         }
@@ -28,6 +28,6 @@ export class APIClient {
     }
 
     download(processId) {
-      return this.apiClient.get(`/download?processId=${processId}`)
+      return this.apiClient.get(`/api/download?processId=${processId}`)
     }
 }
