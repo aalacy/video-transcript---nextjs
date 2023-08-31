@@ -27,7 +27,7 @@ export default function HomePage() {
   const [status, setStatus] = React.useState(false)
 
   React.useEffect(()=>{
-    const socket = io('http://localhost:3000')
+    const socket = io(process.env.NEXT_PUBLIC_API_URL)
     socket.on('connect', ()=>console.log('connect ', socket.id))
     socket.on('connect_error', ()=>{
       setTimeout(()=>socket.connect(),5000)
