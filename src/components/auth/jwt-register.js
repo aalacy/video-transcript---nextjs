@@ -17,7 +17,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from "next/navigation";
 import {
   EmailOutlined as UserIcon,
   VisibilityOutlined as EyeIcon,
@@ -38,7 +38,7 @@ export const JWTRegister = (props) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isMounted = useMounted();
   const router = useRouter();
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
   const { register } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -70,7 +70,10 @@ export const JWTRegister = (props) => {
       confirmPassword: Yup.string()
         .required("Please confirm your password")
         .oneOf([Yup.ref("password")], "Passwords do not match"),
-      policy: Yup.boolean().oneOf([true], "You must accept terms and conditions"),
+      policy: Yup.boolean().oneOf(
+        [true],
+        "You must accept terms and conditions",
+      ),
     }),
     onSubmit: async (values, helpers) => {
       try {
@@ -124,7 +127,7 @@ export const JWTRegister = (props) => {
                   <UserIcon />
                 </IconButton>
               </InputAdornment>
-            )
+            ),
           }}
         />
         <TextField

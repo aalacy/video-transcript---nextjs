@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
   const pathname = usePathname();
 
   const hasLayout = React.useMemo(() => {
-    return !pathname.includes('/auth');
+    return !pathname.includes("/auth");
   }, [pathname]);
 
   const LINKS = [
@@ -64,7 +64,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body style={ { backgroundColor: 'background.default' }}>
+      <body style={{ backgroundColor: "background.default" }}>
         <ThemeRegistry>
           <AuthProvider>
             <Toaster position="top-center" />
@@ -121,8 +121,12 @@ export default function RootLayout({ children }) {
                   <Divider />
                   <List>
                     {LINKS.map(({ text, href, icon: Icon }) => (
-                      <ListItem  key={href} disablePadding>
-                        <ListItemButton selected={ href === pathname } component={Link} href={href}>
+                      <ListItem key={href} disablePadding>
+                        <ListItemButton
+                          selected={href === pathname}
+                          component={Link}
+                          href={href}
+                        >
                           <ListItemIcon>
                             <Icon />
                           </ListItemIcon>
@@ -137,14 +141,21 @@ export default function RootLayout({ children }) {
                       ({ text, href, action, icon: Icon }) => (
                         <ListItem key={text} disablePadding>
                           {action ? (
-                            <ListItemButton selected={ href === pathname } onClick={action}>
+                            <ListItemButton
+                              selected={href === pathname}
+                              onClick={action}
+                            >
                               <ListItemIcon>
                                 <Icon />
                               </ListItemIcon>
                               <ListItemText primary={text} />
                             </ListItemButton>
                           ) : (
-                            <ListItemButton selected={ href === pathname } component={Link} href={href}>
+                            <ListItemButton
+                              selected={href === pathname}
+                              component={Link}
+                              href={href}
+                            >
                               <ListItemIcon>
                                 <Icon />
                               </ListItemIcon>
@@ -152,7 +163,7 @@ export default function RootLayout({ children }) {
                             </ListItemButton>
                           )}
                         </ListItem>
-                      )
+                      ),
                     )}
                   </List>
                 </Drawer>

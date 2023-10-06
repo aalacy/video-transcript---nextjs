@@ -9,7 +9,7 @@ import DesignTabPanel from "@/components/upload/tab-design";
 import VideoPlayer from "@/components/upload/video-player";
 import TranscriptionTapPanel from "@/components/upload/tap-transcription";
 import DescriptionTapPanel from "@/components/upload/tap-description";
-import { useSwrFetcher } from '@/hooks/useSwrFetcher';
+import { useSwrFetcher } from "@/hooks/useSwrFetcher";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

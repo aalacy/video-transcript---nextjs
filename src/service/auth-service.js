@@ -7,9 +7,10 @@ export class AuthService {
 
   static async logout() {
     if (typeof window !== "undefined") {
-      window.localStorage.getItem('accessToken') && await http.post("/api/auth/logout");
+      window.localStorage.getItem("accessToken") &&
+        (await http.post("/api/auth/logout"));
       window.localStorage.removeItem("accessToken");
-      window.location.href = "/"
+      window.location.href = "/";
     }
   }
 
@@ -21,15 +22,11 @@ export class AuthService {
     });
   }
 
-  static register(
-    values,
-  ) {
+  static register(values) {
     return http.post("/api/auth/register", values);
   }
 
-  static googleRegister(
-    user
-  ) {
+  static googleRegister(user) {
     return http.post("/api/auth/google-register", user);
   }
 

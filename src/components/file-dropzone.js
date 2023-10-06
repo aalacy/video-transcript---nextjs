@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
-import { useDropzone } from 'react-dropzone';
+import PropTypes from "prop-types";
+import { useDropzone } from "react-dropzone";
 import {
   Box,
   Button,
@@ -10,11 +10,15 @@ import {
   ListItemIcon,
   ListItemText,
   Tooltip,
-  Typography
-} from '@mui/material';
-import { ContentCopy as DuplicateIcon, Close as XIcon, NoteAddOutlined as NoteAddOutlinedIcon } from '@mui/icons-material';
+  Typography,
+} from "@mui/material";
+import {
+  ContentCopy as DuplicateIcon,
+  Close as XIcon,
+  NoteAddOutlined as NoteAddOutlinedIcon,
+} from "@mui/icons-material";
 
-import { bytesToSize } from '@/utils/byte-to-size';
+import { bytesToSize } from "@/utils/byte-to-size";
 
 export const FileDropzone = (props) => {
   const {
@@ -49,38 +53,39 @@ export const FileDropzone = (props) => {
     maxSize,
     minSize,
     onDrop,
-    multiple: false
+    multiple: false,
   });
 
   return (
     <div {...other}>
       <Box
         sx={{
-          alignItems: 'center',
+          alignItems: "center",
           border: 1,
           borderRadius: 1,
-          borderStyle: 'dashed',
-          borderColor: 'divider',
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          outline: 'none',
+          borderStyle: "dashed",
+          borderColor: "divider",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          outline: "none",
           p: 6,
           ...(isDragActive && {
-            backgroundColor: 'action.active',
-            opacity: 0.5
+            backgroundColor: "action.active",
+            opacity: 0.5,
           }),
-          '&:hover': {
-            backgroundColor: 'action.hover',
-            cursor: 'pointer',
-            opacity: 0.5
-          }
+          "&:hover": {
+            backgroundColor: "action.hover",
+            cursor: "pointer",
+            opacity: 0.5,
+          },
         }}
-        {...getRootProps()}>
+        {...getRootProps()}
+      >
         <input {...getInputProps()} />
-        
+
         <Box sx={{ p: 2, textAlign: "center" }}>
-        <NoteAddOutlinedIcon color='primary' fontSize="large" />
+          <NoteAddOutlinedIcon color="primary" fontSize="large" />
           <Typography fontWeight="bold" variant="h5" sx={{ my: 2 }}>
             Click to upload a file or drag and drop it here
           </Typography>
@@ -97,11 +102,11 @@ export const FileDropzone = (props) => {
                 key={file.path}
                 sx={{
                   border: 1,
-                  borderColor: 'divider',
+                  borderColor: "divider",
                   borderRadius: 1,
-                  '& + &': {
-                    mt: 1
-                  }
+                  "& + &": {
+                    mt: 1,
+                  },
                 }}
               >
                 <ListItemIcon>
@@ -110,8 +115,8 @@ export const FileDropzone = (props) => {
                 <ListItemText
                   primary={file.name}
                   primaryTypographyProps={{
-                    color: 'textPrimary',
-                    variant: 'subtitle2'
+                    color: "textPrimary",
+                    variant: "subtitle2",
                   }}
                   secondary={bytesToSize(file.size)}
                 />
@@ -128,9 +133,9 @@ export const FileDropzone = (props) => {
           </List>
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              mt: 2
+              display: "flex",
+              justifyContent: "flex-end",
+              mt: 2,
             }}
           >
             <Button
@@ -138,7 +143,11 @@ export const FileDropzone = (props) => {
               size="small"
               type="button"
               disabled={loading}
-              startIcon={ loading ? <CircularProgress size="1rem" color="inherit" /> : null }
+              startIcon={
+                loading ? (
+                  <CircularProgress size="1rem" color="inherit" />
+                ) : null
+              }
             >
               Remove
             </Button>
@@ -149,7 +158,11 @@ export const FileDropzone = (props) => {
               type="button"
               disabled={loading}
               variant="contained"
-              startIcon={ loading ? <CircularProgress size="1rem" color="warning" /> : null }
+              startIcon={
+                loading ? (
+                  <CircularProgress size="1rem" color="warning" />
+                ) : null
+              }
             >
               Upload
             </Button>
@@ -163,7 +176,7 @@ export const FileDropzone = (props) => {
 FileDropzone.propTypes = {
   accept: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.arrayOf(PropTypes.string),
   ]),
   disabled: PropTypes.bool,
   files: PropTypes.array,
@@ -182,9 +195,9 @@ FileDropzone.propTypes = {
   onRemove: PropTypes.func,
   onRemoveAll: PropTypes.func,
   onUpload: PropTypes.func,
-  preventDropOnDocument: PropTypes.bool
+  preventDropOnDocument: PropTypes.bool,
 };
 
 FileDropzone.defaultProps = {
-  files: []
+  files: [],
 };

@@ -37,16 +37,16 @@ export default function HomePage() {
 
   const onSubmit = async (values) => {
     try {
-      setLoading(true)
-      const { data } = await client.generate({ name, ...values});
+      setLoading(true);
+      const { data } = await client.generate({ name, ...values });
       toast.success(data.message);
-      setName("")
-      setFiles([])
+      setName("");
+      setFiles([]);
     } catch (error) {
       console.log("error", error);
       toast.error(error.response?.data?.message || "Something wrong happened.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -56,7 +56,7 @@ export default function HomePage() {
 
   const handleRemove = (file) => {
     setFiles((prevFiles) =>
-      prevFiles.filter((_file) => _file.path !== file.path)
+      prevFiles.filter((_file) => _file.path !== file.path),
     );
   };
 
@@ -67,17 +67,17 @@ export default function HomePage() {
   const onUpload = async () => {
     setName("");
     try {
-      setLoading(true)
-      const { data } = await client.upload({file: files[0]});
+      setLoading(true);
+      const { data } = await client.upload({ file: files[0] });
       setName(data.name);
       toast.success(data.message);
     } catch (error) {
       console.log("error", error);
       toast.error(error.response?.data?.message || "Something wrong happened.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const formik = useFormik({
     initialValues,
@@ -144,9 +144,11 @@ export default function HomePage() {
             size="large"
             variant="contained"
             disabled={!name || formik.isSubmitting || loading}
-            startIcon={formik.isSubmitting ?
-              <CircularProgress sx={{ mr: 1 }} color="warning" size={20} />
-            : null}
+            startIcon={
+              formik.isSubmitting ? (
+                <CircularProgress sx={{ mr: 1 }} color="warning" size={20} />
+              ) : null
+            }
           >
             Generate
           </Button>

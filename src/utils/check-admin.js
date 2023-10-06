@@ -61,7 +61,7 @@ export const canAccessPage = (user, path) => {
     ?.filter((role) => role.roleResources)
     .map((role) => role.roleResources)
     .flat();
-  const resourcesResource  = dedupeArrayOfObjects(rolesResources);
+  const resourcesResource = dedupeArrayOfObjects(rolesResources);
 
   let canAccess = false;
   for (let res of resources) {

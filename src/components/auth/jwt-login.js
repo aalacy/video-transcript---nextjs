@@ -30,7 +30,7 @@ const handleMouseDownPassword = (event) => {
 export const JWTLogin = (props) => {
   const isMounted = useMounted();
   const router = useRouter();
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 

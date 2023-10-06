@@ -16,10 +16,10 @@ export default function GoogleAuthBtn() {
       router.push("/");
     } catch (error) {
       if (error.status !== 403 && error.status !== 404) {
-        toast.error(error.message)
+        toast.error(error.message);
       }
     }
-  }
+  };
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => handleRegister(codeResponse),

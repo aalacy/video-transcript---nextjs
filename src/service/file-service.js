@@ -1,4 +1,4 @@
-import http from './http.js'
+import http from "./http.js";
 
 export class FileService {
   upload(fileData) {

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { createContext, useEffect, useMemo, useReducer } from "react";
 import PropTypes from "prop-types";
@@ -96,7 +96,7 @@ export const AuthProvider = (props) => {
   const pathname = usePathname();
 
   const hasLayout = useMemo(() => {
-    return !pathname.includes('/auth');
+    return !pathname.includes("/auth");
   }, [pathname]);
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export const AuthProvider = (props) => {
 
         if (accessToken) {
           const { data } = await AuthService.me();
-          
+
           dispatch({
             type: "INITIALIZE",
             payload: {
@@ -124,10 +124,10 @@ export const AuthProvider = (props) => {
               user: null,
             },
           });
-          window.location.href = '/auth/login';
+          window.location.href = "/auth/login";
         }
       } catch (err) {
-        window.location.href = '/auth/login';
+        window.location.href = "/auth/login";
         dispatch({
           type: "INITIALIZE",
           payload: {
@@ -142,11 +142,7 @@ export const AuthProvider = (props) => {
     hasLayout && initialize();
   }, []);
 
-  const login = async (
-    email,
-    password,
-    shouldRememberMe,
-  ) => {
+  const login = async (email, password, shouldRememberMe) => {
     const { data } = await AuthService.login(email, password, shouldRememberMe);
     const { data: user } = data;
 
@@ -161,14 +157,12 @@ export const AuthProvider = (props) => {
   };
 
   const logout = async () => {
-    console.log('000000000')
+    console.log("000000000");
     await AuthService.logout();
     dispatch({ type: "LOGOUT" });
   };
 
-  const register = async (
-    values,
-  ) => {
+  const register = async (values) => {
     const { data } = await AuthService.register(values);
     const { data: user } = data;
 
@@ -203,11 +197,7 @@ export const AuthProvider = (props) => {
     });
   };
 
-  const passwordReset = (
-    email,
-    code,
-    password,
-  ) => {
+  const passwordReset = (email, code, password) => {
     AuthService.forgotPasswordSubmit(email, code, password);
     dispatch({
       type: "PASSWORD_RESET",
@@ -223,9 +213,7 @@ export const AuthProvider = (props) => {
     });
   };
 
-  const showConfirmDlg = (
-    confirmMessage,
-  ) => {
+  const showConfirmDlg = (confirmMessage) => {
     dispatch({
       type: "SHOW_CONFIRM_DLG",
       payload: {

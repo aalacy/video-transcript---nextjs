@@ -12,12 +12,7 @@ export default function VideoPlayer(props) {
         position: "relative",
       }}
     >
-      <ReactPlayer
-        controls
-        url={url}
-        width="300px"
-        height="100%"
-      />
+      <ReactPlayer controls url={url} width="300px" height="100%" />
       <Typography
         sx={{
           position: "absolute",

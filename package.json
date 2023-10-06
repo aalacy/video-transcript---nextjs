@@ -6,7 +6,9 @@
     "dev": "next dev -p 3005",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write \"src/**/*.js\"",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emotion/cache": "latest",
@@ -22,6 +24,7 @@
     "formik": "^2.4.3",
     "mui-color-input": "^2.0.0",
     "next": "^13.x",
+    "prettier": "^3.0.3",
     "react": "18.x",
     "react-dom": "18.x",
     "react-dropzone": "^14.2.3",
@@ -31,5 +34,12 @@
     "socket.io-client": "^4.7.2",
     "swr": "^2.2.4",
     "yup": "^1.2.0"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write \"src/**/*.js\""
   }
 }

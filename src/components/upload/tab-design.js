@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import {
   Card,
@@ -90,8 +90,8 @@ export default function DesignTabPanel(props) {
 
   useEffect(() => {
     setValues(formik.values);
-  }, [formik.values])
-  
+  }, [formik.values]);
+
   return (
     <Card>
       <CardContent>
@@ -214,8 +214,7 @@ export default function DesignTabPanel(props) {
                 !!formik.errors.backgroundColor
               }
               helperText={
-                formik.touched.backgroundColor &&
-                formik.errors.backgroundColor
+                formik.touched.backgroundColor && formik.errors.backgroundColor
               }
               sx={{ gridColumn: "span 2" }}
             />

@@ -1,4 +1,4 @@
 export const LanguageCode = {
-    English: 'en-US',
-    Hindi: 'hi-IN'
-}
+  English: "en-US",
+  Hindi: "hi-IN",
+};
