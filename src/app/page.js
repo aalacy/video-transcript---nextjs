@@ -4,7 +4,6 @@ import {
   Box,
   Button,
   TextField,
-  useMediaQuery,
   FormHelperText,
   CircularProgress,
   MenuItem,
@@ -16,16 +15,16 @@ import toast from "react-hot-toast";
 import { FileService } from "@/service/file-service";
 import { LanguageCode } from "@/constants";
 import { FileDropzone } from "@/components/file-dropzone";
-import { useState } from "react";
-import { MuiColorInput } from "mui-color-input";
+import { useEffect, useState } from "react";
 
 const client = new FileService();
 
 export default function HomePage() {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
   const [files, setFiles] = useState([]);
   const [name, setName] = useState();
   const [loading, setLoading] = useState();
+  const [fileError, setError] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const initialValues = {
     language: LanguageCode.English,
@@ -51,21 +50,26 @@ export default function HomePage() {
   };
 
   const handleDrop = (newFiles) => {
-    setFiles((prevFiles) => [...newFiles]);
+    setFiles(() => [...newFiles]);
   };
 
   const handleRemove = (file) => {
     setFiles((prevFiles) =>
       prevFiles.filter((_file) => _file.path !== file.path),
     );
+    setLoaded(false);
+    setName("");
   };
 
   const handleRemoveAll = () => {
     setFiles([]);
+    setLoaded(false);
+    setName("");
   };
 
   const onUpload = async () => {
     setName("");
+    setLoaded(false);
     try {
       setLoading(true);
       const { data } = await client.upload({ file: files[0] });
@@ -85,42 +89,41 @@ export default function HomePage() {
     onSubmit,
   });
 
+  useEffect(() => {
+    if (!fileError) return;
+    setError(false);
+    toast.error(
+      "Video width exceeds 1080px limit, please resize it. (TikTok/Reels/Short format only)",
+    );
+  }, [fileError]);
+
   return (
     <>
       <title>Upload</title>
 
       <form onSubmit={formik.handleSubmit}>
-        <Box
-          display="grid"
-          gap="30px"
-          gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-          sx={{
-            "& > div": {
-              gridColumn: isNonMobile ? undefined : "span 4",
-            },
-            mb: 2,
-          }}
-        >
-          <TextField
-            fullWidth
-            select
-            type="text"
-            size="small"
-            label="* Language (97 options)"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.language}
-            name="language"
-            error={!!formik.touched.language && !!formik.errors.language}
-            helperText={formik.touched.language && formik.errors.language}
-            sx={{ gridColumn: "span 2" }}
-          >
-            {Object.keys(LanguageCode).map((key) => (
-              <MenuItem key={key} value={LanguageCode[key]}>
-                {key}
-              </MenuItem>
-            ))}
-          </TextField>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Box sx={{ maxWidth: "sm", mb: 2, width: 1 }}>
+            <TextField
+              select
+              fullWidth
+              type="text"
+              size="small"
+              label="* Language (97 options)"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.language}
+              name="language"
+              error={!!formik.touched.language && !!formik.errors.language}
+              helperText={formik.touched.language && formik.errors.language}
+            >
+              {Object.keys(LanguageCode).map((key) => (
+                <MenuItem key={key} value={LanguageCode[key]}>
+                  {key}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
         </Box>
         {formik.errors.submit && (
           <Box sx={{ mt: 3 }}>
@@ -128,8 +131,9 @@ export default function HomePage() {
           </Box>
         )}
         <FileDropzone
-          accept="audio/*, video/*"
+          accept={{ "video/*": [".mp4", ".mov"] }}
           files={files}
+          setFiles={setFiles}
           maxFiles={1}
           maxSize={100 * 1024 * 1024}
           onDrop={handleDrop}
@@ -137,6 +141,9 @@ export default function HomePage() {
           onRemoveAll={handleRemoveAll}
           onUpload={onUpload}
           loading={loading}
+          setError={setError}
+          loaded={loaded}
+          setLoaded={setLoaded}
         />
         <Box display="flex" justifyContent="center" mt="4em" gap={2}>
           <Button

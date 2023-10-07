@@ -19,12 +19,14 @@ import {
 } from "@mui/icons-material";
 
 import { bytesToSize } from "@/utils/byte-to-size";
+import { createRef, useEffect, useState } from "react";
 
 export const FileDropzone = (props) => {
   const {
     accept,
     disabled,
     files,
+    setFiles,
     getFilesFromEvent,
     maxFiles,
     maxSize,
@@ -42,19 +44,53 @@ export const FileDropzone = (props) => {
     onUpload,
     preventDropOnDocument,
     loading,
+    setError,
+    loaded,
+    setLoaded,
     ...other
   } = props;
 
   // We did not add the remaining props to avoid component complexity
   // but you can simply add it if you need to.
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept,
-    maxFiles,
-    maxSize,
-    minSize,
-    onDrop,
-    multiple: false,
-  });
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone({
+      accept,
+      maxFiles,
+      maxSize,
+      minSize,
+      onDrop,
+      multiple: false,
+    });
+
+  const videoRef = createRef();
+  const acceptedFileURLs = acceptedFiles.map((file) => ({
+    preview: URL.createObjectURL(file),
+  }));
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+    var video = document.getElementById("videoRef");
+    video.addEventListener(
+      "loadedmetadata",
+      function () {
+        // retrieve dimensions
+        const height = this.videoHeight;
+        const width = this.videoWidth;
+        if (width > 1080) {
+          setLoaded(false);
+          setTimeout(() => {
+            setError(true);
+            video.removeEventListener("loadedmetadata", {}, false);
+            videoRef.current = null;
+            setFiles([]);
+          }, 0);
+        } else {
+          setLoaded(true);
+        }
+      },
+      false,
+    );
+  }, [videoRef]);
 
   return (
     <div {...other}>
@@ -92,9 +128,12 @@ export const FileDropzone = (props) => {
           <Typography variant="body1" color="GrayText">
             Up to 100MB in size.
           </Typography>
+          <Typography variant="caption" color="GrayText">
+            MP4, MOV formats & 1:1, 4:5, 9:16 ratio accepted
+          </Typography>
         </Box>
       </Box>
-      {files.length > 0 && (
+      {files.length > 0 && loaded ? (
         <Box sx={{ mt: 2 }}>
           <List>
             {files.map((file) => (
@@ -168,19 +207,23 @@ export const FileDropzone = (props) => {
             </Button>
           </Box>
         </Box>
-      )}
+      ) : null}
+      {files.length > 0 && acceptedFileURLs.length > 0 ? (
+        <video
+          id="videoRef"
+          src={acceptedFileURLs[0].preview}
+          ref={videoRef}
+          style={{ display: "none" }}
+        />
+      ) : null}
     </div>
   );
 };
 
 FileDropzone.propTypes = {
-  accept: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
   disabled: PropTypes.bool,
   files: PropTypes.array,
-  getFilesFromEvent: PropTypes.func,
+  setFiles: PropTypes.func,
   maxFiles: PropTypes.number,
   maxSize: PropTypes.number,
   minSize: PropTypes.number,

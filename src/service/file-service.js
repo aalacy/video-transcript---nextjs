@@ -23,4 +23,12 @@ export class FileService {
     let url = "/api/file/generate";
     return http.post(url, inputData);
   }
+
+  all(paginationModel) {
+    return http.get(
+      `/api/file?page=${paginationModel.page + 1}&take=${
+        paginationModel.pageSize
+      }`,
+    );
+  }
 }

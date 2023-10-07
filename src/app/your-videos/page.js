@@ -2,11 +2,12 @@
 
 import { Button, Container, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Edit as EditIcon } from "@mui/icons-material";
 
-import { useSwrFetcher } from "@/hooks/useSwrFetcher";
 import { useRouter } from "next/navigation";
+import { buffer2String, formatDate } from "@/utils";
+import { FileService } from "@/service/file-service";
 
 const RenderAction = (props) => {
   const { value, handleViewEdit } = props;
@@ -27,6 +28,8 @@ const RenderAction = (props) => {
   );
 };
 
+const client = new FileService();
+
 export default function YourVideosPage() {
   const router = useRouter();
 
@@ -34,33 +37,65 @@ export default function YourVideosPage() {
     page: 0,
     pageSize: 5,
   });
-  const { data, loading, error } = useSwrFetcher(
-    `/api/file?page=${paginationModel.page + 1}&take=${
-      paginationModel.pageSize
-    }`,
-  );
+  const [loading, setLoading] = useState();
+  const [data, setData] = useState();
+  // const { data, loading } = useSwrFetcher(
+  //   `/api/file?page=${paginationModel.page + 1}&take=${
+  //     paginationModel.pageSize
+  //   }`,
+  // );
+
+  const fetchData = useCallback(async () => {
+    const { data } = await client.all(paginationModel);
+    setData(data);
+  }, [paginationModel]);
 
   const handleViewEdit = (value) => {
     router.push(`/upload/${value}`);
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const columns = [
     {
-      field: "name",
-      headerName: "Name",
+      field: "thumbnail",
+      headerName: "Thumbnail",
+      description: "Thumbnail Column",
+      sortable: false,
       width: 150,
-      editable: true,
+      renderCell: (params) =>
+        params.value ? (
+          <img
+            src={"data:image/png;base64," + buffer2String(params.value.data)}
+            alt="Thumbnail image"
+            loading="lazy"
+            style={{
+              width: 100,
+              objectFit: "contain",
+              borderRadius: 2,
+            }}
+          />
+        ) : (
+          <></>
+        ),
     },
     {
-      field: "ext",
-      headerName: "Ext",
-      width: 150,
-      editable: true,
+      field: "fileName",
+      headerName: "Name",
+      width: 350,
+    },
+    {
+      field: "createdAt",
+      headerName: "Date Created",
+      width: 200,
+      valueFormatter: (params) => formatDate(params.value),
     },
     {
       field: "id",
       type: "actions",
-      headerName: "",
+      headerName: "Action",
       description: "Action Column",
       sortable: false,
       width: 200,
