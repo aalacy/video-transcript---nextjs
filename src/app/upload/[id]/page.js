@@ -7,8 +7,7 @@ import { Tabs, Tab, Typography, Box, Container } from "@mui/material";
 
 import DesignTabPanel from "@/components/upload/tab-design";
 import VideoPlayer from "@/components/upload/video-player";
-import TranscriptionTapPanel from "@/components/upload/tap-transcription";
-import DescriptionTapPanel from "@/components/upload/tap-description";
+import TranscriptionTabPanel from "@/components/upload/tab-transcription";
 import { useSwrFetcher } from "@/hooks/useSwrFetcher";
 
 function TabPanel(props) {
@@ -95,7 +94,7 @@ export default function UploadPage({ params }) {
               <Tab label="Design" sx={tabStyle} {...a11yProps(1)} />
             </Tabs>
             <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
-              <TranscriptionTapPanel id={params.id} vtt={data?.vtt} />
+              <TranscriptionTabPanel id={params.id} vtt={data?.vtt} />
               <DesignTabPanel index={1} data={data} setValues={setValues} />
             </SwipeableViews>
           </Box>

@@ -10,25 +10,35 @@
       "static/chunks/main-app.js",
       "static/chunks/app/error.js"
     ],
-    "/loading": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/loading.js"
-    ],
     "/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
-    "/upload/[id]/page": [
+    "/loading": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/upload/[id]/page.js"
+      "static/chunks/app/loading.js"
+    ],
+    "/your-videos/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/your-videos/page.js"
     ],
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
+    ],
+    "/auth/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/auth/login/page.js"
+    ],
+    "/upload/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/upload/[id]/page.js"
     ]
   }
 }

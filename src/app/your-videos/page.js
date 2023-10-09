@@ -1,30 +1,53 @@
 "use client";
 
-import { Button, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Container,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useCallback, useEffect, useState } from "react";
-import { Edit as EditIcon } from "@mui/icons-material";
-
+import { Delete, Edit as EditIcon } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+
 import { buffer2String, formatDate } from "@/utils";
 import { FileService } from "@/service/file-service";
 
 const RenderAction = (props) => {
-  const { value, handleViewEdit } = props;
+  const { value, handleViewEdit, handleDelete } = props;
 
   return (
-    <Button
-      onClick={() => handleViewEdit(value)}
-      variant="outlined"
-      size="small"
-      sx={{
-        ml: 3,
-      }}
-      color="primary"
-      startIcon={<EditIcon fontSize="small" color="primary" />}
-    >
-      <Typography variant="caption">View / Edit</Typography>
-    </Button>
+    <>
+      <IconButton
+        onClick={() => handleViewEdit(value)}
+        variant="outlined"
+        size="small"
+        sx={{
+          ml: 3,
+        }}
+        color="success"
+      >
+        <Tooltip title="Edit/View Video">
+          <EditIcon />
+        </Tooltip>
+      </IconButton>
+      <IconButton
+        onClick={() => handleDelete(value)}
+        variant="outlined"
+        size="small"
+        sx={{
+          ml: 3,
+        }}
+        color="error"
+      >
+        <Tooltip title="Delete Video">
+          <Delete />
+        </Tooltip>
+      </IconButton>
+    </>
   );
 };
 
@@ -39,20 +62,19 @@ export default function YourVideosPage() {
   });
   const [loading, setLoading] = useState();
   const [data, setData] = useState();
-  // const { data, loading } = useSwrFetcher(
-  //   `/api/file?page=${paginationModel.page + 1}&take=${
-  //     paginationModel.pageSize
-  //   }`,
-  // );
 
   const fetchData = useCallback(async () => {
+    setLoading(true);
     const { data } = await client.all(paginationModel);
     setData(data);
+    setLoading(false);
   }, [paginationModel]);
 
   const handleViewEdit = (value) => {
     router.push(`/upload/${value}`);
   };
+
+  const handleDelete = (id) => {};
 
   useEffect(() => {
     fetchData();
@@ -100,7 +122,11 @@ export default function YourVideosPage() {
       sortable: false,
       width: 200,
       renderCell: (params) => (
-        <RenderAction {...params} handleViewEdit={handleViewEdit} />
+        <RenderAction
+          {...params}
+          handleViewEdit={handleViewEdit}
+          handleDelete={handleDelete}
+        />
       ),
     },
   ];
@@ -109,16 +135,22 @@ export default function YourVideosPage() {
     <>
       <title>Your Videos</title>
       <Container>
-        <DataGrid
-          loading={loading}
-          rows={data?.data || []}
-          columns={columns}
-          rowCount={data?.count}
-          pageSizeOptions={[5]}
-          paginationModel={paginationModel}
-          onPaginationModelChange={setPaginationModel}
-          disableRowSelectionOnClick
-        />
+        <Card>
+          <CardContent>
+            <Box sx={{ minHeight: 380 }}>
+              <DataGrid
+                loading={loading}
+                rows={data?.data || []}
+                columns={columns}
+                rowCount={data?.count}
+                pageSizeOptions={[5]}
+                paginationModel={paginationModel}
+                onPaginationModelChange={setPaginationModel}
+                disableRowSelectionOnClick
+              />
+            </Box>
+          </CardContent>
+        </Card>
       </Container>
     </>
   );

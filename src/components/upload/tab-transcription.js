@@ -25,7 +25,7 @@ import toast from "react-hot-toast";
 
 const client = new FileService();
 
-export default function TranscriptionTapPanel(props) {
+export default function TranscriptionTabPanel(props) {
   const { vtt, id } = props;
 
   const [cues, setCues] = useState([]);

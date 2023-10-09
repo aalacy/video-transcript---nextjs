@@ -27,11 +27,11 @@ export default function HomePage() {
   const [loaded, setLoaded] = useState(false);
 
   const initialValues = {
-    language: LanguageCode.English,
+    lang: LanguageCode.English,
   };
 
   const validationSchema = yup.object().shape({
-    language: yup.string(),
+    lang: yup.string(),
   });
 
   const onSubmit = async (values) => {
@@ -112,10 +112,10 @@ export default function HomePage() {
               label="* Language (97 options)"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.language}
-              name="language"
-              error={!!formik.touched.language && !!formik.errors.language}
-              helperText={formik.touched.language && formik.errors.language}
+              value={formik.values.lang}
+              name="lang"
+              error={!!formik.touched.lang && !!formik.errors.lang}
+              helperText={formik.touched.lang && formik.errors.lang}
             >
               {Object.keys(LanguageCode).map((key) => (
                 <MenuItem key={key} value={LanguageCode[key]}>
