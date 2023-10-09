@@ -146,10 +146,12 @@ export const JWTLogin = (props) => {
           size="large"
           type="submit"
           variant="contained"
+          startIcon={
+            formik.isSubmitting ? (
+              <CircularProgress sx={{ mr: 1 }} color="inherit" size={20} />
+            ) : null
+          }
         >
-          {formik.isSubmitting && (
-            <CircularProgress sx={{ mr: 1 }} color="inherit" size={20} />
-          )}{" "}
           Continue
         </Button>
       </Box>

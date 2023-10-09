@@ -95,7 +95,7 @@ export default function UploadPage({ params }) {
               <Tab label="Design" sx={tabStyle} {...a11yProps(1)} />
             </Tabs>
             <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
-              <TranscriptionTapPanel />
+              <TranscriptionTapPanel id={params.id} vtt={data?.vtt} />
               <DesignTabPanel index={1} data={data} setValues={setValues} />
             </SwipeableViews>
           </Box>

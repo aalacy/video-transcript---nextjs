@@ -31,4 +31,8 @@ export class FileService {
       }`,
     );
   }
+
+  updateVTT(id, vtt) {
+    return http.patch(`/api/file/${id}`, { vtt });
+  }
 }
