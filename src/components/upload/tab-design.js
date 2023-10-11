@@ -8,7 +8,6 @@ import {
   TextField,
   useMediaQuery,
   FormHelperText,
-  CircularProgress,
   Typography,
   Stack,
   Slider,
@@ -22,13 +21,16 @@ import {
 import { styled } from "@mui/material/styles";
 import { Brush as BrushIcon } from "@mui/icons-material";
 import { MuiColorInput } from "mui-color-input";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
-const fonts = ["Times New Roman", "Arial", "Helvetica Neue", "Poppins"];
-const fontWeights = ["Light", "Medium", "Bold"];
+import {
+  fonts,
+  fontWeights,
+  MIN_FONT,
+  MAX_FONT,
+  MIN_POSITION,
+  MAX_POSITION,
+} from "@/constants";
 
 const BpIcon = styled("span")(() => ({
   display: "none",
@@ -47,7 +49,7 @@ function BpRadio(props) {
 }
 
 export default function DesignTabPanel(props) {
-  const { setValues, data } = props;
+  const { setMetadata, formik } = props;
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
@@ -61,35 +63,8 @@ export default function DesignTabPanel(props) {
     setAnchorEl(null);
   };
 
-  const onSubmit = async (values, helpers) => {
-    console.log("values", values);
-  };
-
-  const initialValues = {
-    backgroundColor: "#4d1a7f",
-    fontColor: "#4d1a7f",
-    font: fonts[0],
-    fontWeight: fontWeights[0],
-    fontSize: 24,
-    position: 100,
-  };
-
-  const validationSchema = yup.object().shape({
-    backgroundColor: yup.string().required("Required"),
-    fontColor: yup.string().required("Required"),
-    font: yup.string(),
-    fontSize: yup.number().min(11).max(33),
-    position: yup.number().min(1).max(500),
-  });
-
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit,
-  });
-
   useEffect(() => {
-    setValues(formik.values);
+    setMetadata(formik.values);
   }, [formik.values]);
 
   return (
@@ -244,7 +219,7 @@ export default function DesignTabPanel(props) {
                 helperText={formik.touched.position && formik.errors.position}
                 InputProps={{
                   endAdornment: (
-                    <InputAdornment position="end">px</InputAdornment>
+                    <InputAdornment position="end">%</InputAdornment>
                   ),
                 }}
               />
@@ -258,8 +233,8 @@ export default function DesignTabPanel(props) {
                   formik.setFieldValue("position", value)
                 }
                 aria-labelledby="input-slider"
-                min={1}
-                max={500}
+                min={MIN_POSITION}
+                max={MAX_POSITION}
                 sx={{
                   ml: 2,
                   width: "90%",
@@ -294,8 +269,8 @@ export default function DesignTabPanel(props) {
                   formik.setFieldValue("fontSize", value)
                 }
                 aria-labelledby="input-slider"
-                min={11}
-                max={33}
+                min={MIN_FONT}
+                max={MAX_FONT}
                 sx={{
                   ml: 2,
                   width: "90%",
@@ -308,19 +283,6 @@ export default function DesignTabPanel(props) {
               <FormHelperText error>{formik.errors.submit}</FormHelperText>
             </Box>
           )}
-          <Box display="flex" justifyContent="end" mt="4em" gap={2}>
-            <Button
-              type="submit"
-              color="primary"
-              variant="contained"
-              disabled={formik.isSubmitting}
-            >
-              {formik.isSubmitting && (
-                <CircularProgress sx={{ mr: 1 }} color="inherit" size={20} />
-              )}{" "}
-              Upload
-            </Button>
-          </Box>
         </form>
       </CardContent>
     </Card>

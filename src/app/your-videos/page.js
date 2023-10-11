@@ -7,14 +7,17 @@ import {
   Container,
   IconButton,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useCallback, useEffect, useState } from "react";
 import { Delete, Edit as EditIcon } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import { buffer2String, formatDate } from "@/utils";
 import { FileService } from "@/service/file-service";
+import RootLayout from "@/components/common/layout";
 
 const RenderAction = (props) => {
   const { value, handleViewEdit, handleDelete } = props;
@@ -74,7 +77,15 @@ export default function YourVideosPage() {
     router.push(`/upload/${value}`);
   };
 
-  const handleDelete = (id) => {};
+  const handleDelete = async (id) => {
+    try {
+      await client.delete(id);
+      toast.success("Successfully deleted.");
+      fetchData();
+    } catch (error) {
+      toast.error(error.message || "Something went wrong!");
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -82,15 +93,25 @@ export default function YourVideosPage() {
 
   const columns = [
     {
-      field: "thumbnail",
-      headerName: "Thumbnail",
+      field: "name_thumbnail",
+      headerName: "Name",
       description: "Thumbnail Column",
       sortable: false,
-      width: 150,
-      renderCell: (params) =>
-        params.value ? (
+      width: 400,
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
           <img
-            src={"data:image/png;base64," + buffer2String(params.value.data)}
+            src={
+              params.row.thumbnail
+                ? "data:image/png;base64," + buffer2String(params.value.data)
+                : "/assets/placeholder.jpg"
+            }
             alt="Thumbnail image"
             loading="lazy"
             style={{
@@ -99,14 +120,9 @@ export default function YourVideosPage() {
               borderRadius: 2,
             }}
           />
-        ) : (
-          <></>
-        ),
-    },
-    {
-      field: "fileName",
-      headerName: "Name",
-      width: 350,
+          <Typography>{params.row.fileName}</Typography>
+        </Box>
+      ),
     },
     {
       field: "createdAt",
@@ -117,8 +133,8 @@ export default function YourVideosPage() {
     {
       field: "id",
       type: "actions",
-      headerName: "Action",
-      description: "Action Column",
+      headerName: "Actions",
+      description: "Actions Column",
       sortable: false,
       width: 200,
       renderCell: (params) => (
@@ -132,13 +148,15 @@ export default function YourVideosPage() {
   ];
 
   return (
-    <>
+    <RootLayout>
       <title>Your Videos</title>
       <Container>
         <Card>
           <CardContent>
-            <Box sx={{ minHeight: 380 }}>
+            <Box sx={{ height: 380 }}>
               <DataGrid
+                autoHeight
+                disableRowSelectionOnClick
                 loading={loading}
                 rows={data?.data || []}
                 columns={columns}
@@ -146,12 +164,17 @@ export default function YourVideosPage() {
                 pageSizeOptions={[5]}
                 paginationModel={paginationModel}
                 onPaginationModelChange={setPaginationModel}
-                disableRowSelectionOnClick
+                sx={{
+                  "& .MuiDataGrid-columnHeaders": {
+                    borderBottom: "2px solid #A6A6A6 !important",
+                    bgcolor: "primary.main",
+                  },
+                }}
               />
             </Box>
           </CardContent>
         </Card>
       </Container>
-    </>
+    </RootLayout>
   );
 }

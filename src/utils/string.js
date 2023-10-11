@@ -16,11 +16,13 @@ const TIMESTAMP_REGEXP = /([0-9]+)?:?([0-9]{2}):([0-9]{2}\,[0-9]{2,3})/;
 export const compileVTT = (cues, values) => {
   let output = "";
   for (let cue of cues) {
+    const updated = values.find((val) => val.identifier === cue.identifier);
+
     output += "\n";
     output += `${cue.identifier}\n`;
     output += `${cue.startOrg} --> ${cue.endOrg}`;
     output += cue.styles ? ` ${cue.styles}` : "";
-    output += `\n${values[cue.identifier]}`;
+    output += `\n${updated.text}`;
     output += "\n";
   }
 
@@ -197,8 +199,20 @@ function parseTimestamp(timestamp) {
 
 const dayObj = (timestamp) => {
   const [time, milliseconds] = timestamp.split(",");
+  const hours = dayjs(time, "HH:mm:ss").hour();
+  const minutes = dayjs(time, "HH:mm:ss").minute();
   const seconds = dayjs(time, "HH:mm:ss").second();
   const mili = Number((+milliseconds / 1000).toFixed(1));
 
-  return seconds + mili;
+  return hours * 3600 + minutes * 60 + seconds + mili;
+};
+
+export const downloadMedia = (fileName, output) => {
+  console.log("fileName", fileName, output);
+  const downloadLink = document.createElement("a");
+  downloadLink.download = fileName;
+  downloadLink.href = output;
+  downloadLink.style.display = "none";
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
 };

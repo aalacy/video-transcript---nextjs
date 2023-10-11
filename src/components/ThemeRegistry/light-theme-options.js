@@ -109,7 +109,7 @@ export const lightThemeOptions = {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          borderRadius: 28,
+          borderRadius: 8,
           fontSize: "0.9rem",
         },
         notchedOutline: {

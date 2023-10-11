@@ -5,69 +5,33 @@ import {
   Card,
   CardContent,
   List,
-  ListItem,
   ListItemButton,
   TextField,
   Typography,
   IconButton,
   Tooltip,
-  Button,
-  CircularProgress,
   FormHelperText,
+  ListItem,
 } from "@mui/material";
 import { UndoOutlined as UndoIcon } from "@mui/icons-material";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useFormik } from "formik";
 
-import { FileService } from "@/service/file-service";
-import { compileVTT, parseVtt } from "@/utils";
-import toast from "react-hot-toast";
-
-const client = new FileService();
-
 export default function TranscriptionTabPanel(props) {
-  const { vtt, id } = props;
-
-  const [cues, setCues] = useState([]);
-  const [initialValues, setInitialValues] = useState({});
-  const [showInputs, setShowInputs] = useState({});
+  const {
+    cues,
+    initialValues,
+    showInputs,
+    setShowInputs,
+    selectedCue,
+    setSelectedCue,
+    setUpdatedCues,
+  } = props;
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues,
-    onSubmit: async (values, helpers) => {
-      try {
-        await client.updateVTT(id, compileVTT(cues, values));
-        toast.success("Successfully updated!");
-      } catch (err) {
-        if (isMounted()) {
-          helpers.setStatus({ success: false });
-          helpers.setErrors({
-            submit: err?.response?.data?.message || err.message,
-          });
-          helpers.setSubmitting(false);
-        }
-      }
-    },
   });
-
-  useEffect(() => {
-    if (!vtt) return;
-    const parsed = parseVtt(vtt);
-    const obj = {};
-    const bools = {};
-    if (parsed.valid) {
-      setCues(parsed.cues);
-      Array.from(parsed.cues).forEach((cue) => {
-        obj[cue.identifier] = cue.text;
-        bools[cue.identifier] = false;
-      });
-    }
-    setInitialValues(obj);
-    setShowInputs(bools);
-  }, [vtt]);
-
-  useEffect(() => {}, [formik.values]);
 
   const handleTextClick = (identifier) => {
     setShowInputs((prev) => ({ ...prev, [identifier]: true }));
@@ -75,11 +39,17 @@ export default function TranscriptionTabPanel(props) {
 
   const handleBlur = (identifier) => {
     setShowInputs((prev) => ({ ...prev, [identifier]: false }));
+    setSelectedCue({
+      ...selectedCue,
+      identifier,
+      text: formik.values[identifier],
+    });
   };
 
   const handleUndo = (identifier) => {
     const value = cues.find((cue) => cue.identifier === identifier);
     formik.setFieldValue(identifier, value.text);
+    setSelectedCue({ ...selectedCue, identifier, text: value.text });
   };
 
   const hasChanged = useCallback(
@@ -92,16 +62,30 @@ export default function TranscriptionTabPanel(props) {
     [formik.values],
   );
 
+  useEffect(() => {
+    if (!formik.values || Object.keys(formik.values).length === 0) return;
+    setUpdatedCues(
+      cues.map((cue) => ({ ...cue, text: formik.values[cue.identifier] })),
+    );
+  }, [formik.values]);
+
+  useEffect(() => {
+    if (!selectedCue.identifier) return;
+    document
+      .querySelector(`#item-${selectedCue.identifier}`)
+      .scrollIntoView({ block: "end", behavior: "smooth" });
+  }, [selectedCue]);
+
   return (
     <Card>
-      <CardContent>
+      <CardContent sx={{ overflow: "auto", maxHeight: 460 }}>
         {cues.length > 0 ? (
           <form noValidate onSubmit={formik.handleSubmit}>
-            <List sx={{ overflow: "auto", maxHeight: 460 }}>
+            <List>
               {cues?.map((cue) => (
                 <ListItem
                   key={cue.identifier}
-                  disablePadding
+                  id={`item-${cue.identifier}`}
                   secondaryAction={
                     <>
                       {hasChanged(cue.identifier) ? (
@@ -117,6 +101,14 @@ export default function TranscriptionTabPanel(props) {
                   }
                 >
                   <ListItemButton
+                    onClick={() =>
+                      setSelectedCue({
+                        identifier: cue.identifier,
+                        start: cue.start,
+                        text: formik.values[cue.identifier],
+                      })
+                    }
+                    selected={selectedCue.identifier === cue.identifier}
                     sx={{
                       p: 2,
                       borderRadius: 8,
@@ -177,30 +169,6 @@ export default function TranscriptionTabPanel(props) {
                 <FormHelperText error>{formik.errors.submit}</FormHelperText>
               </Box>
             )}
-            <Box
-              sx={{
-                textAlign: "center",
-                mt: 2,
-              }}
-            >
-              <Button
-                disabled={formik.isSubmitting}
-                size="large"
-                type="submit"
-                variant="contained"
-                startIcon={
-                  formik.isSubmitting ? (
-                    <CircularProgress
-                      sx={{ mr: 1 }}
-                      color="warning"
-                      size={20}
-                    />
-                  ) : null
-                }
-              >
-                Save
-              </Button>
-            </Box>
           </form>
         ) : null}
       </CardContent>

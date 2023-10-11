@@ -24,6 +24,7 @@ export const baseThemeOptions = {
       },
       styleOverrides: {
         root: {
+          borderRadius: 8,
           textTransform: "none",
         },
         sizeSmall: {

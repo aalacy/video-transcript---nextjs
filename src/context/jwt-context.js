@@ -2,11 +2,13 @@
 
 import { createContext, useEffect, useMemo, useReducer } from "react";
 import PropTypes from "prop-types";
-import { AuthService } from "@/service/auth-service";
-import { checkAdmin } from "@/utils/check-admin";
 import { usePathname } from "next/navigation";
 
+import { AuthService } from "@/service/auth-service";
+import { checkAdmin } from "@/utils/check-admin";
+
 const initialState = {
+  title: "",
   isAuthenticated: false,
   isAdmin: false,
   isInitialized: false,
@@ -69,6 +71,13 @@ const handlers = {
       confirmMessage,
     };
   },
+  SET_TITLE_INFO: (state, action) => {
+    const { title } = action.payload;
+    return {
+      ...state,
+      title,
+    };
+  },
 };
 
 const reducer = (state, action) =>
@@ -87,6 +96,7 @@ export const AuthContext = createContext({
   refreshPage: () => Promise.resolve(),
   showConfirmDlg: () => Promise.resolve(),
   hideConfirm: () => Promise.resolve(),
+  setTitleInfo: () => Promise.resolve(),
 });
 
 export const AuthProvider = (props) => {
@@ -157,7 +167,6 @@ export const AuthProvider = (props) => {
   };
 
   const logout = async () => {
-    console.log("000000000");
     await AuthService.logout();
     dispatch({ type: "LOGOUT" });
   };
@@ -231,6 +240,15 @@ export const AuthProvider = (props) => {
     });
   };
 
+  const setTitleInfo = async (titleInfo) => {
+    dispatch({
+      type: "SET_TITLE_INFO",
+      payload: {
+        ...titleInfo,
+      },
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -246,6 +264,7 @@ export const AuthProvider = (props) => {
         refreshPage,
         showConfirmDlg,
         hideConfirm,
+        setTitleInfo,
       }}
     >
       {children}

@@ -47,6 +47,7 @@ export const FileDropzone = (props) => {
     setError,
     loaded,
     setLoaded,
+    setSize,
     ...other
   } = props;
 
@@ -67,30 +68,29 @@ export const FileDropzone = (props) => {
     preview: URL.createObjectURL(file),
   }));
 
+  const videoEventListener = (params) => {
+    const height = params.target.videoHeight;
+    const width = params.target.videoWidth;
+    setSize({ width, height });
+    if (width > 1080) {
+      setLoaded(false);
+      setTimeout(() => {
+        setError(true);
+
+        videoRef.current = null;
+        setFiles([]);
+      }, 0);
+    } else {
+      setLoaded(true);
+    }
+  };
+
   useEffect(() => {
     if (!videoRef.current) return;
-    var video = document.getElementById("videoRef");
-    video.addEventListener(
-      "loadedmetadata",
-      function () {
-        // retrieve dimensions
-        const height = this.videoHeight;
-        const width = this.videoWidth;
-        if (width > 1080) {
-          setLoaded(false);
-          setTimeout(() => {
-            setError(true);
-            video.removeEventListener("loadedmetadata", {}, false);
-            videoRef.current = null;
-            setFiles([]);
-          }, 0);
-        } else {
-          setLoaded(true);
-        }
-      },
-      false,
-    );
-  }, [videoRef]);
+    document
+      .getElementById("videoRef")
+      .addEventListener("loadedmetadata", videoEventListener, { once: true });
+  }, [acceptedFileURLs?.length]);
 
   return (
     <div {...other}>

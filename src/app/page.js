@@ -11,11 +11,13 @@ import {
 import { useFormik } from "formik";
 import * as yup from "yup";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { FileService } from "@/service/file-service";
 import { LanguageCode } from "@/constants";
 import { FileDropzone } from "@/components/file-dropzone";
-import { useEffect, useState } from "react";
+import RootLayout from "@/components/common/layout";
 
 const client = new FileService();
 
@@ -25,6 +27,9 @@ export default function HomePage() {
   const [loading, setLoading] = useState();
   const [fileError, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [size, setSize] = useState({});
+
+  const router = useRouter();
 
   const initialValues = {
     lang: LanguageCode.English,
@@ -37,10 +42,11 @@ export default function HomePage() {
   const onSubmit = async (values) => {
     try {
       setLoading(true);
-      const { data } = await client.generate({ name, ...values });
+      const { data } = await client.generateTranscription({ name, ...values });
       toast.success(data.message);
       setName("");
       setFiles([]);
+      router.push(`/upload/${data.id}`);
     } catch (error) {
       console.log("error", error);
       toast.error(error.response?.data?.message || "Something wrong happened.");
@@ -68,13 +74,12 @@ export default function HomePage() {
   };
 
   const onUpload = async () => {
-    setName("");
-    setLoaded(false);
+    setLoading(true);
     try {
-      setLoading(true);
-      const { data } = await client.upload({ file: files[0] });
+      const { data } = await client.upload({ file: files[0], ...size });
       setName(data.name);
       toast.success(data.message);
+      setFiles([]);
     } catch (error) {
       console.log("error", error);
       toast.error(error.response?.data?.message || "Something wrong happened.");
@@ -98,7 +103,7 @@ export default function HomePage() {
   }, [fileError]);
 
   return (
-    <>
+    <RootLayout>
       <title>Upload</title>
 
       <form onSubmit={formik.handleSubmit}>
@@ -144,13 +149,19 @@ export default function HomePage() {
           setError={setError}
           loaded={loaded}
           setLoaded={setLoaded}
+          setSize={setSize}
         />
-        <Box display="flex" justifyContent="center" mt="4em" gap={2}>
+        <Box
+          justifyContent="center"
+          mt="4em"
+          gap={2}
+          sx={{ display: name ? "flex" : "none" }}
+        >
           <Button
             type="submit"
             size="large"
             variant="contained"
-            disabled={!name || formik.isSubmitting || loading}
+            disabled={formik.isSubmitting || loading}
             startIcon={
               formik.isSubmitting ? (
                 <CircularProgress sx={{ mr: 1 }} color="warning" size={20} />
@@ -161,6 +172,6 @@ export default function HomePage() {
           </Button>
         </Box>
       </form>
-    </>
+    </RootLayout>
   );
 }

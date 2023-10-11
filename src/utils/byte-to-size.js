@@ -27,3 +27,5 @@ export const buffer2String = (buffer) => {
 };
 
 export const formatDate = (date) => dayjs(date).format("L LT");
+
+export const formatOnlyDate = (date) => dayjs(date).format("L");

@@ -15,13 +15,20 @@ export class FileService {
     return http.post(url, formData, config);
   }
 
-  download(processId) {
-    return http.get(`/api/file/download?processId=${processId}`);
+  download(id) {
+    return http.get(`/api/file/download?id=${id}`);
   }
 
-  generate(inputData) {
-    let url = "/api/file/generate";
-    return http.post(url, inputData);
+  generateTranscription(inputData) {
+    return http.post("/api/file/generate-transcription", inputData);
+  }
+
+  generateVideo(id, vtt, metadata) {
+    return http.post("/api/file/generate-video", {
+      id,
+      vtt,
+      metadata,
+    });
   }
 
   all(paginationModel) {
@@ -30,6 +37,14 @@ export class FileService {
         paginationModel.pageSize
       }`,
     );
+  }
+
+  get(id) {
+    return http.get(`/api/file/${id}`);
+  }
+
+  delete(id) {
+    return http.delete(`/api/file/${id}`);
   }
 
   updateVTT(id, vtt) {
