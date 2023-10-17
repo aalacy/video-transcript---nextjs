@@ -15,6 +15,10 @@ const initialState = {
   user: null,
   shouldRefresh: false,
   confirmMessage: {},
+  handleSave: undefined,
+  fileName: "",
+  loading: false,
+  progress: {},
 };
 
 const handlers = {
@@ -78,6 +82,41 @@ const handlers = {
       title,
     };
   },
+  SET_HANDLE_SAVE: (state, action) => {
+    const { handleSave } = action.payload;
+    return {
+      ...state,
+      handleSave,
+    };
+  },
+  SET_HANDLE_EXPORT: (state, action) => {
+    const { handleExport } = action.payload;
+    return {
+      ...state,
+      handleExport,
+    };
+  },
+  SET_FILE_NAME: (state, action) => {
+    const { fileName } = action.payload;
+    return {
+      ...state,
+      fileName,
+    };
+  },
+  SET_LOADING: (state, action) => {
+    const { loading } = action.payload;
+    return {
+      ...state,
+      loading,
+    };
+  },
+  SET_PROGRESS: (state, action) => {
+    const { progress } = action.payload;
+    return {
+      ...state,
+      progress,
+    };
+  },
 };
 
 const reducer = (state, action) =>
@@ -97,6 +136,11 @@ export const AuthContext = createContext({
   showConfirmDlg: () => Promise.resolve(),
   hideConfirm: () => Promise.resolve(),
   setTitleInfo: () => Promise.resolve(),
+  setHandleSave: () => Promise.resolve(),
+  setHandleExport: () => Promise.resolve(),
+  setFileName: () => Promise.resolve(),
+  setLoading: () => Promise.resolve(),
+  setProgress: () => Promise.resolve(),
 });
 
 export const AuthProvider = (props) => {
@@ -185,8 +229,8 @@ export const AuthProvider = (props) => {
     });
   };
 
-  const passwordRecovery = (email) => {
-    AuthService.passwordRecovery(email);
+  const passwordRecovery = async (email) => {
+    await AuthService.passwordRecovery(email);
     dispatch({
       type: "PASSWORD_RECOVERY",
     });
@@ -206,8 +250,8 @@ export const AuthProvider = (props) => {
     });
   };
 
-  const passwordReset = (email, code, password) => {
-    AuthService.forgotPasswordSubmit(email, code, password);
+  const passwordReset = async (password, token) => {
+    await AuthService.forgotPasswordSubmit(password, token);
     dispatch({
       type: "PASSWORD_RESET",
     });
@@ -249,6 +293,51 @@ export const AuthProvider = (props) => {
     });
   };
 
+  const setHandleSave = (handleSave) => {
+    dispatch({
+      type: "SET_HANDLE_SAVE",
+      payload: {
+        handleSave,
+      },
+    });
+  };
+
+  const setHandleExport = (handleExport) => {
+    dispatch({
+      type: "SET_HANDLE_EXPORT",
+      payload: {
+        handleExport,
+      },
+    });
+  };
+
+  const setFileName = (fileName) => {
+    dispatch({
+      type: "SET_FILE_NAME",
+      payload: {
+        fileName,
+      },
+    });
+  };
+
+  const setLoading = (loading) => {
+    dispatch({
+      type: "SET_LOADING",
+      payload: {
+        loading,
+      },
+    });
+  };
+
+  const setProgress = (progress) => {
+    dispatch({
+      type: "SET_PROGRESS",
+      payload: {
+        progress,
+      },
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -265,6 +354,11 @@ export const AuthProvider = (props) => {
         showConfirmDlg,
         hideConfirm,
         setTitleInfo,
+        setHandleSave,
+        setHandleExport,
+        setFileName,
+        setLoading,
+        setProgress,
       }}
     >
       {children}

@@ -3,7 +3,6 @@ import { useDropzone } from "react-dropzone";
 import {
   Box,
   Button,
-  CircularProgress,
   IconButton,
   List,
   ListItem,
@@ -19,7 +18,8 @@ import {
 } from "@mui/icons-material";
 
 import { bytesToSize } from "@/utils/byte-to-size";
-import { createRef, useEffect, useState } from "react";
+import { createRef, useEffect } from "react";
+import { useAuth } from "@/hooks/use-auth";
 
 export const FileDropzone = (props) => {
   const {
@@ -43,13 +43,14 @@ export const FileDropzone = (props) => {
     onRemoveAll,
     onUpload,
     preventDropOnDocument,
-    loading,
     setError,
     loaded,
     setLoaded,
     setSize,
     ...other
   } = props;
+
+  const { fileName } = useAuth();
 
   // We did not add the remaining props to avoid component complexity
   // but you can simply add it if you need to.
@@ -126,7 +127,7 @@ export const FileDropzone = (props) => {
             Click to upload a file or drag and drop it here
           </Typography>
           <Typography variant="body1" color="GrayText">
-            Up to 100MB in size.
+            Up to 300MB in size.
           </Typography>
           <Typography variant="caption" color="GrayText">
             MP4, MOV formats & 1:1, 4:5, 9:16 ratio accepted
@@ -177,17 +178,7 @@ export const FileDropzone = (props) => {
               mt: 2,
             }}
           >
-            <Button
-              onClick={onRemoveAll}
-              size="small"
-              type="button"
-              disabled={loading}
-              startIcon={
-                loading ? (
-                  <CircularProgress size="1rem" color="inherit" />
-                ) : null
-              }
-            >
+            <Button onClick={onRemoveAll} size="small" type="button">
               Remove
             </Button>
             <Button
@@ -195,13 +186,7 @@ export const FileDropzone = (props) => {
               size="small"
               sx={{ ml: 2 }}
               type="button"
-              disabled={loading}
               variant="contained"
-              startIcon={
-                loading ? (
-                  <CircularProgress size="1rem" color="warning" />
-                ) : null
-              }
             >
               Upload
             </Button>

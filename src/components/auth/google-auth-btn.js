@@ -5,12 +5,16 @@ import { Button, Typography } from "@mui/material";
 import { GoogleLogo } from "@/components/common/google-logo";
 import { useGoogleLogin } from "@react-oauth/google";
 import { AuthService } from "@/service/auth-service";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function GoogleAuthBtn() {
   const router = useRouter();
 
+  const { setLoading } = useAuth();
+
   const handleRegister = async (value) => {
     try {
+      setLoading(true);
       const { data } = await AuthService.googleRegister(value);
       localStorage.setItem("accessToken", data.data.accessToken);
       router.push("/");
@@ -18,6 +22,8 @@ export default function GoogleAuthBtn() {
       if (error.status !== 403 && error.status !== 404) {
         toast.error(error.message);
       }
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -31,24 +31,22 @@ export class AuthService {
   }
 
   static passwordRecovery(email) {
-    return http.post("/auth/password-recovery", { email });
+    return http.post("/api/auth/password-recovery", { email });
   }
 
   static verifyCode(email, code) {}
 
   static resendCode(email) {
-    return http.post("/auth/password-recovery", { email });
+    return http.post("/api/auth/password-recovery", { email });
   }
 
-  static forgotPasswordSubmit(email, code, password) {
-    return http.post("/auth/reset-password-with-code", {
-      email,
-      code,
+  static forgotPasswordSubmit(password, token) {
+    let accessToken = "";
+    if (!token) accessToken = window.localStorage.getItem("accessToken");
+    return http.post("/api/auth/reset-password", {
       password,
+      token,
+      accessToken,
     });
-  }
-
-  logout(data) {
-    return http.post("");
   }
 }

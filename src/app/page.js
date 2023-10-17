@@ -2,58 +2,45 @@
 
 import {
   Box,
-  Button,
   TextField,
-  FormHelperText,
-  CircularProgress,
   MenuItem,
+  LinearProgress,
+  Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { FileService } from "@/service/file-service";
-import { LanguageCode } from "@/constants";
+import { LanguageCode, isoLangs } from "@/constants";
 import { FileDropzone } from "@/components/file-dropzone";
-import RootLayout from "@/components/common/layout";
+import { useAuth } from "@/hooks/use-auth";
+import ProgressBar from "@/components/common/progress-bar";
+import HowItWorks from "@/components/home/how-it-works";
+import CreateContentLike from "@/components/home/create-content-like";
+import SubmagicProVsTraditional from "@/components/home/compare";
+import UnmatchedFeatures from "@/components/home/unmatched-features";
+import About from "@/components/home/about";
+import Faq from "@/components/home/faq";
 
 const client = new FileService();
 
 export default function HomePage() {
   const [files, setFiles] = useState([]);
-  const [name, setName] = useState();
-  const [loading, setLoading] = useState();
   const [fileError, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [size, setSize] = useState({});
 
-  const router = useRouter();
+  const { loading, setLoading, progress, setTitleInfo } = useAuth();
 
   const initialValues = {
-    lang: LanguageCode.English,
+    lang: "en",
   };
 
   const validationSchema = yup.object().shape({
     lang: yup.string(),
   });
-
-  const onSubmit = async (values) => {
-    try {
-      setLoading(true);
-      const { data } = await client.generateTranscription({ name, ...values });
-      toast.success(data.message);
-      setName("");
-      setFiles([]);
-      router.push(`/upload/${data.id}`);
-    } catch (error) {
-      console.log("error", error);
-      toast.error(error.response?.data?.message || "Something wrong happened.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDrop = (newFiles) => {
     setFiles(() => [...newFiles]);
@@ -64,34 +51,31 @@ export default function HomePage() {
       prevFiles.filter((_file) => _file.path !== file.path),
     );
     setLoaded(false);
-    setName("");
   };
 
   const handleRemoveAll = () => {
     setFiles([]);
     setLoaded(false);
-    setName("");
   };
 
   const onUpload = async () => {
     setLoading(true);
     try {
-      const { data } = await client.upload({ file: files[0], ...size });
-      setName(data.name);
-      toast.success(data.message);
+      const { data } = await client.upload({
+        file: files[0],
+        ...size,
+        lang: formik.values.lang,
+      });
       setFiles([]);
     } catch (error) {
       console.log("error", error);
       toast.error(error.response?.data?.message || "Something wrong happened.");
-    } finally {
-      setLoading(false);
     }
   };
 
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit,
   });
 
   useEffect(() => {
@@ -102,11 +86,19 @@ export default function HomePage() {
     );
   }, [fileError]);
 
+  useEffect(() => {
+    setTitleInfo({ title: "" });
+  }, []);
+
   return (
-    <RootLayout>
+    <>
       <title>Upload</title>
 
-      <form onSubmit={formik.handleSubmit}>
+      <ProgressBar loading={loading} progress={progress} />
+      <form
+        style={{ display: loading ? "none" : "inherit" }}
+        onSubmit={formik.handleSubmit}
+      >
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Box sx={{ maxWidth: "sm", mb: 2, width: 1 }}>
             <TextField
@@ -114,7 +106,7 @@ export default function HomePage() {
               fullWidth
               type="text"
               size="small"
-              label="* Language (97 options)"
+              label={`* Language (${isoLangs.length} options)`}
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.lang}
@@ -122,56 +114,36 @@ export default function HomePage() {
               error={!!formik.touched.lang && !!formik.errors.lang}
               helperText={formik.touched.lang && formik.errors.lang}
             >
-              {Object.keys(LanguageCode).map((key) => (
-                <MenuItem key={key} value={LanguageCode[key]}>
-                  {key}
+              {isoLangs.map((lang) => (
+                <MenuItem key={lang.code} value={lang.code}>
+                  {lang.name}
                 </MenuItem>
               ))}
             </TextField>
           </Box>
         </Box>
-        {formik.errors.submit && (
-          <Box sx={{ mt: 3 }}>
-            <FormHelperText error>{formik.errors.submit}</FormHelperText>
-          </Box>
-        )}
         <FileDropzone
           accept={{ "video/*": [".mp4", ".mov"] }}
           files={files}
           setFiles={setFiles}
           maxFiles={1}
-          maxSize={100 * 1024 * 1024}
+          maxSize={300 * 1024 * 1024}
           onDrop={handleDrop}
           onRemove={handleRemove}
           onRemoveAll={handleRemoveAll}
           onUpload={onUpload}
-          loading={loading}
           setError={setError}
           loaded={loaded}
           setLoaded={setLoaded}
           setSize={setSize}
         />
-        <Box
-          justifyContent="center"
-          mt="4em"
-          gap={2}
-          sx={{ display: name ? "flex" : "none" }}
-        >
-          <Button
-            type="submit"
-            size="large"
-            variant="contained"
-            disabled={formik.isSubmitting || loading}
-            startIcon={
-              formik.isSubmitting ? (
-                <CircularProgress sx={{ mr: 1 }} color="warning" size={20} />
-              ) : null
-            }
-          >
-            Generate
-          </Button>
-        </Box>
       </form>
-    </RootLayout>
+      <HowItWorks />
+      <CreateContentLike />
+      <SubmagicProVsTraditional />
+      <UnmatchedFeatures />
+      <About />
+      <Faq />
+    </>
   );
 }

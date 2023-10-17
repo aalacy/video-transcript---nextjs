@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import SwipeableViews from "react-swipeable-views";
-import { Tabs, Tab, Box, Container } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
 import toast from "react-hot-toast";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -10,14 +10,11 @@ import * as yup from "yup";
 import DesignTabPanel from "@/components/upload/tab-design";
 import VideoPlayer from "@/components/upload/video-player";
 import TranscriptionTabPanel from "@/components/upload/tab-transcription";
-import { compileVTT, downloadMedia, parseVtt } from "@/utils";
+import { compileVTT, parseVtt } from "@/utils";
 import { FileService } from "@/service/file-service";
-import { TabSkeleton } from "@/components/skeleton/tab-skeleton";
 import { useAuth } from "@/hooks/use-auth";
-import RootLayout from "@/components/common/layout";
 
 import {
-  fonts,
   fontWeights,
   MIN_FONT,
   MAX_FONT,
@@ -25,6 +22,7 @@ import {
   MAX_POSITION,
 } from "@/constants";
 import { useMounted } from "@/hooks/use-mounted";
+import ProgressBar from "@/components/common/progress-bar";
 
 function a11yProps(index) {
   return {
@@ -45,7 +43,14 @@ const tabStyle = {
 const client = new FileService();
 
 export default function UploadPage({ params }) {
-  const { setTitleInfo } = useAuth();
+  const {
+    setTitleInfo,
+    setHandleSave,
+    setHandleExport,
+    loading,
+    setLoading,
+    progress,
+  } = useAuth();
   const isMounted = useMounted();
 
   const [value, setValue] = useState(0);
@@ -54,26 +59,46 @@ export default function UploadPage({ params }) {
   const [initialValues, setInitialValues] = useState({});
   const [showInputs, setShowInputs] = useState({});
   const [selectedCue, setSelectedCue] = useState({});
+  const [startPos, setStartPos] = useState(0);
   const [updatedCues, setUpdatedCues] = useState([]);
-  const [loading, setLoading] = useState();
   const [data, setData] = useState({});
   const [canShow, setCanShow] = useState();
 
-  const getData = useCallback(async () => {
+  const handleSave = async () => {
+    try {
+      await formik.submitForm();
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const handleExport = async () => {
     try {
       setLoading(true);
+      await client.download(params.id);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const getData = useCallback(async () => {
+    try {
       const { data } = await client.get(params.id);
       setTitleInfo({ title: data.fileName });
       setData(data);
     } catch (error) {
       toast.error(error.message);
-    } finally {
-      setLoading(false);
     }
   }, []);
 
   useEffect(() => {
+    setHandleSave(handleSave);
+    setHandleExport(handleExport);
     getData();
+    return () => {
+      setHandleSave(null);
+      setHandleExport(null);
+    };
   }, []);
 
   useEffect(() => {
@@ -83,6 +108,7 @@ export default function UploadPage({ params }) {
     const bools = {};
     if (parsed.valid) {
       setCues(parsed.cues);
+      if (parsed.cues.length > 0) setSelectedCue(parsed.cues[0]);
       Array.from(parsed.cues).forEach((cue) => {
         obj[cue.identifier] = cue.text;
         bools[cue.identifier] = false;
@@ -101,9 +127,14 @@ export default function UploadPage({ params }) {
     setValue(index);
   };
 
-  const onSubmit = (values, helpers) => {
+  const onSubmit = async (values, helpers) => {
     try {
-      client.generateVideo(params.id, compileVTT(cues, updatedCues), values);
+      const { data } = await client.saveProject(
+        params.id,
+        compileVTT(cues, updatedCues),
+        values,
+      );
+      toast.success(data.message);
     } catch (err) {
       if (isMounted()) {
         helpers.setStatus({ success: false });
@@ -116,13 +147,14 @@ export default function UploadPage({ params }) {
   };
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      backgroundColor: "#4d1a7f",
-      fontColor: "#76f016",
-      font: fonts[0],
-      fontWeight: fontWeights[0],
-      fontSize: MIN_FONT,
-      position: 50,
+      backgroundColor: data?.metadata?.backgroundColor || "#4d1a7f",
+      fontColor: data?.metadata?.fontColor || "#76f016",
+      font: data?.metadata?.font || "Roboto",
+      fontWeight: data?.metadata?.fontWeight || fontWeights[0],
+      fontSize: data?.metadata?.fontSize || MIN_FONT,
+      position: data?.metadata?.position || 80,
     },
     validationSchema: yup.object().shape({
       backgroundColor: yup.string().required("Required"),
@@ -134,93 +166,60 @@ export default function UploadPage({ params }) {
     onSubmit,
   });
 
-  const handleSave = async () => {
-    try {
-      setLoading(true);
-      await formik.submitForm();
-      toast.success("Successfully saved.");
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleExport = async () => {
-    try {
-      setLoading(true);
-      const { data } = await client.download(params.id);
-      downloadMedia(
-        `${data.fileName.substr(0, -4)}-subtitled.${data.ext}`,
-        data.output,
-      );
-      toast.success("Successfully exported.");
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <RootLayout saveCallback={handleSave} exportCallback={handleExport}>
+    <>
       <title>Upload</title>
-      <Container maxWidth="md" sx={{ p: 3 }}>
-        {loading || !canShow ? (
-          <TabSkeleton />
-        ) : (
-          <Box
+      <ProgressBar loading={loading} progress={progress} />
+      <Box
+        sx={{
+          display: !loading && canShow ? "flex" : "none",
+          flexWrap: "wrap-reverse",
+          justifyContent: "center",
+          gap: 3,
+        }}
+      >
+        <Box maxWidth="sm">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="inherit"
+            textColor="secondary"
+            variant="fullWidth"
+            aria-label="full width Upload Tab"
             sx={{
-              display: "flex",
-              flexWrap: "wrap-reverse",
-              justifyContent: "center",
-              gap: 3,
+              mb: 1,
             }}
           >
-            <Box maxWidth="sm">
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                indicatorColor="inherit"
-                textColor="secondary"
-                variant="fullWidth"
-                aria-label="full width Upload Tab"
-                sx={{
-                  mb: 1,
-                }}
-              >
-                <Tab label="Transcription" sx={tabStyle} {...a11yProps(0)} />
-                <Tab label="Design" sx={tabStyle} {...a11yProps(1)} />
-              </Tabs>
-              <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
-                <TranscriptionTabPanel
-                  cues={cues}
-                  initialValues={initialValues}
-                  showInputs={showInputs}
-                  setShowInputs={setShowInputs}
-                  selectedCue={selectedCue}
-                  setSelectedCue={setSelectedCue}
-                  setUpdatedCues={setUpdatedCues}
-                />
-                <DesignTabPanel
-                  index={1}
-                  setMetadata={setMetadata}
-                  formik={formik}
-                />
-              </SwipeableViews>
-            </Box>
-            <Box>
-              <VideoPlayer
-                data={data}
-                updatedCues={updatedCues}
-                setSelectedCue={setSelectedCue}
-                selectedCue={selectedCue}
-                metadata={metadata}
-              />
-            </Box>
-          </Box>
-        )}
-      </Container>
-    </RootLayout>
+            <Tab label="Transcription" sx={tabStyle} {...a11yProps(0)} />
+            <Tab label="Design" sx={tabStyle} {...a11yProps(1)} />
+          </Tabs>
+          <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
+            <TranscriptionTabPanel
+              cues={cues}
+              initialValues={initialValues}
+              showInputs={showInputs}
+              setShowInputs={setShowInputs}
+              selectedCue={selectedCue}
+              setSelectedCue={setSelectedCue}
+              setUpdatedCues={setUpdatedCues}
+              setStartPos={setStartPos}
+            />
+            <DesignTabPanel
+              index={1}
+              setMetadata={setMetadata}
+              formik={formik}
+            />
+          </SwipeableViews>
+        </Box>
+        <VideoPlayer
+          data={data}
+          updatedCues={updatedCues}
+          setSelectedCue={setSelectedCue}
+          startPos={startPos}
+          selectedCue={selectedCue}
+          metadata={metadata}
+        />
+      </Box>
+    </>
   );
 }

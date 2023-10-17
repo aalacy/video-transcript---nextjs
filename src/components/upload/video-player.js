@@ -1,49 +1,47 @@
 "use client";
 
+import { GOOGLE_FONTS } from "@/constants";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 
-const DEFAULT_TEXT = "SubmagicPro";
+const WIDTH = 320;
 
 export default function VideoPlayer(props) {
-  const { metadata, data, selectedCue, setSelectedCue, updatedCues } = props;
+  const { metadata, data, startPos, selectedCue, setSelectedCue, updatedCues } =
+    props;
 
   const ref = useRef();
 
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    if (!selectedCue) return;
     setPlaying(false);
-    ref.current.seekTo(selectedCue.start);
-  }, [selectedCue]);
+    ref.current.seekTo(startPos, "seconds");
+  }, [startPos]);
 
   const handleProgress = (progress) => {
     for (let val of updatedCues) {
       if (
-        progress.playedSeconds > val.start &&
+        progress.playedSeconds >= val.start &&
         progress.playedSeconds < val.end
       ) {
-        setSelectedCue(val);
+        setSelectedCue({
+          ...val,
+        });
       }
     }
   };
 
-  const boxRef = useRef();
-
   const scale = useMemo(() => {
-    if (!data || !boxRef.current) return 1;
-    return data.width / boxRef.current.offsetWidth;
+    if (!data) return 1;
+    return data.width / WIDTH;
   }, [data]);
 
   return (
     <Box
-      ref={boxRef}
       sx={{
         position: "relative",
-        aspectRatio: `${data?.width} / ${data?.height}`,
-        transform: `scale(${scale})`,
       }}
     >
       <ReactPlayer
@@ -51,7 +49,7 @@ export default function VideoPlayer(props) {
         ref={ref}
         controls
         url={data?.output}
-        width="300px"
+        width={`${WIDTH}px`}
         height="100%"
         onProgress={handleProgress}
         style={{
@@ -60,22 +58,31 @@ export default function VideoPlayer(props) {
           },
         }}
       />
-      <Typography
+      <Box
         sx={{
           position: "absolute",
-          top: `${metadata.position || 0}%`,
+          top: `calc(${metadata.position || 0}% - 30px)`,
+          display: "flex",
+          justifyContent: "center",
           width: 1,
-          textAlign: "center",
-          fontWeight: metadata.fontWeight || "medium",
-          fontSize: metadata.fontSize || 16,
-          fontFamily: metadata.font || "Arial",
-          color: metadata.fontColor || "inherit",
-          textShadow:
-            "0 0 8px #000, 0 0 9px #000, 0 0 10px #000, 0 0 11px #000, 0 0 12px #000, 0 0 13px #000, 0 0 14px #000, 0 0 15px #000, 0 0 16px #000, 0 0 17px #000",
         }}
       >
-        {selectedCue?.text || DEFAULT_TEXT}
-      </Typography>
+        <Typography
+          component="span"
+          sx={{
+            lineHeight: 1,
+            textAlign: "center",
+            fontWeight: metadata.fontWeight || "medium",
+            fontStyle: metadata.fontWeight,
+            fontSize: (metadata.fontSize || 16) * scale * 0.5,
+            fontFamily: GOOGLE_FONTS[metadata.font] || "Arial",
+            color: metadata.fontColor || "inherit",
+            backgroundColor: metadata.backgroundColor || "inherit",
+          }}
+        >
+          {selectedCue?.text}
+        </Typography>
+      </Box>
     </Box>
   );
 }

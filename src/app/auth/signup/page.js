@@ -13,7 +13,7 @@ export default function SignupPage() {
       <title>SignUp</title>
       <Container
         fixed
-        maxWidth="sm"
+        maxWidth="xs"
         sx={{
           py: {
             xs: "30px",

@@ -31,7 +31,7 @@ export const JWTLogin = (props) => {
   const isMounted = useMounted();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { login } = useAuth();
+  const { login, loading, setLoading } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -52,6 +52,7 @@ export const JWTLogin = (props) => {
     }),
     onSubmit: async (values, helpers) => {
       try {
+        setLoading(true);
         await login(values.email, values.password, values.shouldRememberMe);
 
         if (isMounted()) {
@@ -68,6 +69,8 @@ export const JWTLogin = (props) => {
           });
           helpers.setSubmitting(false);
         }
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -129,7 +132,7 @@ export const JWTLogin = (props) => {
       )}
       <Link
         color="secondary"
-        href="/auth/password-recovery"
+        href="/auth/forgot-password"
         sx={{ mt: 1 }}
         variant="body2"
       >
@@ -141,13 +144,13 @@ export const JWTLogin = (props) => {
         }}
       >
         <Button
-          disabled={formik.isSubmitting}
+          disabled={formik.isSubmitting || loading}
           fullWidth
           size="large"
           type="submit"
           variant="contained"
           startIcon={
-            formik.isSubmitting ? (
+            formik.isSubmitting || loading ? (
               <CircularProgress sx={{ mr: 1 }} color="inherit" size={20} />
             ) : null
           }

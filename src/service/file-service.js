@@ -23,19 +23,20 @@ export class FileService {
     return http.post("/api/file/generate-transcription", inputData);
   }
 
-  generateVideo(id, vtt, metadata) {
-    return http.post("/api/file/generate-video", {
+  saveProject(id, vtt, metadata) {
+    return http.post("/api/file/save-project", {
       id,
       vtt,
       metadata,
     });
   }
 
-  all(paginationModel) {
+  all(paginationModel, filterModel) {
+    const query = filterModel.quickFilterValues.join(" ");
     return http.get(
       `/api/file?page=${paginationModel.page + 1}&take=${
         paginationModel.pageSize
-      }`,
+      }&query=${query}`,
     );
   }
 

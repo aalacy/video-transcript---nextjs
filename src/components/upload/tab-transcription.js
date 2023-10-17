@@ -26,6 +26,7 @@ export default function TranscriptionTabPanel(props) {
     selectedCue,
     setSelectedCue,
     setUpdatedCues,
+    setStartPos,
   } = props;
 
   const formik = useFormik({
@@ -73,7 +74,7 @@ export default function TranscriptionTabPanel(props) {
     if (!selectedCue.identifier) return;
     document
       .querySelector(`#item-${selectedCue.identifier}`)
-      .scrollIntoView({ block: "end", behavior: "smooth" });
+      .scrollIntoView({ block: "nearest", behavior: "smooth" });
   }, [selectedCue]);
 
   return (
@@ -81,9 +82,11 @@ export default function TranscriptionTabPanel(props) {
       <CardContent sx={{ overflow: "auto", maxHeight: 460 }}>
         {cues.length > 0 ? (
           <form noValidate onSubmit={formik.handleSubmit}>
-            <List>
+            <List disablePadding>
               {cues?.map((cue) => (
                 <ListItem
+                  disableGutters
+                  disablePadding
                   key={cue.identifier}
                   id={`item-${cue.identifier}`}
                   secondaryAction={
@@ -101,13 +104,14 @@ export default function TranscriptionTabPanel(props) {
                   }
                 >
                   <ListItemButton
-                    onClick={() =>
+                    onClick={() => {
                       setSelectedCue({
                         identifier: cue.identifier,
                         start: cue.start,
                         text: formik.values[cue.identifier],
-                      })
-                    }
+                      });
+                      setStartPos(cue.start);
+                    }}
                     selected={selectedCue.identifier === cue.identifier}
                     sx={{
                       p: 2,

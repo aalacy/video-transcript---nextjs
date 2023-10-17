@@ -3,7 +3,7 @@
 import { Skeleton, Box } from "@mui/material";
 
 export const TabSkeleton = (props) => {
-  const { height } = props;
+  const { height, loading } = props;
 
   return (
     <Box
@@ -11,7 +11,7 @@ export const TabSkeleton = (props) => {
         width: "80%",
         minHeight: height || 400,
         height: "100%",
-        display: "flex",
+        display: loading ? "flex" : "none",
         justifyContent: "space-around",
         flexDirection: "column",
       }}

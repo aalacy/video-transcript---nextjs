@@ -12,7 +12,7 @@ export default function LoginPage() {
       <title>SignIn</title>
       <Container
         fixed
-        maxWidth="sm"
+        maxWidth="xs"
         sx={{
           py: {
             xs: "30px",

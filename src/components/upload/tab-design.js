@@ -24,12 +24,12 @@ import { MuiColorInput } from "mui-color-input";
 import { useEffect, useState } from "react";
 
 import {
-  fonts,
   fontWeights,
   MIN_FONT,
   MAX_FONT,
   MIN_POSITION,
   MAX_POSITION,
+  GOOGLE_FONTS,
 } from "@/constants";
 
 const BpIcon = styled("span")(() => ({
@@ -81,7 +81,7 @@ export default function DesignTabPanel(props) {
               },
             }}
           >
-            <RadioGroup
+            {/* <RadioGroup
               aria-labelledby="font"
               name="font"
               value={formik.values.font}
@@ -173,11 +173,77 @@ export default function DesignTabPanel(props) {
                   />
                 ))}
               </Box>
-            </RadioGroup>
+            </RadioGroup> */}
+            <Box sx={{ gridColumn: "span 2" }}>
+              <TextField
+                select
+                fullWidth
+                name="font"
+                value={formik.values.font}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+                error={!!formik.touched.font && !!formik.errors.font}
+                helperText={formik.touched.font && formik.errors.font}
+                label="Font"
+                size="small"
+                sx={{ mb: 1 }}
+              >
+                {Array.from(Object.keys(GOOGLE_FONTS)).map((font) => (
+                  <MenuItem key={font} value={font}>
+                    <Typography
+                      fontWeight="medium"
+                      variant="h6"
+                      sx={{
+                        fontFamily: GOOGLE_FONTS[font],
+                      }}
+                    >
+                      {font}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </TextField>
+              <Button
+                startIcon={<BrushIcon fontSize="small" />}
+                color="inherit"
+                size="small"
+                variant="outlined"
+                sx={{ borderRadius: 8, p: 1, py: 0 }}
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+              >
+                <Typography variant="caption">
+                  {formik.values.fontWeight}
+                </Typography>
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                {fontWeights.map((fontWeight) => (
+                  <MenuItem
+                    key={fontWeight}
+                    selected={formik.values.fontWeight == fontWeight}
+                    onClick={() => {
+                      handleClose();
+                      formik.setFieldValue("fontWeight", fontWeight);
+                    }}
+                  >
+                    {fontWeight}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
             <MuiColorInput
               fullWidth
               size="small"
-              format="hex"
+              format="hex8"
               name="backgroundColor"
               label="Background Color"
               value={formik.values.backgroundColor}
@@ -196,7 +262,7 @@ export default function DesignTabPanel(props) {
             <MuiColorInput
               fullWidth
               size="small"
-              format="hex"
+              format="hex8"
               name="fontColor"
               label="Font Color"
               value={formik.values.fontColor}

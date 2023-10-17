@@ -25,7 +25,7 @@ import Logo from "./logo";
 
 const LINKS = [
   { text: "Upload", href: "/", icon: UploadIcon },
-  { text: "Your Videos", href: "/your-videos", icon: SubscriptionsIcon },
+  { text: "Your Projects", href: "/your-projects", icon: SubscriptionsIcon },
 ];
 
 const PLACEHOLDER_LINKS = [

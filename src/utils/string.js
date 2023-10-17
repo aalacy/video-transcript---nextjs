@@ -213,6 +213,7 @@ export const downloadMedia = (fileName, output) => {
   downloadLink.download = fileName;
   downloadLink.href = output;
   downloadLink.style.display = "none";
+  downloadLink.target = "_blank";
   document.body.appendChild(downloadLink);
   downloadLink.click();
 };

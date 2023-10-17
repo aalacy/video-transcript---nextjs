@@ -39,7 +39,7 @@ export const JWTRegister = (props) => {
   const isMounted = useMounted();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { register } = useAuth();
+  const { register, loading, setLoading } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
@@ -78,6 +78,7 @@ export const JWTRegister = (props) => {
     onSubmit: async (values, helpers) => {
       try {
         const { confirmPassword, policy, submit, ...data } = values;
+        setLoading(true);
         await register(data);
 
         if (isMounted()) {
@@ -94,6 +95,8 @@ export const JWTRegister = (props) => {
           helpers.setStatus({ success: false });
           helpers.setSubmitting(false);
         }
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -231,14 +234,16 @@ export const JWTRegister = (props) => {
         >
           <Button
             fullWidth
-            disabled={formik.isSubmitting}
+            disabled={formik.isSubmitting || loading}
             size="medium"
             type="submit"
             variant="contained"
+            startIcon={
+              formik.isSubmitting || loading ? (
+                <CircularProgress sx={{ mr: 1 }} color="inherit" size={20} />
+              ) : null
+            }
           >
-            {formik.isSubmitting && (
-              <CircularProgress sx={{ mr: 1 }} color="inherit" size={20} />
-            )}{" "}
             Create
           </Button>
         </Box>
