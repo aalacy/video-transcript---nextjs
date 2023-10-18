@@ -1,9 +1,19 @@
+"use client";
+
 import { Container, Box, Card, Typography } from "@mui/material";
 
 import Logo from "@/components/common/logo";
 import JWTResetPassword from "@/components/auth/jwt-reset-password";
+import { useAuth } from "@/hooks/use-auth";
+import { useEffect } from "react";
 
 export default function SettingsPage() {
+  const { setTitleInfo } = useAuth();
+
+  useEffect(() => {
+    setTitleInfo({ title: "Settings" });
+  }, []);
+
   return (
     <>
       <title>Settings</title>

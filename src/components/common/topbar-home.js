@@ -64,7 +64,6 @@ export default function TopbarHome({ ...props }) {
             Sign up
           </Button>
           <IconButton
-            startIcon={loading ? <CircularProgress size={20} /> : null}
             disabled={loading}
             onClick={handleExport}
             size="small"
@@ -74,6 +73,7 @@ export default function TopbarHome({ ...props }) {
               ml: 1,
             }}
           >
+            {loading ? <CircularProgress size={20} /> : null}
             <Tooltip title="Download video">
               <DownloadIcon />
             </Tooltip>

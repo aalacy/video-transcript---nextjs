@@ -7,8 +7,8 @@ export class AuthService {
 
   static async logout() {
     if (typeof window !== "undefined") {
-      window.localStorage.getItem("accessToken") &&
-        (await http.post("/api/auth/logout"));
+      // window.localStorage.getItem("accessToken") &&
+      //   (await http.post("/api/auth/logout"));
       window.localStorage.removeItem("accessToken");
       window.location.href = "/";
     }

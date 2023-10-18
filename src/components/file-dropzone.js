@@ -19,7 +19,6 @@ import {
 
 import { bytesToSize } from "@/utils/byte-to-size";
 import { createRef, useEffect } from "react";
-import { useAuth } from "@/hooks/use-auth";
 
 export const FileDropzone = (props) => {
   const {
@@ -35,6 +34,7 @@ export const FileDropzone = (props) => {
     noDrag,
     noDragEventsBubbling,
     noKeyboard,
+    onError,
     onDrop,
     onDropAccepted,
     onDropRejected,
@@ -50,8 +50,6 @@ export const FileDropzone = (props) => {
     ...other
   } = props;
 
-  const { fileName } = useAuth();
-
   // We did not add the remaining props to avoid component complexity
   // but you can simply add it if you need to.
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
@@ -61,6 +59,7 @@ export const FileDropzone = (props) => {
       maxSize,
       minSize,
       onDrop,
+      onError,
       multiple: false,
     });
 
@@ -129,7 +128,7 @@ export const FileDropzone = (props) => {
             Click to upload a file or drag and drop it here
           </Typography>
           <Typography variant="body1" color="GrayText">
-            Up to 300MB in size.
+            Up to 50MB in size.
           </Typography>
           <Typography variant="caption" color="GrayText">
             MP4, MOV formats & 1:1, 4:5, 9:16 ratio accepted
@@ -218,6 +217,7 @@ FileDropzone.propTypes = {
   noDrag: PropTypes.bool,
   noDragEventsBubbling: PropTypes.bool,
   noKeyboard: PropTypes.bool,
+  onError: PropTypes.func,
   onDrop: PropTypes.func,
   onDropAccepted: PropTypes.func,
   onDropRejected: PropTypes.func,

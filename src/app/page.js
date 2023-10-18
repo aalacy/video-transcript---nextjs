@@ -26,6 +26,8 @@ import Faq from "@/components/home/faq";
 
 const client = new FileService();
 
+const MAX_SIZE = 50;
+
 export default function HomePage() {
   const [files, setFiles] = useState([]);
   const [fileError, setError] = useState(false);
@@ -49,8 +51,24 @@ export default function HomePage() {
     lang: yup.string(),
   });
 
-  const handleDrop = (newFiles) => {
+  const handleDrop = (newFiles, fileRejections) => {
     setFiles(() => [...newFiles]);
+    if (fileRejections.length) {
+      const { file, errors } = fileRejections[0];
+      const { name } = file;
+      const { code } = errors[0];
+      let message = "";
+      if (code === "file-too-large") {
+        message = `The file ${name} is larger than ${MAX_SIZE}MB.`;
+      } else if (code === "file-invalid-type") {
+        message = `The file ${name} is not MP4 or MOV format.`;
+      }
+      toast.error(message);
+    }
+  };
+
+  const handleError = (error) => {
+    console.log("handleError", error);
   };
 
   const handleRemove = (file) => {
@@ -148,8 +166,9 @@ export default function HomePage() {
           files={files}
           setFiles={setFiles}
           maxFiles={1}
-          maxSize={300 * 1024 * 1024}
+          maxSize={MAX_SIZE * 1024 * 1024}
           onDrop={handleDrop}
+          onError={handleError}
           onRemove={handleRemove}
           onRemoveAll={handleRemoveAll}
           onUpload={onUpload}

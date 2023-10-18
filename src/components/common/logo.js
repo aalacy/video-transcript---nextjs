@@ -10,11 +10,11 @@ export default function Logo(props) {
         ...props,
       }}
     >
-      <Typography variant="h3" fontWeight="bold" color="black">
+      <Typography variant="h3" fontWeight="bold" sx={{ color: "black" }}>
         Submagic
       </Typography>
       <Typography
-        variant="h3"
+        variant="h4"
         fontWeight="bold"
         sx={{ color: "warning.light" }}
       >

@@ -1,8 +1,16 @@
 "use client";
 
-import Faq from "@/components/home/faq";
+import { useEffect } from "react";
 
-export default function SettingsPage() {
+import Faq from "@/components/home/faq";
+import { useAuth } from "@/hooks/use-auth";
+
+export default function FaqPage() {
+  const { setTitleInfo } = useAuth();
+
+  useEffect(() => {
+    setTitleInfo({ title: "Help Center" });
+  }, []);
   return (
     <>
       <title>Help Center</title>

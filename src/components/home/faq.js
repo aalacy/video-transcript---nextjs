@@ -43,7 +43,7 @@ export default function Faq() {
         }}
       >
         <Box maxWidth="md" sx={{ width: 1 }}>
-          <Typography variant="h5" sx={{ mb: 5, textAlign: "center" }}>
+          <Typography variant="h4" sx={{ mb: 5, textAlign: "center" }}>
             FAQ
           </Typography>
           {data.map((faq) => (

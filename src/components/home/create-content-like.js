@@ -20,7 +20,7 @@ export default function CreateContentLike() {
         }}
       >
         <Box maxWidth="md" sx={{ width: 1, textAlign: "center" }}>
-          <Typography variant="h5" sx={{ mb: 5 }}>
+          <Typography variant="h4" sx={{ mb: 5 }}>
             Create Content like Top Influencers
           </Typography>
           <Box

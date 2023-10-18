@@ -36,7 +36,7 @@ export default function UnmatchedFeatures() {
         }}
       >
         <Box maxWidth="md" sx={{ width: 1 }}>
-          <Typography variant="h5" sx={{ mb: 5, textAlign: "center" }}>
+          <Typography variant="h4" sx={{ mb: 5, textAlign: "center" }}>
             SubMagic Pro Unmatched Features
           </Typography>
           <Box

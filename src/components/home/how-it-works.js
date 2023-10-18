@@ -19,7 +19,7 @@ export default function HowItWorks() {
         }}
       >
         <Box maxWidth="md" sx={{ width: 1 }}>
-          <Typography variant="h5" sx={{ mb: 5, textAlign: "center" }}>
+          <Typography variant="h4" sx={{ mb: 5, textAlign: "center" }}>
             How It Works
           </Typography>
           <Box
@@ -35,7 +35,9 @@ export default function HowItWorks() {
                 key={content}
                 sx={{ maxWidth: 200, textAlign: "center", p: 1 }}
               >
-                <Typography fontWeight="bold">Step {index + 1}</Typography>
+                <Typography sx={{ mb: 1 }} variant="h6">
+                  Step {index + 1}
+                </Typography>
                 <Typography>{content}</Typography>
               </Card>
             ))}
