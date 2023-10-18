@@ -75,7 +75,7 @@ export default function UploadPage({ params }) {
   const handleExport = async () => {
     try {
       setLoading(true);
-      await client.download(params.id);
+      await client.download({ fileId: params.id });
     } catch (error) {
       toast.error(error.message);
     }
@@ -154,7 +154,7 @@ export default function UploadPage({ params }) {
       font: data?.metadata?.font || "Roboto",
       fontWeight: data?.metadata?.fontWeight || fontWeights[0],
       fontSize: data?.metadata?.fontSize || MIN_FONT,
-      position: data?.metadata?.position || 80,
+      position: data?.metadata?.position || 50,
     },
     validationSchema: yup.object().shape({
       backgroundColor: yup.string().required("Required"),

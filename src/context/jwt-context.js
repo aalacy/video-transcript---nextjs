@@ -16,9 +16,12 @@ const initialState = {
   shouldRefresh: false,
   confirmMessage: {},
   handleSave: undefined,
+  handleExport: undefined,
+  showDownload: false,
   fileName: "",
   loading: false,
   progress: {},
+  visitorId: "",
 };
 
 const handlers = {
@@ -117,6 +120,20 @@ const handlers = {
       progress,
     };
   },
+  SET_VISITORID: (state, action) => {
+    const { visitorId } = action.payload;
+    return {
+      ...state,
+      visitorId,
+    };
+  },
+  SET_SHOW_DOWNLOAD: (state, action) => {
+    const { showDownload } = action.payload;
+    return {
+      ...state,
+      showDownload,
+    };
+  },
 };
 
 const reducer = (state, action) =>
@@ -141,6 +158,8 @@ export const AuthContext = createContext({
   setFileName: () => Promise.resolve(),
   setLoading: () => Promise.resolve(),
   setProgress: () => Promise.resolve(),
+  setVisitorId: () => Promise.resolve(),
+  setShowDownload: () => Promise.resolve(),
 });
 
 export const AuthProvider = (props) => {
@@ -178,10 +197,8 @@ export const AuthProvider = (props) => {
               user: null,
             },
           });
-          window.location.href = "/auth/login";
         }
       } catch (err) {
-        window.location.href = "/auth/login";
         dispatch({
           type: "INITIALIZE",
           payload: {
@@ -194,7 +211,7 @@ export const AuthProvider = (props) => {
     };
 
     hasLayout && initialize();
-  }, []);
+  }, [pathname]);
 
   const login = async (email, password, shouldRememberMe) => {
     const { data } = await AuthService.login(email, password, shouldRememberMe);
@@ -338,6 +355,24 @@ export const AuthProvider = (props) => {
     });
   };
 
+  const setVisitorId = (visitorId) => {
+    dispatch({
+      type: "SET_VISITORID",
+      payload: {
+        visitorId,
+      },
+    });
+  };
+
+  const setShowDownload = (showDownload) => {
+    dispatch({
+      type: "SET_SHOW_DOWNLOAD",
+      payload: {
+        showDownload,
+      },
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -359,6 +394,8 @@ export const AuthProvider = (props) => {
         setFileName,
         setLoading,
         setProgress,
+        setVisitorId,
+        setShowDownload,
       }}
     >
       {children}

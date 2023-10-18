@@ -14,6 +14,7 @@ export const TabSkeleton = (props) => {
         display: loading ? "flex" : "none",
         justifyContent: "space-around",
         flexDirection: "column",
+        margin: "0 auto",
       }}
     >
       <Skeleton animation="wave" />

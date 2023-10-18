@@ -1,21 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 
-const columns = [
-  { field: "feature", headerName: "Feature", width: 200, sortable: false },
-  {
-    field: "traditional",
-    headerName: "Traditional Captioning Tools",
-    width: 200,
-    sortable: false,
-  },
-  {
-    field: "submagicPro",
-    headerName: "SubMagic Pro",
-    width: 200,
-    sortable: false,
-  },
-];
+import "./style.css";
 
 const rows = [
   {
@@ -52,7 +37,7 @@ const rows = [
     id: 6,
     feature: "Multi-Language Support",
     traditional: "Usually 56 languages",
-    submagicPro: "Free",
+    submagicPro: "99 languages",
   },
 ];
 
@@ -60,6 +45,7 @@ export default function SubmagicProVsTraditional() {
   return (
     <>
       <Box
+        id="compare"
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -76,43 +62,24 @@ export default function SubmagicProVsTraditional() {
             content. Moreover, they make mistakes while generating subtitles.
             Correcting them can be a time-consuming process.
           </Typography>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            density="comfortable"
-            rowSelection={false}
-            disableColumnFilter
-            disableColumnMenu
-            disableColumnSelector
-            disableRowSelectionOnClick
-            disableMultipleRowSelection
-            disableDensitySelector
-            disableVirtualization
-            hideFooter
-            autoHeight
-            hideFooterPagination
-            sx={{
-              mt: 5,
-              "& .MuiDataGrid-cell": {
-                border: 1,
-                borderColor: "black !important",
-                whiteSpace: "break-spaces !important",
-              },
-              "& .MuiDataGrid-columnHeader": {
-                border: 1,
-                borderColor: "black !important",
-              },
-              "& .MuiDataGrid-columnHeaderTitle": {
-                fontWeight: "bold",
-                fontSize: "1.1rem",
-                whiteSpace: "break-spaces !important",
-                lineHeight: "22px !important",
-              },
-              "& .MuiDataGrid-cell.MuiDataGrid-withBorderColor:last-child": {
-                display: "none",
-              },
-            }}
-          />
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Traditional Captioning Tools</th>
+                <th>SubMagic Pro</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr key={row.id}>
+                  <td>{row.feature}</td>
+                  <td>{row.traditional}</td>
+                  <td>{row.submagicPro}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </Box>
       </Box>
     </>

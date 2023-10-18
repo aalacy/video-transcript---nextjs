@@ -1,7 +1,7 @@
 import { Box, Card, Typography } from "@mui/material";
 
 const steps = [
-  "Upload your video, by default language is English, you can choose from 97 different languages.",
+  "Upload your video, by default language is English, you can choose from 99 different languages.",
   "Customize your captions - Choose Captions size, color, position & font family.",
   "Download your captioned video and share it with the world, without any watermarks!",
 ];
@@ -10,6 +10,7 @@ export default function HowItWorks() {
   return (
     <>
       <Box
+        id="how-it-works"
         sx={{
           display: "flex",
           justifyContent: "center",

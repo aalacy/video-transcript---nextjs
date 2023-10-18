@@ -27,6 +27,7 @@ export default function UnmatchedFeatures() {
   return (
     <>
       <Box
+        id="unmatched-features"
         sx={{
           display: "flex",
           justifyContent: "center",

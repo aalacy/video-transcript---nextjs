@@ -6,10 +6,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 import toast from "react-hot-toast";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 import {
   DRAWER_WIDTH,
-  JOB_FILE_UPLOAD,
   JOB_GENERATE_VIDEO,
   JOB_MONSTER_TRANSCRIPTION,
 } from "@/constants";
@@ -18,9 +18,12 @@ import Sidebar from "@/components/common/sidebar";
 import { useAuth } from "@/hooks/use-auth";
 import ConfirmDialog from "./confirm";
 import { downloadMedia } from "@/utils";
+import TopbarHome from "./topbar-home";
 
 const socket = io(process.env.NEXT_PUBLIC_API_URL);
-socket.on("connect", () => console.log("connect ", socket.id));
+socket.on("connect", () => {
+  console.log("socket connected", socket.id);
+});
 socket.on("connect_error", () => {
   setTimeout(() => socket.connect(), 5000);
 });
@@ -37,6 +40,10 @@ export default function RootLayout({ children }) {
     setLoading,
     setProgress,
     confirmMessage,
+    isAuthenticated,
+    setVisitorId,
+    visitorId,
+    setShowDownload,
     ...props
   } = useAuth();
 
@@ -44,15 +51,29 @@ export default function RootLayout({ children }) {
   const router = useRouter();
 
   const hasLayout = useMemo(() => {
-    return !pathname.includes("/auth");
-  }, [pathname]);
+    return !pathname.includes("/auth") && isAuthenticated;
+  }, [pathname, user]);
+
+  const hasHomeLayout = useMemo(() => {
+    return !pathname.includes("/auth") && !isAuthenticated;
+  }, [pathname, user]);
 
   useEffect(() => {
     socket.on("monster", (data) => {
-      const { status, file, jobName, message, userId, percent } = data;
-      if (user?.id == userId) {
+      const {
+        status,
+        file,
+        jobName,
+        message,
+        userId,
+        percent,
+        error,
+        ...other
+      } = data;
+      if (user?.id == userId || other.visitorId === visitorId) {
         if (status === "progress") {
           setProgress({ percent, message });
+          setShowDownload(false);
         } else if (status === "completed") {
           if (
             [JOB_MONSTER_TRANSCRIPTION, JOB_GENERATE_VIDEO].includes(jobName)
@@ -61,7 +82,8 @@ export default function RootLayout({ children }) {
             setProgress({ percent: 0, message: "" });
             if (jobName === JOB_MONSTER_TRANSCRIPTION) {
               toast.success(message);
-              router.push(`/upload/${file.id}`);
+              if (userId) router.push(`/upload/${file.id}`);
+              if (other.visitorId) setShowDownload(true);
             } else if (jobName === JOB_GENERATE_VIDEO) {
               downloadMedia(
                 `${file.fileName.substr(0, -4)}-subtitled.${file.ext}`,
@@ -70,11 +92,25 @@ export default function RootLayout({ children }) {
               toast.success("Successfully downloaded a video");
             }
           }
+        } else if (status === "failed") {
+          setLoading(false);
+          console.error("job ", jobName, error);
+          toast.error(`Something wrong happened.`);
         }
       }
     });
     return () => socket.removeAllListeners();
   }, [pathname, user]);
+
+  useEffect(() => {
+    const setFp = async () => {
+      const fp = await FingerprintJS.load();
+      const { visitorId } = await fp.get();
+      setVisitorId(visitorId);
+    };
+
+    setFp();
+  }, []);
 
   return (
     <>
@@ -84,12 +120,13 @@ export default function RootLayout({ children }) {
           <Sidebar setState={setState} state={state} />
         </>
       ) : null}
+      {hasHomeLayout ? <TopbarHome {...props} /> : null}
       <Container maxWidth="xl" sx={{ py: 2 }}>
         <Box
           component="main"
           sx={{
             flexGrow: 1,
-            pt: hasLayout ? ["48px", "56px", "64px"] : 0,
+            pt: hasLayout || hasHomeLayout ? ["48px", "56px", "64px"] : 0,
             ml: isNonMobile && hasLayout ? `${DRAWER_WIDTH}px` : 0,
           }}
         >

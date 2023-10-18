@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
 
 const images = [
@@ -11,6 +11,7 @@ export default function CreateContentLike() {
   return (
     <>
       <Box
+        id="create-content-like"
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -18,8 +19,8 @@ export default function CreateContentLike() {
           mt: 5,
         }}
       >
-        <Box maxWidth="md" sx={{ width: 1 }}>
-          <Typography variant="h5" sx={{ mb: 5, textAlign: "center" }}>
+        <Box maxWidth="md" sx={{ width: 1, textAlign: "center" }}>
+          <Typography variant="h5" sx={{ mb: 5 }}>
             Create Content like Top Influencers
           </Typography>
           <Box
@@ -28,12 +29,23 @@ export default function CreateContentLike() {
               justifyContent: "space-around",
               flexWrap: "wrap",
               gap: 4,
+              mb: 3,
             }}
           >
             {images.map((src) => (
-              <Image src={src} width={200} height={300} alt="Sample image" />
+              <Image
+                key={src}
+                src={src}
+                width={200}
+                height={300}
+                alt="Sample image"
+                style={{ borderRadius: 4 }}
+              />
             ))}
           </Box>
+          <Button variant="contained" href="/auth/signup">
+            Sign Up
+          </Button>
         </Box>
       </Box>
     </>

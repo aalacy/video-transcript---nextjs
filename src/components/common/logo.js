@@ -10,7 +10,7 @@ export default function Logo(props) {
         ...props,
       }}
     >
-      <Typography variant="h3" fontWeight="bold">
+      <Typography variant="h3" fontWeight="bold" color="black">
         Submagic
       </Typography>
       <Typography

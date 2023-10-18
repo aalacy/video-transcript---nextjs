@@ -10,7 +10,6 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useCallback, useEffect, useState } from "react";
 
-import { useAuth } from "@/hooks/use-auth";
 import { FaqService } from "@/service/faq-service";
 import { TabSkeleton } from "@/components/skeleton/tab-skeleton";
 
@@ -18,7 +17,7 @@ const faqService = new FaqService();
 
 export default function Faq() {
   const [data, setData] = useState([]);
-  const { loading, setLoading } = useAuth();
+  const [loading, setLoading] = useState();
 
   const getData = useCallback(async () => {
     setLoading(true);
@@ -35,6 +34,7 @@ export default function Faq() {
     <>
       <TabSkeleton loading={loading} />
       <Box
+        id="faq"
         sx={{
           display: loading ? "none" : "flex",
           justifyContent: "center",

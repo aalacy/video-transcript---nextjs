@@ -15,8 +15,8 @@ export class FileService {
     return http.post(url, formData, config);
   }
 
-  download(id) {
-    return http.get(`/api/file/download?id=${id}`);
+  download({ fileId, visitorId }) {
+    return http.post(`/api/file/download`, { fileId, visitorId });
   }
 
   generateTranscription(inputData) {

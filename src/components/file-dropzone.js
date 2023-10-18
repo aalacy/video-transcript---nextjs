@@ -97,6 +97,8 @@ export const FileDropzone = (props) => {
     <div {...other}>
       <Box
         sx={{
+          margin: "0 auto",
+          maxWidth: "md",
           alignItems: "center",
           border: 1,
           borderRadius: 1,

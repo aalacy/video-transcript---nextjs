@@ -4,6 +4,7 @@ export default function About() {
   return (
     <>
       <Box
+        id="about"
         sx={{
           display: "flex",
           justifyContent: "center",

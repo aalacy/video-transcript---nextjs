@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -12,23 +13,22 @@ import {
 } from "@mui/material";
 import {
   DataGrid,
-  GridToolbar,
   GridToolbarContainer,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-import { useCallback, useEffect, useState } from "react";
 import {
   Delete as DeleteIcon,
   Edit as EditIcon,
   PlayArrow as RunIcon,
 } from "@mui/icons-material";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 
 import { buffer2String, formatDate } from "@/utils";
 import { FileService } from "@/service/file-service";
 import { useAuth } from "@/hooks/use-auth";
-import Link from "next/link";
 
 const client = new FileService();
 
@@ -181,7 +181,7 @@ export default function YourProjectsPage() {
           }}
         >
           <Link href={`/upload/${params.row.id}`}>
-            <img
+            <Image
               src={
                 params.row.thumbnail
                   ? "data:image/png;base64," +
@@ -189,9 +189,10 @@ export default function YourProjectsPage() {
                   : "/assets/placeholder.jpg"
               }
               alt="Thumbnail image"
+              width={60}
+              height={100}
               loading="lazy"
               style={{
-                width: 60,
                 objectFit: "contain",
                 borderRadius: 2,
               }}

@@ -32,7 +32,14 @@ export default function HomePage() {
   const [loaded, setLoaded] = useState(false);
   const [size, setSize] = useState({});
 
-  const { loading, setLoading, progress, setTitleInfo } = useAuth();
+  const {
+    loading,
+    setLoading,
+    progress,
+    setTitleInfo,
+    setShowDownload,
+    visitorId,
+  } = useAuth();
 
   const initialValues = {
     lang: "en",
@@ -61,10 +68,11 @@ export default function HomePage() {
   const onUpload = async () => {
     setLoading(true);
     try {
-      const { data } = await client.upload({
+      await client.upload({
         file: files[0],
         ...size,
         lang: formik.values.lang,
+        visitorId,
       });
       setFiles([]);
     } catch (error) {
@@ -88,6 +96,7 @@ export default function HomePage() {
 
   useEffect(() => {
     setTitleInfo({ title: "" });
+    return () => setShowDownload(false);
   }, []);
 
   return (
@@ -99,28 +108,40 @@ export default function HomePage() {
         style={{ display: loading ? "none" : "inherit" }}
         onSubmit={formik.handleSubmit}
       >
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Box sx={{ maxWidth: "sm", mb: 2, width: 1 }}>
-            <TextField
-              select
-              fullWidth
-              type="text"
-              size="small"
-              label={`* Language (${isoLangs.length} options)`}
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.lang}
-              name="lang"
-              error={!!formik.touched.lang && !!formik.errors.lang}
-              helperText={formik.touched.lang && formik.errors.lang}
-            >
-              {isoLangs.map((lang) => (
-                <MenuItem key={lang.code} value={lang.code}>
-                  {lang.name}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Box>
+        <Box
+          sx={{
+            justifyContent: "center",
+            display: "flex",
+            flexDirection: "column",
+            maxWidth: "sm",
+            margin: "0 auto",
+            mb: 2,
+            width: 1,
+            gap: 3,
+          }}
+        >
+          <Typography variant="h4" sx={{ textAlign: "center" }}>
+            AI Video Caption Generator Free Without Watermark
+          </Typography>
+          <TextField
+            select
+            fullWidth
+            type="text"
+            size="small"
+            label={`* Language (${isoLangs.length} options)`}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.lang}
+            name="lang"
+            error={!!formik.touched.lang && !!formik.errors.lang}
+            helperText={formik.touched.lang && formik.errors.lang}
+          >
+            {isoLangs.map((lang) => (
+              <MenuItem key={lang.code} value={lang.code}>
+                {lang.name}
+              </MenuItem>
+            ))}
+          </TextField>
         </Box>
         <FileDropzone
           accept={{ "video/*": [".mp4", ".mov"] }}
