@@ -14,18 +14,69 @@ import {
 } from "next/font/google";
 
 // define your variable fonts
-const inter = Inter({ subsets: ["latin"], weight: ["400", "700"] });
-const lora = Lora({ subsets: ["latin"], weight: ["400", "700"] });
-const lato = Lato({ subsets: ["latin"], weight: ["400", "700"] });
-const amaticSC = Amatic_SC({ subsets: ["latin"], weight: ["400", "700"] });
-const bebasNeue = Bebas_Neue({ subsets: ["latin"], weight: ["400"] });
-const gabrioto = Gabarito({ subsets: ["latin"], weight: ["400", "700"] });
-const orbitron = Orbitron({ subsets: ["latin"], weight: ["400", "700"] });
-const oswald = Oswald({ subsets: ["latin"], weight: ["400", "700"] });
-const raleway = Raleway({ subsets: ["latin"], weight: ["400", "700"] });
-const roboto = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
-const vinaSans = Vina_Sans({ subsets: ["latin"], weight: ["400"] });
-const youngSerif = Young_Serif({ subsets: ["latin"], weight: ["400"] });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+const lora = Lora({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+const amaticSC = Amatic_SC({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+const gabrioto = Gabarito({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  adjustFontFallback: false,
+});
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+const raleway = Raleway({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+const vinaSans = Vina_Sans({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  adjustFontFallback: false,
+});
+const youngSerif = Young_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+  adjustFontFallback: false,
+});
 
 export {
   inter,

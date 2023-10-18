@@ -1,20 +1,14 @@
 "use client";
 
-import {
-  Box,
-  TextField,
-  MenuItem,
-  LinearProgress,
-  Typography,
-} from "@mui/material";
+import { Box, TextField, MenuItem, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
 import { FileService } from "@/service/file-service";
-import { LanguageCode, isoLangs } from "@/constants";
-import { FileDropzone } from "@/components/file-dropzone";
+import { isoLangs } from "@/constants";
+import { FileDropzone } from "@/components/home/file-dropzone";
 import { useAuth } from "@/hooks/use-auth";
 import ProgressBar from "@/components/common/progress-bar";
 import HowItWorks from "@/components/home/how-it-works";
@@ -65,10 +59,6 @@ export default function HomePage() {
       }
       toast.error(message);
     }
-  };
-
-  const handleError = (error) => {
-    console.log("handleError", error);
   };
 
   const handleRemove = (file) => {
@@ -162,13 +152,12 @@ export default function HomePage() {
           </TextField>
         </Box>
         <FileDropzone
-          accept={{ "video/*": [".mp4", ".mov"] }}
+          // accept={{ "video/*": [".mp4", ".mov"] }}
           files={files}
           setFiles={setFiles}
           maxFiles={1}
-          maxSize={MAX_SIZE * 1024 * 1024}
+          maxSize={50 * 1024 * 1024}
           onDrop={handleDrop}
-          onError={handleError}
           onRemove={handleRemove}
           onRemoveAll={handleRemoveAll}
           onUpload={onUpload}

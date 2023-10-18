@@ -1,3 +1,5 @@
+"use client";
+
 import PropTypes from "prop-types";
 import { useDropzone } from "react-dropzone";
 import {
@@ -16,9 +18,9 @@ import {
   Close as XIcon,
   NoteAddOutlined as NoteAddOutlinedIcon,
 } from "@mui/icons-material";
+import { createRef, useEffect } from "react";
 
 import { bytesToSize } from "@/utils/byte-to-size";
-import { createRef, useEffect } from "react";
 
 export const FileDropzone = (props) => {
   const {
@@ -34,7 +36,6 @@ export const FileDropzone = (props) => {
     noDrag,
     noDragEventsBubbling,
     noKeyboard,
-    onError,
     onDrop,
     onDropAccepted,
     onDropRejected,
@@ -59,14 +60,10 @@ export const FileDropzone = (props) => {
       maxSize,
       minSize,
       onDrop,
-      onError,
       multiple: false,
     });
 
   const videoRef = createRef();
-  const acceptedFileURLs = acceptedFiles.map((file) => ({
-    preview: URL.createObjectURL(file),
-  }));
 
   const videoEventListener = (params) => {
     const height = params.target.videoHeight;
@@ -90,7 +87,11 @@ export const FileDropzone = (props) => {
     document
       .getElementById("videoRef")
       .addEventListener("loadedmetadata", videoEventListener, { once: true });
-  }, [acceptedFileURLs?.length]);
+    return () =>
+      document
+        .getElementById("videoRef")
+        ?.removeEventListener("loadedmetadata");
+  }, [acceptedFiles?.length]);
 
   return (
     <div {...other}>
@@ -194,10 +195,10 @@ export const FileDropzone = (props) => {
           </Box>
         </Box>
       ) : null}
-      {files.length > 0 && acceptedFileURLs.length > 0 ? (
+      {files.length > 0 && acceptedFiles.length > 0 ? (
         <video
           id="videoRef"
-          src={acceptedFileURLs[0].preview}
+          src={URL.createObjectURL(acceptedFiles[0])}
           ref={videoRef}
           style={{ display: "none" }}
         />

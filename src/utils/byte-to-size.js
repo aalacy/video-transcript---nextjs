@@ -1,4 +1,4 @@
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 const localizedFormat = require("dayjs/plugin/localizedFormat");
 
 dayjs.extend(localizedFormat);
