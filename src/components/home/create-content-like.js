@@ -2,9 +2,9 @@ import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
 
 const images = [
-  "/images/sample1.jpeg",
-  "/images/sample2.webp",
-  "/images/sample3.jpeg",
+  "/images/sample1.jpg",
+  "/images/sample2.jpg",
+  "/images/sample3.jpg",
 ];
 
 export default function CreateContentLike() {
