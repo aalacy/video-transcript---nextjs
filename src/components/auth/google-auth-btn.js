@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Button, Typography } from "@mui/material";
+import Cookies from "js-cookie";
 
 import { GoogleLogo } from "@/components/common/google-logo";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -16,7 +17,7 @@ export default function GoogleAuthBtn() {
     try {
       setLoading(true);
       const { data } = await AuthService.googleRegister(value);
-      localStorage.setItem("accessToken", data.data.accessToken);
+      Cookies.set("accessToken", data.data.accessToken);
       router.push("/");
     } catch (error) {
       if (error.status !== 403 && error.status !== 404) {

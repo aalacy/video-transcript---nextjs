@@ -1,4 +1,5 @@
 import http from "./http";
+import Cookies from "js-cookie";
 
 export class AuthService {
   static me() {
@@ -6,12 +7,8 @@ export class AuthService {
   }
 
   static async logout() {
-    if (typeof window !== "undefined") {
-      // window.localStorage.getItem("accessToken") &&
-      //   (await http.post("/api/auth/logout"));
-      window.localStorage.removeItem("accessToken");
-      window.location.href = "/";
-    }
+    Cookies.remove("accessToken");
+    window.location.href = "/";
   }
 
   static login(email, password, shouldRememberMe) {
@@ -42,7 +39,7 @@ export class AuthService {
 
   static forgotPasswordSubmit(password, token) {
     let accessToken = "";
-    if (!token) accessToken = window.localStorage.getItem("accessToken");
+    if (!token) accessToken = Cookies.get("accessToken");
     return http.post("/api/auth/reset-password", {
       password,
       token,

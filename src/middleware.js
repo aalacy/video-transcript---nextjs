@@ -4,20 +4,28 @@ import { NextResponse } from "next/server";
 export async function middleware(request) {
   const accessToken = request.cookies.get("accessToken");
   if (accessToken?.value) {
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/api/auth/me", {
-      headers: {
-        Authorization: `Bearer ${accessToken.value}`,
-      },
-    });
+    try {
+      const res = await fetch(
+        process.env.NEXT_PUBLIC_API_URL + "/api/auth/me",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken.value}`,
+          },
+        },
+      );
+      await res.json();
+    } catch (error) {
+      NextResponse.redirect(new URL("auth/login", request.url));
+    }
+  } else {
+    // return NextResponse.rewrite(new URL('/', request.url))
   }
-
   return NextResponse.next();
-  // return NextResponse.redirect(new URL('/', request.url))
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    "/((?!api|_next/static|favicon.ico|auth/signup|auth/loginin|auth/forgot-password|auth/reset-password).*)",
+    "/((?!api|_next/static|_next/image|_next/assets|favicon.ico|auth/signup|auth/login|auth/forgot-password|auth/reset-password).*)",
   ],
 };

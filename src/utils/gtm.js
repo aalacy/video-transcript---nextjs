@@ -42,6 +42,19 @@ class GTM {
     const noscript = document.createElement("noscript");
     const leavescript = document.createElement("script");
 
+    if (typeof window != "undefined") {
+      // We need to parse into integer since local storage can only
+      // store strings.
+      let tabCount = parseInt(localStorage.getItem("tabCount"));
+
+      // Then we instantiate tabCount if it doesn't already exist
+      // OR Increment by 1 if it already exists
+      tabCount = Number.isNaN(tabCount) ? 1 : ++tabCount;
+
+      // Set the count on local storage
+      localStorage.setItem("tabCount", tabCount.toString());
+    }
+
     script.innerHTML = `
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -55,7 +68,13 @@ class GTM {
     `;
 
     leavescript.innerHTML = `window.addEventListener('beforeunload', function (e) { 
-      document.cookie = 'accessToken=; Max-Age=-99999999;';
+      e.preventDefault();
+      const entries = performance.getEntriesByType("navigation");
+      entries.forEach((entry) => {
+        if (!["navigate", "reload", "back_forward", "prerender"].includes(entry.type)) {
+          document.cookie = 'accessToken=; Max-Age=-99999999;';
+        }
+      });
     });`;
 
     document.head.insertBefore(script, document.head.childNodes[0]);

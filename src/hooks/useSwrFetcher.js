@@ -1,13 +1,14 @@
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
+import Cookies from "js-cookie";
 
 export const fetcher = (url) =>
   fetch(process.env.NEXT_PUBLIC_API_URL + url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
+      Authorization: `Bearer ${Cookies.get("accessToken")}`,
     },
   })
     .then((res) => res.json())

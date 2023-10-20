@@ -2,7 +2,7 @@
 
 import { createContext, useEffect, useMemo, useReducer } from "react";
 import PropTypes from "prop-types";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 import { AuthService } from "@/service/auth-service";
@@ -173,14 +173,15 @@ export const AuthProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const pathname = usePathname();
-
-  const hasLayout = useMemo(() => {
-    return !pathname.includes("/auth");
-  }, [pathname]);
+  const router = useRouter();
 
   useEffect(() => {
     gtm.initialize(gtmConfig);
   }, []);
+
+  const hasLayout = useMemo(() => {
+    return !pathname.includes("/auth");
+  }, [pathname]);
 
   useEffect(() => {
     const initialize = async () => {
@@ -207,6 +208,7 @@ export const AuthProvider = (props) => {
               user: null,
             },
           });
+          if (pathname != "/") router.push("/");
         }
       } catch (err) {
         dispatch({
@@ -217,8 +219,8 @@ export const AuthProvider = (props) => {
             user: null,
           },
         });
-        window.localStorage.removeItem("accessToken");
-        window.location.href = "/auth/login";
+        Cookies.remove("accessToken");
+        router.push("/");
       }
     };
 
@@ -229,7 +231,6 @@ export const AuthProvider = (props) => {
     const { data } = await AuthService.login(email, password, shouldRememberMe);
     const { data: user } = data;
 
-    localStorage.setItem("accessToken", user.accessToken);
     Cookies.set("accessToken", user.accessToken);
 
     dispatch({
@@ -250,7 +251,6 @@ export const AuthProvider = (props) => {
     const { data } = await AuthService.register(values);
     const { data: user } = data;
 
-    localStorage.setItem("accessToken", user.accessToken);
     Cookies.set("accessToken", user.accessToken);
 
     dispatch({

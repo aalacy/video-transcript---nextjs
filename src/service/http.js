@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -17,15 +18,15 @@ const $api = axios.create({
 // on each request to the server, we pull out the current "access" token saved in the cookie and send it to the server for authentication
 // access token is only valid for 10 minutes, so it's more secure when combined with checking refresh tokena across sessions at the same time
 $api.interceptors.request.use(async (config) => {
-  if (typeof window !== "undefined") {
-    const accessToken = window.localStorage.getItem("accessToken");
-    if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+  const accessToken = Cookies.get("accessToken");
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
   return config;
 });
 
 const clearCookie = () => {
-  window.localStorage.removeItem("accessToken");
+  Cookies.remove("accessToken");
 };
 
 // when responding from the server with a 401 error status, meaning that the access token has expired
