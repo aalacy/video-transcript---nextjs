@@ -7,33 +7,12 @@ import {
   Toolbar,
   Button,
   Box,
-  CircularProgress,
-  IconButton,
-  Tooltip,
 } from "@mui/material";
-import toast from "react-hot-toast";
 
-import { useAuth } from "@/hooks/use-auth";
 import Logo from "./logo";
-import { FileService } from "@/service/file-service";
-import { Download as DownloadIcon } from "@mui/icons-material";
 
-const client = new FileService();
-
-export default function TopbarHome({ ...props }) {
-  const { showDownload } = props;
+export default function TopbarHome() {
   const isNonMobile = useMediaQuery("(min-width:640px)");
-
-  const { visitorId, loading, setLoading } = useAuth();
-
-  const handleExport = async () => {
-    try {
-      setLoading(true);
-      await client.download({ visitorId });
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
 
   return (
     <AppBar
@@ -63,21 +42,6 @@ export default function TopbarHome({ ...props }) {
           <Button href="/auth/signup" size="small" variant="contained">
             Sign up
           </Button>
-          <IconButton
-            disabled={loading}
-            onClick={handleExport}
-            size="small"
-            color="success"
-            sx={{
-              display: showDownload ? "inline-flex" : "none",
-              ml: 1,
-            }}
-          >
-            {loading ? <CircularProgress size={20} /> : null}
-            <Tooltip title="Download video">
-              <DownloadIcon />
-            </Tooltip>
-          </IconButton>
         </Box>
       </Toolbar>
       <Divider />

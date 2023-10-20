@@ -1,6 +1,15 @@
 "use client";
 
-import { Box, TextField, MenuItem, Typography } from "@mui/material";
+import {
+  Box,
+  TextField,
+  MenuItem,
+  Typography,
+  Tooltip,
+  CircularProgress,
+  Button,
+} from "@mui/material";
+import { Download as DownloadIcon } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import toast from "react-hot-toast";
@@ -32,6 +41,7 @@ export default function HomePage() {
     progress,
     setTitleInfo,
     setShowDownload,
+    showDownload,
     visitorId,
     isAuthenticated,
   } = useAuth();
@@ -88,6 +98,16 @@ export default function HomePage() {
     }
   };
 
+  const handleExport = async () => {
+    try {
+      setLoading(true);
+      await client.download({ visitorId });
+      setShowDownload(false);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -115,8 +135,25 @@ export default function HomePage() {
       <title>SubmagicPro</title>
 
       <ProgressBar loading={loading} progress={progress} />
+
+      <Box sx={{ display: showDownload ? "inline-flex" : "none", width: 1 }}>
+        <Button
+          disabled={loading}
+          onClick={handleExport}
+          color="success"
+          startIcon={
+            loading ? <CircularProgress size={20} /> : <DownloadIcon />
+          }
+          sx={{
+            margin: "0 auto",
+            my: 3,
+          }}
+        >
+          Download
+        </Button>
+      </Box>
       <form
-        style={{ display: loading ? "none" : "inherit" }}
+        style={{ display: loading || showDownload ? "none" : "inherit" }}
         onSubmit={formik.handleSubmit}
       >
         <Box
