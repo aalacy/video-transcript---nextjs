@@ -21,6 +21,7 @@ import {
 import { createRef, useEffect } from "react";
 
 import { bytesToSize } from "@/utils/byte-to-size";
+import { useAuth } from "@/hooks/use-auth";
 
 export const FileDropzone = (props) => {
   const {
@@ -50,6 +51,8 @@ export const FileDropzone = (props) => {
     setSize,
     ...other
   } = props;
+
+  const { isAuthenticated } = useAuth();
 
   // We did not add the remaining props to avoid component complexity
   // but you can simply add it if you need to.
@@ -129,7 +132,7 @@ export const FileDropzone = (props) => {
             Click to upload a file or drag and drop it here
           </Typography>
           <Typography variant="body1" color="GrayText">
-            Up to 50MB in size.
+            Up to {isAuthenticated ? 300 : 50}MB in size.
           </Typography>
           <Typography variant="caption" color="GrayText">
             MP4, MOV formats & 1:1, 4:5, 9:16 ratio accepted

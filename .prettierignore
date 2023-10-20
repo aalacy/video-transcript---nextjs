@@ -17,3 +17,6 @@ yarn.lock
 
 # public folder
 public/**/*.*
+
+src/app/*.png
+src/app/*.ico

@@ -6,7 +6,10 @@ import RootLayout from "@/components/common/layout";
 
 export const metadata = {
   title: "SubmagicPro",
-  description: "SubmagicPro",
+  description: "Free AI Video Caption Generator",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function DefaultRootLayout({ children }) {

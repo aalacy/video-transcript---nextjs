@@ -36,7 +36,6 @@ export default function Faq() {
       <Box
         id="faq"
         sx={{
-          display: loading ? "none" : "flex",
           justifyContent: "center",
           width: 1,
           mt: 5,
@@ -46,19 +45,22 @@ export default function Faq() {
           <Typography variant="h4" sx={{ mb: 5, textAlign: "center" }}>
             FAQ
           </Typography>
-          {data.map((faq) => (
-            <Accordion key={faq.title}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls={faq.title}
-              >
-                <Typography variant="h6">{faq.title}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{faq.content}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
+
+          <Box sx={{ display: loading ? "none" : "flex" }}>
+            {data.map((faq) => (
+              <Accordion key={faq.title}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls={faq.title}
+                >
+                  <Typography variant="h6">{faq.title}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>{faq.content}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </Box>
         </Box>
       </Box>
     </>

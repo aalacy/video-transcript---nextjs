@@ -4,7 +4,7 @@ import { Box, TextField, MenuItem, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { FileService } from "@/service/file-service";
 import { isoLangs } from "@/constants";
@@ -20,8 +20,6 @@ import Faq from "@/components/home/faq";
 
 const client = new FileService();
 
-const MAX_SIZE = 50;
-
 export default function HomePage() {
   const [files, setFiles] = useState([]);
   const [fileError, setError] = useState(false);
@@ -35,6 +33,7 @@ export default function HomePage() {
     setTitleInfo,
     setShowDownload,
     visitorId,
+    isAuthenticated,
   } = useAuth();
 
   const initialValues = {
@@ -107,9 +106,13 @@ export default function HomePage() {
     return () => setShowDownload(false);
   }, []);
 
+  const maxSize = useMemo(() => {
+    return isAuthenticated ? 300 * 1024 * 1024 : 50 * 1024 * 1024;
+  }, [isAuthenticated]);
+
   return (
     <>
-      <title>Upload</title>
+      <title>SubmagicPro</title>
 
       <ProgressBar loading={loading} progress={progress} />
       <form
@@ -156,7 +159,7 @@ export default function HomePage() {
           files={files}
           setFiles={setFiles}
           maxFiles={1}
-          maxSize={50 * 1024 * 1024}
+          maxSize={maxSize}
           onDrop={handleDrop}
           onRemove={handleRemove}
           onRemoveAll={handleRemoveAll}
@@ -167,12 +170,16 @@ export default function HomePage() {
           setSize={setSize}
         />
       </form>
-      <HowItWorks />
-      <CreateContentLike />
-      <SubmagicProVsTraditional />
-      <UnmatchedFeatures />
-      <About />
-      <Faq />
+      {!isAuthenticated ? (
+        <>
+          <HowItWorks />
+          <CreateContentLike />
+          <SubmagicProVsTraditional />
+          <UnmatchedFeatures />
+          <About />
+          <Faq />
+        </>
+      ) : null}
     </>
   );
 }
