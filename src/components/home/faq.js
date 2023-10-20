@@ -36,6 +36,7 @@ export default function Faq() {
       <Box
         id="faq"
         sx={{
+          display: "flex",
           justifyContent: "center",
           width: 1,
           mt: 5,
@@ -46,7 +47,7 @@ export default function Faq() {
             FAQ
           </Typography>
 
-          <Box sx={{ display: loading ? "none" : "inherit" }}>
+          <div sx={{ display: loading ? "none" : "inherit" }}>
             {data.map((faq) => (
               <Accordion key={faq.title}>
                 <AccordionSummary
@@ -60,7 +61,7 @@ export default function Faq() {
                 </AccordionDetails>
               </Accordion>
             ))}
-          </Box>
+          </div>
         </Box>
       </Box>
     </>
