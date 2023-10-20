@@ -46,7 +46,7 @@ export default function Faq() {
             FAQ
           </Typography>
 
-          <Box sx={{ display: loading ? "none" : "flex" }}>
+          <Box sx={{ display: loading ? "none" : "inherit" }}>
             {data.map((faq) => (
               <Accordion key={faq.title}>
                 <AccordionSummary
