@@ -32,7 +32,6 @@ export default function Faq() {
 
   return (
     <>
-      <TabSkeleton loading={loading} />
       <Box
         id="faq"
         sx={{
@@ -46,6 +45,7 @@ export default function Faq() {
           <Typography variant="h4" sx={{ mb: 5, textAlign: "center" }}>
             FAQ
           </Typography>
+          <TabSkeleton loading={loading} />
 
           <div sx={{ display: loading ? "none" : "inherit" }}>
             {data.map((faq) => (

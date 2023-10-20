@@ -3,9 +3,15 @@
 import { createContext, useEffect, useMemo, useReducer } from "react";
 import PropTypes from "prop-types";
 import { usePathname } from "next/navigation";
+import Cookies from "js-cookie";
 
 import { AuthService } from "@/service/auth-service";
 import { checkAdmin } from "@/utils/check-admin";
+import { gtm } from "@/utils/gtm";
+
+const gtmConfig = {
+  containerId: process.env.NEXT_PUBLIC_GTM_CONTAINER_ID,
+};
 
 const initialState = {
   title: "",
@@ -173,9 +179,13 @@ export const AuthProvider = (props) => {
   }, [pathname]);
 
   useEffect(() => {
+    gtm.initialize(gtmConfig);
+  }, []);
+
+  useEffect(() => {
     const initialize = async () => {
       try {
-        const accessToken = window.localStorage.getItem("accessToken");
+        const accessToken = Cookies.get("accessToken");
 
         if (accessToken) {
           const { data } = await AuthService.me();
@@ -207,6 +217,8 @@ export const AuthProvider = (props) => {
             user: null,
           },
         });
+        window.localStorage.removeItem("accessToken");
+        window.location.href = "/auth/login";
       }
     };
 
@@ -218,6 +230,7 @@ export const AuthProvider = (props) => {
     const { data: user } = data;
 
     localStorage.setItem("accessToken", user.accessToken);
+    Cookies.set("accessToken", user.accessToken);
 
     dispatch({
       type: "LOGIN",
@@ -228,6 +241,7 @@ export const AuthProvider = (props) => {
   };
 
   const logout = async () => {
+    Cookies.remove("accessToken");
     await AuthService.logout();
     dispatch({ type: "LOGOUT" });
   };
@@ -237,6 +251,7 @@ export const AuthProvider = (props) => {
     const { data: user } = data;
 
     localStorage.setItem("accessToken", user.accessToken);
+    Cookies.set("accessToken", user.accessToken);
 
     dispatch({
       type: "REGISTER",

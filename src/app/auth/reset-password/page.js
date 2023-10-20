@@ -8,7 +8,7 @@ import JWTResetPassword from "@/components/auth/jwt-reset-password";
 export default function ResetPassword() {
   return (
     <>
-      <title>Reset your Password</title>
+      <title>SubmagicPro - Reset your Password</title>
       <Container
         fixed
         maxWidth="xs"

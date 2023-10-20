@@ -23,6 +23,7 @@ import {
 } from "@/constants";
 import { useMounted } from "@/hooks/use-mounted";
 import ProgressBar from "@/components/common/progress-bar";
+import { gtm } from "@/utils/gtm";
 
 function a11yProps(index) {
   return {
@@ -89,6 +90,7 @@ export default function UploadPage({ params }) {
     } catch (error) {
       toast.error(error.message);
     }
+    gtm.push({ event: "page_view" });
   }, []);
 
   useEffect(() => {
@@ -168,7 +170,7 @@ export default function UploadPage({ params }) {
 
   return (
     <>
-      <title>Upload</title>
+      <title>SubmagicPro - Upload</title>
       <ProgressBar loading={loading} progress={progress} />
       <Box
         sx={{

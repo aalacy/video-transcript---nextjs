@@ -6,17 +6,19 @@ import Logo from "@/components/common/logo";
 import JWTResetPassword from "@/components/auth/jwt-reset-password";
 import { useAuth } from "@/hooks/use-auth";
 import { useEffect } from "react";
+import { gtm } from "@/utils/gtm";
 
 export default function SettingsPage() {
   const { setTitleInfo } = useAuth();
 
   useEffect(() => {
     setTitleInfo({ title: "Settings" });
+    gtm.push({ event: "page_view" });
   }, []);
 
   return (
     <>
-      <title>Settings</title>
+      <title>SubmagicPro - Settings</title>
       <Container
         fixed
         maxWidth="xs"

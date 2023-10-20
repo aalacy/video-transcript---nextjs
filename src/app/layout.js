@@ -5,14 +5,15 @@ import { AuthProvider } from "@/context/jwt-context";
 import RootLayout from "@/components/common/layout";
 
 export const metadata = {
-  title: "SubmagicPro",
-  description: "Free AI Video Caption Generator",
+  title: "SuSubmagicPro - Free AI Video Caption GeneratorbmagicPro",
+  description: "SubmagicPro - Free AI Video Caption Generator",
   icons: {
     icon: "/favicon.ico",
   },
+  robots: "noindex",
 };
 
-export default function DefaultRootLayout({ children }) {
+export default function DefaultRootLayout({ children, session }) {
   return (
     <html lang="en">
       <body style={{ backgroundColor: "background.default" }}>

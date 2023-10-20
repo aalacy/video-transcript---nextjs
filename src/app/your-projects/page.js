@@ -29,6 +29,7 @@ import Image from "next/image";
 import { buffer2String, formatDate } from "@/utils";
 import { FileService } from "@/service/file-service";
 import { useAuth } from "@/hooks/use-auth";
+import { gtm } from "@/utils/gtm";
 
 const client = new FileService();
 
@@ -162,6 +163,7 @@ export default function YourProjectsPage() {
 
   useEffect(() => {
     setTitleInfo({ title: "Your Projects" });
+    gtm.push({ event: "page_view" });
   }, []);
 
   const columns = [
@@ -250,7 +252,7 @@ export default function YourProjectsPage() {
 
   return (
     <>
-      <title>Your Projects</title>
+      <title>SubmagicPro - Your Projects</title>
       <Container>
         <Card>
           <CardContent>

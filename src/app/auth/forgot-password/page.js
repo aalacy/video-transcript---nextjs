@@ -8,7 +8,7 @@ import JWTForgotPassword from "@/components/auth/jwt-forgot-password";
 export default function ForgotPassword() {
   return (
     <>
-      <title>Forgot your Password</title>
+      <title>SubmagicPro - Forgot your Password</title>
       <Container
         fixed
         maxWidth="xs"

@@ -26,6 +26,7 @@ import SubmagicProVsTraditional from "@/components/home/compare";
 import UnmatchedFeatures from "@/components/home/unmatched-features";
 import About from "@/components/home/about";
 import Faq from "@/components/home/faq";
+import { gtm } from "@/utils/gtm";
 
 const client = new FileService();
 
@@ -62,7 +63,9 @@ export default function HomePage() {
       const { code } = errors[0];
       let message = "";
       if (code === "file-too-large") {
-        message = `The file ${name} is larger than ${MAX_SIZE}MB.`;
+        message = `The file ${name} is larger than ${
+          isAuthenticated ? 300 : 50
+        }MB.`;
       } else if (code === "file-invalid-type") {
         message = `The file ${name} is not MP4 or MOV format.`;
       }
@@ -123,6 +126,7 @@ export default function HomePage() {
 
   useEffect(() => {
     setTitleInfo({ title: "" });
+    gtm.push({ event: "page_view" });
     return () => setShowDownload(false);
   }, []);
 
@@ -132,7 +136,31 @@ export default function HomePage() {
 
   return (
     <>
-      <title>SubmagicPro</title>
+      <title>SubmagicPro - Free AI Video Caption Generator</title>
+      <meta
+        name="description"
+        content="Submagic pro make adding words to your videos super easy and totally free. Our smart tool helps you create captions fast. Try it now"
+      />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <meta
+        name="robots"
+        content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+      />
+      <meta property="og:url" content="https://submagic.pro/" />
+      <meta property="og:type" content="website" />
+      <meta
+        property="og:title"
+        content="SubmagicPro - Free AI Video Caption Generator"
+      />
+      <meta
+        property="og:description"
+        content="Submagic pro make make adding words to your videos super easy and totally free. Our smart tool helps you create captions fast. Try it now"
+      />
+      <meta charSet="UTF-8" />
+      <meta name="theme-color" content="#febf4b" />
+      <meta property="og:locale" content="en" />
+      <meta property="og:site_name" content="SubmagicPro" />
+      <link rel="canonical" href="https://submagic.pro/" />
 
       <ProgressBar loading={loading} progress={progress} />
 

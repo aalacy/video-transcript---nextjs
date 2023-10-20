@@ -24,6 +24,7 @@
     "eslint": "latest",
     "eslint-config-next": "latest",
     "formik": "^2.4.3",
+    "js-cookie": "^3.0.5",
     "mui-color-input": "^2.0.0",
     "next": "^13.5.5",
     "prettier": "^3.0.3",

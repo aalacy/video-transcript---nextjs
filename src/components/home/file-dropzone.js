@@ -124,7 +124,7 @@ export const FileDropzone = (props) => {
         }}
         {...getRootProps()}
       >
-        <input {...getInputProps()} />
+        <input {...getInputProps()} accept="video/mp4,video/mov,video/*" />
 
         <Box sx={{ p: 2, textAlign: "center" }}>
           <NoteAddOutlinedIcon color="primary" fontSize="large" />

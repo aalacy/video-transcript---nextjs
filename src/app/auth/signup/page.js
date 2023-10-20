@@ -10,7 +10,7 @@ import GoogleAuthBtn from "@/components/auth/google-auth-btn";
 export default function SignupPage() {
   return (
     <>
-      <title>SignUp</title>
+      <title>SubmagicPro - SignUp</title>
       <Container
         fixed
         maxWidth="xs"
