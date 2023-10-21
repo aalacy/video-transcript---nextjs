@@ -35,10 +35,12 @@ export default function TopbarHome() {
           width={isNonMobile ? "inherit" : "100px"}
         />
         <Box>
-          <Button size="small" href="#about">
+          <Button size="small" href="https://blog.submgic.pro/about/">
             About
           </Button>
-          <Button size="small">Contact</Button>
+          <Button href="https://blog.submgic.pro/contact/" size="small">
+            Contact
+          </Button>
           <Button href="/auth/signup" size="small" variant="contained">
             Sign up
           </Button>

@@ -39,12 +39,7 @@ const bebasNeue = Bebas_Neue({
   weight: ["400"],
   display: "swap",
 });
-const gabrioto = Gabarito({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
-  adjustFontFallback: false,
-});
+
 const orbitron = Orbitron({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -74,6 +69,12 @@ const vinaSans = Vina_Sans({
 const youngSerif = Young_Serif({
   subsets: ["latin"],
   weight: ["400"],
+  display: "swap",
+  adjustFontFallback: false,
+});
+const gabrioto = Gabarito({
+  subsets: ["latin"],
+  weight: ["400", "700"],
   display: "swap",
   adjustFontFallback: false,
 });

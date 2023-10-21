@@ -220,7 +220,7 @@ export default function HomePage() {
           </TextField>
         </Box>
         <FileDropzone
-          // accept={{ "video/*": [".mp4", ".mov"] }}
+          accept={{ "video/*": [".mp4", ".mov"] }}
           files={files}
           setFiles={setFiles}
           maxFiles={1}
