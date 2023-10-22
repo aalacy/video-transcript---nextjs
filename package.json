@@ -20,6 +20,7 @@
     "@mui/x-data-grid": "latest",
     "@react-oauth/google": "^0.11.1",
     "axios": "^1.5.1",
+    "bufferutil": "^4.0.8",
     "dayjs": "^1.11.10",
     "eslint": "latest",
     "eslint-config-next": "latest",
@@ -36,6 +37,8 @@
     "react-swipeable-views": "^0.14.0",
     "socket.io-client": "^4.7.2",
     "swr": "^2.2.4",
+    "utf-8-validate": "^6.0.3",
+    "ws": "^8.14.2",
     "yup": "^1.2.0"
   },
   "devDependencies": {
