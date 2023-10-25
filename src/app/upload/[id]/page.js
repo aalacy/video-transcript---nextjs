@@ -151,7 +151,7 @@ export default function UploadPage({ params }) {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      backgroundColor: data?.metadata?.backgroundColor || "#4d1a7f",
+      backgroundColor: data?.metadata?.backgroundColor || "#4d1a7fff",
       fontColor: data?.metadata?.fontColor || "#76f016",
       font: data?.metadata?.font || "Roboto",
       fontWeight: data?.metadata?.fontWeight || fontWeights[0],

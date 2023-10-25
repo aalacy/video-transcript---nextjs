@@ -26,7 +26,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
-import { buffer2String, formatDate } from "@/utils";
+import { formatDate } from "@/utils";
 import { FileService } from "@/service/file-service";
 import { useAuth } from "@/hooks/use-auth";
 import { gtm } from "@/utils/gtm";
@@ -161,7 +161,7 @@ export default function YourProjectsPage() {
   }, []);
 
   useEffect(() => {
-    if (isMounted && !isAuthenticated) fetchData();
+    if (isMounted && isAuthenticated) fetchData();
   }, [paginationModel, filterModel]);
 
   useEffect(() => {
@@ -189,8 +189,7 @@ export default function YourProjectsPage() {
             <Image
               src={
                 params.row.thumbnail
-                  ? "data:image/png;base64," +
-                    buffer2String(params.row.thumbnail.data)
+                  ? "data:image/png;base64," + params.row.thumbnail
                   : "/assets/placeholder.jpg"
               }
               alt="Thumbnail image"
