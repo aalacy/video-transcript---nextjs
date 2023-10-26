@@ -70,8 +70,10 @@ export default function RootLayout({ children }) {
         error,
         ...other
       } = data;
-      console.log("user", userId && user?.id === userId);
-      if ((userId && user?.id == userId) || other.visitorId === visitorId) {
+      const isMine = userId
+        ? user?.id == userId
+        : other.visitorId === visitorId;
+      if (isMine) {
         if (status === "progress") {
           setProgress({ percent, message });
           setShowDownload(false);
@@ -101,7 +103,7 @@ export default function RootLayout({ children }) {
       }
     });
     return () => socket.removeAllListeners();
-  }, [pathname, user]);
+  }, [pathname, user, visitorId]);
 
   useEffect(() => {
     const setFp = async () => {
@@ -111,7 +113,7 @@ export default function RootLayout({ children }) {
     };
 
     setFp();
-  }, []);
+  }, [pathname, user]);
 
   return (
     <>
