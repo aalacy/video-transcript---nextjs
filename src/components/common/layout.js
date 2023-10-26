@@ -70,7 +70,8 @@ export default function RootLayout({ children }) {
         error,
         ...other
       } = data;
-      if (user?.id === userId || other.visitorId === visitorId) {
+      console.log("user", userId && user?.id === userId);
+      if ((userId && user?.id == userId) || other.visitorId === visitorId) {
         if (status === "progress") {
           setProgress({ percent, message });
           setShowDownload(false);
