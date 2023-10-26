@@ -103,7 +103,7 @@ export default function RootLayout({ children }) {
       }
     });
     return () => socket.removeAllListeners();
-  }, [pathname, user, visitorId]);
+  }, [pathname, user, visitorId, socket]);
 
   useEffect(() => {
     const setFp = async () => {

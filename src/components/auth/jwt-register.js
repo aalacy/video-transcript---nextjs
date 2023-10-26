@@ -10,12 +10,12 @@ import {
   FormHelperText,
   TextField,
   Typography,
-  Link,
   useMediaQuery,
   InputAdornment,
   IconButton,
   CircularProgress,
 } from "@mui/material";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import {

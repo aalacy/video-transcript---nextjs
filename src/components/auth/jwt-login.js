@@ -11,8 +11,8 @@ import {
   InputAdornment,
   IconButton,
   CircularProgress,
-  Link,
 } from "@mui/material";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   EmailOutlined as UserIcon,

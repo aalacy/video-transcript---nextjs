@@ -208,7 +208,6 @@ const dayObj = (timestamp) => {
 };
 
 export const downloadMedia = (fileName, output) => {
-  console.log("fileName", fileName, output);
   const downloadLink = document.createElement("a");
   downloadLink.download = fileName;
   downloadLink.href = output;

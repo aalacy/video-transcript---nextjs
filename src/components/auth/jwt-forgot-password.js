@@ -9,8 +9,8 @@ import {
   TextField,
   InputAdornment,
   CircularProgress,
-  Link,
 } from "@mui/material";
+import Link from "next/link";
 import { EmailOutlined as UserIcon } from "@mui/icons-material";
 
 import { useAuth } from "@/hooks/use-auth";
