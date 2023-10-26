@@ -45,6 +45,7 @@ export default function HomePage() {
     showDownload,
     visitorId,
     isAuthenticated,
+    setProgress,
   } = useAuth();
 
   const initialValues = {
@@ -56,6 +57,7 @@ export default function HomePage() {
   });
 
   const handleDrop = (newFiles, fileRejections) => {
+    setProgress({ percent: 0, message: "" });
     setFiles(() => [...newFiles]);
     if (fileRejections.length) {
       const { file, errors } = fileRejections[0];
