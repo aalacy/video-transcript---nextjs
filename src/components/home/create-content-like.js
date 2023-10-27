@@ -34,7 +34,7 @@ export default function CreateContentLike() {
             {videos.map((src) => (
               <iframe
                 width="300"
-                height="582"
+                height="533"
                 src={src}
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
