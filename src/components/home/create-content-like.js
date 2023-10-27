@@ -1,10 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
-import Image from "next/image";
 
-const images = [
-  "/images/sample1.jpg",
-  "/images/sample2.jpg",
-  "/images/sample3.jpg",
+const videos = [
+  "https://www.youtube.com/embed/SAG_Lqo-KBw",
+  "https://www.youtube.com/embed/edWSAHi4wGU",
+  "https://www.youtube.com/embed/S_CUEOBZ0P4",
 ];
 
 export default function CreateContentLike() {
@@ -32,15 +31,15 @@ export default function CreateContentLike() {
               gap: 1,
             }}
           >
-            {images.map((src) => (
-              <Image
-                key={src}
+            {videos.map((src) => (
+              <iframe
+                width="300"
+                height="582"
                 src={src}
-                width={300}
-                height={500}
-                alt="Sample image"
-                style={{ borderRadius: 16 }}
-              />
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                style={{ borderRadius: 12 }}
+              ></iframe>
             ))}
           </Box>
           <Button
