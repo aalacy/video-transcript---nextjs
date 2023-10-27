@@ -38,11 +38,11 @@ export default function Faq() {
           display: "flex",
           justifyContent: "center",
           width: 1,
-          mt: 5,
+          my: 10,
         }}
       >
         <Box maxWidth="md" sx={{ width: 1 }}>
-          <Typography variant="h4" sx={{ mb: 5, textAlign: "center" }}>
+          <Typography variant="h5" sx={{ mb: 5, textAlign: "center" }}>
             FAQ
           </Typography>
           <TabSkeleton loading={loading} />
@@ -54,10 +54,12 @@ export default function Faq() {
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls={faq.title}
                 >
-                  <Typography variant="h6">{faq.title}</Typography>
+                  <Typography variant="h6" fontWeight="medium">
+                    {faq.title}
+                  </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>{faq.content}</Typography>
+                  <Typography color="GrayText">{faq.content}</Typography>
                 </AccordionDetails>
               </Accordion>
             ))}

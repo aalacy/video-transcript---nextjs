@@ -1,6 +1,13 @@
 "use client";
 
-import { useMediaQuery, Box, Container } from "@mui/material";
+import {
+  useMediaQuery,
+  Box,
+  Container,
+  Divider,
+  Typography,
+  Stack,
+} from "@mui/material";
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -19,6 +26,7 @@ import { useAuth } from "@/hooks/use-auth";
 import ConfirmDialog from "./confirm";
 import { downloadMedia } from "@/utils";
 import TopbarHome from "./topbar-home";
+import Link from "next/link";
 
 const socket = io(process.env.NEXT_PUBLIC_API_URL);
 socket.on("connect", () => {
@@ -134,6 +142,25 @@ export default function RootLayout({ children }) {
           }}
         >
           {children}
+        </Box>
+        <Divider />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            my: 2,
+          }}
+        >
+          <Typography>Copyright © 2023 SubmagicPRO</Typography>
+          <Stack
+            direction="row"
+            divider={<Divider orientation="vertical" flexItem />}
+            spacing={1}
+          >
+            <Typography>All Rights Reserved</Typography>
+            <Link href="#">Terms and Conditions</Link>
+            <Link href="#">Privacy Policy</Link>
+          </Stack>
         </Box>
       </Container>
       <ConfirmDialog {...confirmMessage} />

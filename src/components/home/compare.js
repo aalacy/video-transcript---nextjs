@@ -50,14 +50,19 @@ export default function SubmagicProVsTraditional() {
           display: "flex",
           justifyContent: "center",
           width: 1,
-          mt: 5,
+          mt: 10,
         }}
       >
         <Box maxWidth="md" sx={{ width: 1 }}>
-          <Typography variant="h4" sx={{ mb: 5, textAlign: "center" }}>
+          <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
             SubMagic Pro vs Traditional Captioning Tools
           </Typography>
-          <Typography textAlign="center">
+          <Typography
+            maxWidth="sm"
+            textAlign="center"
+            color="GrayText"
+            sx={{ margin: "0 auto", mb: 5 }}
+          >
             Traditional Captioning tools are not friendly for short-form
             content. Moreover, they make mistakes while generating subtitles.
             Correcting them can be a time-consuming process.
@@ -67,7 +72,9 @@ export default function SubmagicProVsTraditional() {
               <tr>
                 <th>Feature</th>
                 <th>Traditional Captioning Tools</th>
-                <th>SubMagic Pro</th>
+                <th>
+                  SubMagic<span style={{ color: "#FFBF4C" }}>PRO</span>
+                </th>
               </tr>
             </thead>
             <tbody>
