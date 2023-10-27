@@ -96,6 +96,7 @@ export default function HomePage() {
         lang: formik.values.lang,
         visitorId,
       });
+      setProgress({ percent: 5, message: "Uploading..." });
       setFiles([]);
     } catch (error) {
       console.log("error", error);
@@ -108,6 +109,7 @@ export default function HomePage() {
       setLoading(true);
       await client.download({ visitorId });
       setShowDownload(false);
+      setProgress({ percent: 5, message: "Downloading..." });
     } catch (error) {
       toast.error(error.message);
     }
