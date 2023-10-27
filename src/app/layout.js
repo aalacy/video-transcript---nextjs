@@ -16,7 +16,10 @@ export const metadata = {
 export default function DefaultRootLayout({ children, session }) {
   return (
     <html lang="en">
-      <body style={{ backgroundColor: "background.default" }}>
+      <body
+        suppressHydrationWarning={true}
+        style={{ backgroundColor: "background.default" }}
+      >
         <Toaster position="top-center" />
         <ThemeRegistry>
           <AuthProvider>
