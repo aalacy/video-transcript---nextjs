@@ -1,11 +1,26 @@
 table {
   margin: 0 auto;
   margin-top: 20px;
-  border: 1px solid;
+  border-radius: 8px;
+}
+
+table,
+th,
+td {
+  border: 1px solid #03122033;
+  border-collapse: collapse;
+}
+
+thead {
+  text-align: left;
 }
 
 th,
 td {
-  border: 1px solid;
-  padding: 6px;
+  padding: 16px 24px 16px 24px;
+}
+
+th:last-child,
+td:last-child {
+  background-color: #f2f9ff;
 }

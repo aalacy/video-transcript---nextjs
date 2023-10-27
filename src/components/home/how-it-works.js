@@ -1,9 +1,17 @@
-import { Box, Card, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+
+import { CameraIcon, UploadIcon, VideoIcon } from "@/icons";
 
 const steps = [
-  "Upload your video, by default language is English, you can choose from 99 different languages.",
-  "Customize your captions - Choose Captions size, color, position & font family.",
+  "Upload your video, by default language is english, you can choose from 97 different languages.",
+  "Wait for upload & transcription, once done you will see the download button.",
   "Download your captioned video and share it with the world, without any watermarks!",
+];
+
+const icons = [
+  <CameraIcon sx={{ fontSize: 60 }} />,
+  <UploadIcon sx={{ fontSize: 60 }} />,
+  <VideoIcon sx={{ fontSize: 60 }} />,
 ];
 
 export default function HowItWorks() {
@@ -15,11 +23,11 @@ export default function HowItWorks() {
           display: "flex",
           justifyContent: "center",
           width: 1,
-          mt: 5,
+          mt: 1,
         }}
       >
         <Box maxWidth="md" sx={{ width: 1 }}>
-          <Typography variant="h4" sx={{ mb: 5, textAlign: "center" }}>
+          <Typography variant="h5" sx={{ mb: 5, textAlign: "center" }}>
             How It Works
           </Typography>
           <Box
@@ -27,19 +35,21 @@ export default function HowItWorks() {
               display: "flex",
               justifyContent: "space-around",
               flexWrap: "wrap",
-              gap: 4,
+              width: 1,
+              gap: 2,
             }}
           >
             {steps.map((content, index) => (
-              <Card
+              <Box
                 key={content}
-                sx={{ maxWidth: 200, textAlign: "center", p: 1 }}
+                sx={{ maxWidth: 300, textAlign: "center", p: 1 }}
               >
-                <Typography sx={{ mb: 1 }} variant="h6">
+                {icons[index]}
+                <Typography sx={{ my: 1 }} variant="h6">
                   Step {index + 1}
                 </Typography>
-                <Typography>{content}</Typography>
-              </Card>
+                <Typography color="GrayText">{content}</Typography>
+              </Box>
             ))}
           </Box>
         </Box>

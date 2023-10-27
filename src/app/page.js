@@ -27,6 +27,10 @@ import UnmatchedFeatures from "@/components/home/unmatched-features";
 import About from "@/components/home/about";
 import Faq from "@/components/home/faq";
 import { gtm } from "@/utils/gtm";
+import { YelloBottom } from "@/icons/yellow-bottom";
+import { FreeStarIcon } from "@/icons/free-star";
+import { Pattern } from "@/icons/pattern";
+import GetMoreFeatures from "@/components/home/get-more-features";
 
 const client = new FileService();
 
@@ -198,10 +202,46 @@ export default function HomePage() {
             mb: 2,
             width: 1,
             gap: 3,
+            mt: 5,
           }}
         >
-          <Typography variant="h4" sx={{ textAlign: "center" }}>
-            AI Video Caption Generator Free Without Watermark
+          <Box textAlign="center">
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                gap: 1,
+                margin: "0 auto",
+              }}
+            >
+              <Typography variant="h4">AI Video Caption Generator</Typography>
+              <Box sx={{ position: "relative" }}>
+                <Typography variant="h4"> Free</Typography>
+                <FreeStarIcon
+                  sx={{
+                    fontSize: 94,
+                    position: "absolute",
+                    top: "-22px",
+                    left: "-15px",
+                  }}
+                />
+              </Box>
+            </Box>
+            <Typography variant="h4" sx={{ textAlign: "center" }}>
+              Without Watermark
+            </Typography>
+            <Box sx={{ textAlign: "center", mt: -1 }}>
+              <YelloBottom sx={{ width: 1 }} />
+            </Box>
+          </Box>
+          <Typography
+            color="GrayText"
+            textAlign="center"
+            variant="h5"
+            fontWeight="light"
+          >
+            Unlock the magic of effortless captioning with SubMagic Pro – the
+            free online caption generator for your videos.
           </Typography>
           <TextField
             select
@@ -239,9 +279,11 @@ export default function HomePage() {
           setSize={setSize}
         />
       </form>
+      <Pattern sx={{ width: 1, fontSize: 250, margin: "0 auto", mt: -7 }} />
       {!isAuthenticated ? (
         <>
           <HowItWorks />
+          <GetMoreFeatures />
           <CreateContentLike />
           <SubmagicProVsTraditional />
           <UnmatchedFeatures />

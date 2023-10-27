@@ -35,14 +35,22 @@ export default function TopbarHome() {
           width={isNonMobile ? "inherit" : "100px"}
         />
         <Box>
-          <Button size="small" href="https://blog.submgic.pro/about/">
+          <Button
+            size="small"
+            sx={{ color: "ButtonText" }}
+            href="https://blog.submgic.pro/about/"
+          >
             About
           </Button>
-          <Button href="https://blog.submgic.pro/contact/" size="small">
+          <Button
+            href="https://blog.submgic.pro/contact/"
+            sx={{ color: "ButtonText" }}
+            size="small"
+          >
             Contact
           </Button>
           <Button href="/auth/signup" size="small" variant="contained">
-            Sign up
+            Sign Up
           </Button>
         </Box>
       </Toolbar>

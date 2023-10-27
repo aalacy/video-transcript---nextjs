@@ -16,12 +16,12 @@ import {
 import {
   ContentCopy as DuplicateIcon,
   Close as XIcon,
-  NoteAddOutlined as NoteAddOutlinedIcon,
 } from "@mui/icons-material";
 import { createRef, useEffect } from "react";
 
 import { bytesToSize } from "@/utils/byte-to-size";
 import { useAuth } from "@/hooks/use-auth";
+import { UploadPlusIcon } from "@/icons";
 
 export const FileDropzone = (props) => {
   const {
@@ -101,10 +101,10 @@ export const FileDropzone = (props) => {
       <Box
         sx={{
           margin: "0 auto",
-          maxWidth: "md",
+          maxWidth: "sm",
           alignItems: "center",
           border: 1,
-          borderRadius: 1,
+          borderRadius: 4,
           borderStyle: "dashed",
           borderColor: "divider",
           display: "flex",
@@ -126,13 +126,13 @@ export const FileDropzone = (props) => {
       >
         <input {...getInputProps()} />
 
-        <Box sx={{ p: 2, textAlign: "center" }}>
-          <NoteAddOutlinedIcon color="primary" fontSize="large" />
-          <Typography fontWeight="bold" variant="h5" sx={{ my: 2 }}>
+        <Box sx={{ px: 2, textAlign: "center" }}>
+          <UploadPlusIcon sx={{ fontSize: 50 }} />
+          <Typography fontWeight="bold" variant="h6" sx={{ mt: 1 }}>
             Click to upload a file or drag and drop it here
           </Typography>
-          <Typography variant="body1" color="GrayText">
-            Up to {isAuthenticated ? 300 : 50}MB in size.
+          <Typography fontWeight="medium" variant="h6">
+            Up to <b>{isAuthenticated ? 300 : 50}MB</b> in size.
           </Typography>
           <Typography variant="caption" color="GrayText">
             MP4, MOV formats & 1:1, 4:5, 9:16 ratio accepted
@@ -140,7 +140,7 @@ export const FileDropzone = (props) => {
         </Box>
       </Box>
       {files.length > 0 && loaded ? (
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ margin: "0 auto", mt: 2, maxWidth: "sm" }}>
           <List>
             {files.map((file) => (
               <ListItem
@@ -178,22 +178,20 @@ export const FileDropzone = (props) => {
           </List>
           <Box
             sx={{
+              margin: "0 auto",
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "center",
               mt: 2,
             }}
           >
-            <Button onClick={onRemoveAll} size="small" type="button">
-              Remove
-            </Button>
             <Button
               onClick={onUpload}
               size="small"
-              sx={{ ml: 2 }}
+              sx={{ width: 1 }}
               type="button"
               variant="contained"
             >
-              Upload
+              Generate
             </Button>
           </Box>
         </Box>
