@@ -237,7 +237,7 @@ export default function HomePage() {
           <Typography
             color="GrayText"
             textAlign="center"
-            variant="h5"
+            variant="h6"
             fontWeight="light"
           >
             Unlock the magic of effortless captioning with SubMagic Pro – the
