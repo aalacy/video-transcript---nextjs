@@ -11,6 +11,7 @@ import {
   Roboto,
   Vina_Sans,
   Young_Serif,
+  Poppins,
 } from "next/font/google";
 
 // define your variable fonts
@@ -78,6 +79,12 @@ const gabrioto = Gabarito({
   display: "swap",
   adjustFontFallback: false,
 });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  adjustFontFallback: false,
+});
 
 export {
   inter,
@@ -92,4 +99,5 @@ export {
   roboto,
   vinaSans,
   youngSerif,
+  poppins,
 };

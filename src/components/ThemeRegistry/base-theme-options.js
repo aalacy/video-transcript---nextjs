@@ -11,6 +11,7 @@ import {
   roboto,
   vinaSans,
   youngSerif,
+  poppins,
 } from "@/styles/font";
 
 export const baseThemeOptions = {
@@ -274,19 +275,19 @@ export const baseThemeOptions = {
       fontWeight: 600,
     },
     fontFamily:
-      '"Poppins", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"' +
+      `${poppins.style.fontFamily}, -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif,` +
       `${amaticSC.style.fontFamily}, 
       ${bebasNeue.style.fontFamily}, 
       ${lora.style.fontFamily},
       ${gabrioto.style.fontFamily},
-       ${inter.style.fontFamily}, 
-       ${lato.style.fontFamily}, 
-       "${orbitron.style.fontFamily}", 
-       "${oswald.style.fontFamily}", 
-       "${raleway.style.fontFamily}", 
-       "${roboto.style.fontFamily}", 
-       "${vinaSans.style.fontFamily}", 
-       "${youngSerif.style.fontFamily}"`,
+      ${inter.style.fontFamily}, 
+      ${lato.style.fontFamily}, 
+       ${orbitron.style.fontFamily}, 
+       ${oswald.style.fontFamily}, 
+       ${raleway.style.fontFamily}, 
+       ${roboto.style.fontFamily}, 
+       ${vinaSans.style.fontFamily}, 
+       ${youngSerif.style.fontFamily}`,
     body1: {
       fontSize: "1rem",
       fontWeight: 400,
