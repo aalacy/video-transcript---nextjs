@@ -219,10 +219,10 @@ export default function HomePage() {
                 <Typography variant="h4"> Free</Typography>
                 <FreeStarIcon
                   sx={{
-                    fontSize: 94,
+                    fontSize: 106,
                     position: "absolute",
-                    top: "-22px",
-                    left: "-15px",
+                    top: "-32px",
+                    left: "-18px",
                   }}
                 />
               </Box>
