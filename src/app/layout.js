@@ -10,7 +10,6 @@ export const metadata = {
   icons: {
     icon: "/favicon.ico",
   },
-  robots: "noindex",
 };
 
 export default function DefaultRootLayout({ children, session }) {

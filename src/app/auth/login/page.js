@@ -10,6 +10,7 @@ export default function LoginPage() {
   return (
     <>
       <title>SubmagicPro - SignIn</title>
+      <meta name="robots" content="noindex" />
       <Container
         fixed
         maxWidth="xs"

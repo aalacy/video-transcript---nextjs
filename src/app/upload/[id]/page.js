@@ -151,11 +151,11 @@ export default function UploadPage({ params }) {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      backgroundColor: data?.metadata?.backgroundColor || "#4d1a7fff",
-      fontColor: data?.metadata?.fontColor || "#76f016",
+      backgroundColor: data?.metadata?.backgroundColor || "#ffbc02",
+      fontColor: data?.metadata?.fontColor || "#000101",
       font: data?.metadata?.font || "Roboto",
       fontWeight: data?.metadata?.fontWeight || fontWeights[0],
-      fontSize: data?.metadata?.fontSize || MIN_FONT,
+      fontSize: data?.metadata?.fontSize || 17,
       position: data?.metadata?.position || 50,
     },
     validationSchema: yup.object().shape({
