@@ -9,6 +9,7 @@ export default function ForgotPassword() {
   return (
     <>
       <title>SubmagicPro - Forgot your Password</title>
+      <meta name="robots" content="noindex" />
       <Container
         fixed
         maxWidth="xs"

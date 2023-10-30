@@ -11,6 +11,7 @@ export default function SignupPage() {
   return (
     <>
       <title>SubmagicPro - SignUp</title>
+      <meta name="robots" content="noindex" />
       <Container
         fixed
         maxWidth="xs"

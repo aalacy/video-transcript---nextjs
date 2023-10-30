@@ -9,6 +9,7 @@ export default function ResetPassword() {
   return (
     <>
       <title>SubmagicPro - Reset your Password</title>
+      <meta name="robots" content="noindex" />
       <Container
         fixed
         maxWidth="xs"
