@@ -8,8 +8,17 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import Link from "next/link";
+import { styled } from "@mui/material/styles";
 
 import Logo from "./logo";
+
+const LinkButton = styled(Button)(() => ({
+  color: "ButtonText",
+  "&:hover": {
+    backgroundColor: "primary.light",
+  },
+}));
 
 export default function TopbarHome() {
   const isNonMobile = useMediaQuery("(min-width:640px)");
@@ -35,23 +44,30 @@ export default function TopbarHome() {
           width={isNonMobile ? "inherit" : "100px"}
         />
         <Box>
-          <Button
-            size="small"
-            sx={{ color: "ButtonText" }}
-            href="https://blog.submgic.pro/about/"
-          >
-            About
-          </Button>
-          <Button
-            href="https://blog.submgic.pro/contact/"
-            sx={{ color: "ButtonText" }}
-            size="small"
-          >
-            Contact
-          </Button>
-          <Button href="/auth/signup" size="small" variant="contained">
-            Sign Up
-          </Button>
+          <LinkButton size="small">
+            <Link
+              href="https://blog.submgic.pro/about/"
+              style={{ color: "ButtonText", textDecoration: "none" }}
+            >
+              About
+            </Link>
+          </LinkButton>
+          <LinkButton size="small">
+            <Link
+              href="https://blog.submgic.pro/contact/"
+              style={{ color: "ButtonText", textDecoration: "none" }}
+            >
+              Contact
+            </Link>
+          </LinkButton>
+          <LinkButton size="small" variant="contained">
+            <Link
+              href="/auth/signup"
+              style={{ color: "ButtonText", textDecoration: "none" }}
+            >
+              Sign Up
+            </Link>
+          </LinkButton>
         </Box>
       </Toolbar>
       <Divider />
