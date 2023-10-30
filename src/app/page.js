@@ -176,33 +176,33 @@ export default function HomePage() {
             mt: 5,
           }}
         >
-          <Box
-            sx={{
-              position: "relative",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              width: "fit-content",
-              margin: "0 auto",
-            }}
-          >
-            <Typography variant="h4" display="inline">
-              AI Video Caption Generator Free
-            </Typography>
-            <FreeStarIcon
+          <Box>
+            <Box
               sx={{
-                fontSize: 106,
-                position: "absolute",
-                top: "-32px",
-                right: "-18px",
+                position: "relative",
+                textAlign: "center",
+                display: "flex",
+                justifyContent: "center",
+                width: "fit-content",
+                margin: "0 auto",
               }}
-            />
-          </Box>
-          <Typography variant="h4" sx={{ textAlign: "center" }}>
-            Without Watermark
-          </Typography>
-          <Box sx={{ textAlign: "center", mt: -1 }}>
-            <YelloBottom sx={{ width: 1 }} />
+            >
+              <Typography variant="h4" display="inline">
+                AI Video Caption Generator Free
+              </Typography>
+              <FreeStarIcon
+                sx={{
+                  fontSize: 106,
+                  position: "absolute",
+                  top: "-32px",
+                  right: "-18px",
+                }}
+              />
+            </Box>
+            <Typography variant="h4" sx={{ textAlign: "center" }}>
+              Without Watermark
+            </Typography>
+            <YelloBottom sx={{ width: 1, mt: -1 }} />
           </Box>
           <Typography
             color="GrayText"
