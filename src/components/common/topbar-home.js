@@ -63,7 +63,7 @@ export default function TopbarHome() {
           <LinkButton size="small" variant="contained">
             <Link
               href="/auth/signup"
-              style={{ color: "ButtonText", textDecoration: "none" }}
+              style={{ color: "White", textDecoration: "none" }}
             >
               Sign Up
             </Link>

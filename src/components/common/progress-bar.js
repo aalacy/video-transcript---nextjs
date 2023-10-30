@@ -6,10 +6,8 @@ export default function ProgressBar({ loading, progress }) {
       sx={{
         display: loading ? "inherit" : "none",
         textAlign: "center",
-        minHeight: 100,
-        margin: "0 auto",
-        mt: 10,
-        width: 1 / 3,
+        minHeight: 40,
+        width: 1,
       }}
     >
       <LinearProgress
@@ -17,9 +15,9 @@ export default function ProgressBar({ loading, progress }) {
         value={progress?.percent || 0}
         sx={{ width: 1, height: 10 }}
       />
-      <Typography variant="h5" sx={{ ml: 2, mt: 2 }}>
+      {/* <Typography variant="h5" sx={{ ml: 2, mt: 2 }}>
         {progress?.message}
-      </Typography>
+      </Typography> */}
     </Box>
   );
 }

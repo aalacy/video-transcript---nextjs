@@ -140,6 +140,7 @@ export default function RootLayout({ children }) {
             pt: hasLayout || hasHomeLayout ? ["48px", "56px", "64px"] : 0,
             ml: isNonMobile && hasLayout ? `${DRAWER_WIDTH}px` : 0,
             minHeight: 300,
+            mb: 2,
           }}
         >
           {children}

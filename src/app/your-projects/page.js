@@ -31,7 +31,6 @@ import { FileService } from "@/service/file-service";
 import { useAuth } from "@/hooks/use-auth";
 import { gtm } from "@/utils/gtm";
 import { useMounted } from "@/hooks/use-mounted";
-import { isAuthenticated } from "@/service/auth";
 
 const client = new FileService();
 
@@ -101,7 +100,8 @@ function CustomToolbar() {
 
 export default function YourProjectsPage() {
   const router = useRouter();
-  const { setTitleInfo, showConfirmDlg, hideConfirm } = useAuth();
+  const { setTitleInfo, showConfirmDlg, hideConfirm, isAuthenticated } =
+    useAuth();
   const isMounted = useMounted();
 
   const [paginationModel, setPaginationModel] = useState({
