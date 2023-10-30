@@ -139,6 +139,7 @@ export default function RootLayout({ children }) {
             flexGrow: 1,
             pt: hasLayout || hasHomeLayout ? ["48px", "56px", "64px"] : 0,
             ml: isNonMobile && hasLayout ? `${DRAWER_WIDTH}px` : 0,
+            minHeight: 300,
           }}
         >
           {children}
@@ -149,6 +150,7 @@ export default function RootLayout({ children }) {
             display: "flex",
             justifyContent: "space-between",
             my: 2,
+            ml: isNonMobile && hasLayout ? `${DRAWER_WIDTH}px` : 0,
           }}
         >
           <Typography>Copyright © 2023 SubmagicPRO</Typography>

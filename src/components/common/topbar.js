@@ -35,12 +35,13 @@ export default function Topbar({ setState, state, ...props }) {
       sx={{
         zIndex: 100,
         boxShadow: "none",
-        width: isNonMobile ? `calc(100% - ${DRAWER_WIDTH}px)` : "100%",
+        width: isNonMobile ? `calc(100% - ${DRAWER_WIDTH}px)` : 1,
       }}
     >
       <Toolbar
         variant="dense"
         sx={{
+          width: 1,
           backgroundColor: "background.paper",
           justifyContent: "space-between",
         }}

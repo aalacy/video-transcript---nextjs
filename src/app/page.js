@@ -192,19 +192,18 @@ export default function HomePage() {
         onSubmit={formik.handleSubmit}
       >
         <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
           sx={{
-            justifyContent: "center",
-            display: "flex",
-            flexDirection: "column",
             maxWidth: "sm",
             margin: "0 auto",
             mb: 2,
-            width: 1,
             gap: 3,
             mt: 5,
           }}
         >
-          <Box textAlign="center">
+          <Box>
             <Box
               sx={{
                 display: "flex",
