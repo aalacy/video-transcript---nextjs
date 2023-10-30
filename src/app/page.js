@@ -104,8 +104,6 @@ export default function HomePage() {
     } catch (error) {
       console.log("error", error);
       toast.error(error.response?.data?.message || "Something wrong happened.");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -117,8 +115,6 @@ export default function HomePage() {
       setProgress({ percent: 5, message: "Downloading..." });
     } catch (error) {
       toast.error(error.message);
-    } finally {
-      setLoading(false);
     }
   };
 

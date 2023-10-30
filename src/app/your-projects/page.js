@@ -187,15 +187,13 @@ export default function YourProjectsPage() {
         >
           <Link href={`/upload/${params.row.id}`}>
             <Image
-              src={
-                params.row.thumbnail
-                  ? "data:image/png;base64," + params.row.thumbnail
-                  : "/assets/placeholder.jpg"
-              }
+              src={params.row.thumbnail}
               alt="Thumbnail image"
               width={60}
               height={100}
-              loading="lazy"
+              placeholder="blur"
+              blurDataURL="/assets/placeholder.jpg"
+              onError={() => setSrc("/assets/placeholder.jpg")}
               style={{
                 objectFit: "contain",
                 borderRadius: 2,
