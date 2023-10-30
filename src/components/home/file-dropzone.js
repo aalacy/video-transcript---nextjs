@@ -22,6 +22,7 @@ import { createRef, useEffect } from "react";
 import { bytesToSize } from "@/utils/byte-to-size";
 import { useAuth } from "@/hooks/use-auth";
 import { UploadPlusIcon } from "@/icons";
+import ProgressBar from "../common/progress-bar";
 
 export const FileDropzone = (props) => {
   const {
@@ -44,6 +45,7 @@ export const FileDropzone = (props) => {
     onRemove,
     onRemoveAll,
     onUpload,
+    handleExport,
     preventDropOnDocument,
     setError,
     loaded,
@@ -52,7 +54,7 @@ export const FileDropzone = (props) => {
     ...other
   } = props;
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, progress, loading, showDownload } = useAuth();
 
   // We did not add the remaining props to avoid component complexity
   // but you can simply add it if you need to.
@@ -64,6 +66,7 @@ export const FileDropzone = (props) => {
       minSize,
       onDrop,
       multiple: false,
+      disabled: loading,
     });
 
   const videoRef = createRef();
@@ -127,17 +130,31 @@ export const FileDropzone = (props) => {
         <input {...getInputProps()} />
 
         <Box sx={{ px: 2, textAlign: "center" }}>
-          <UploadPlusIcon sx={{ fontSize: 50 }} />
-          <Typography fontWeight="bold" variant="h6" sx={{ mt: 1 }}>
-            Click to upload a file or drag and drop it here
-          </Typography>
-          <Typography fontWeight="medium" variant="h6">
-            Up to <b>{isAuthenticated ? 300 : 50}MB</b> in size.
-          </Typography>
-          <Typography variant="caption" color="GrayText">
-            MP4, MOV formats & 1:1, 4:5, 9:16 ratio accepted
-          </Typography>
+          <UploadPlusIcon sx={{ fontSize: 50, mb: 1 }} />
+          {loading ? (
+            <Typography variant="h6">{progress?.message}</Typography>
+          ) : (
+            <>
+              <Typography fontWeight="bold" variant="h6">
+                Click to upload a file or drag and drop it here
+              </Typography>
+              <Typography fontWeight="medium" variant="h6">
+                Up to <b>{isAuthenticated ? 300 : 50}MB</b> in size.
+              </Typography>
+              <Typography variant="caption" color="GrayText">
+                MP4, MOV formats & 1:1, 4:5, 9:16 ratio accepted
+              </Typography>
+            </>
+          )}
         </Box>
+      </Box>
+      <Box
+        sx={{
+          margin: "0 auto",
+          maxWidth: "sm",
+        }}
+      >
+        <ProgressBar loading={loading} progress={progress} />
       </Box>
       {files.length > 0 && loaded ? (
         <Box sx={{ margin: "0 auto", mt: 2, maxWidth: "sm" }}>
@@ -176,26 +193,28 @@ export const FileDropzone = (props) => {
               </ListItem>
             ))}
           </List>
-          <Box
-            sx={{
-              margin: "0 auto",
-              display: "flex",
-              justifyContent: "center",
-              mt: 2,
-            }}
-          >
-            <Button
-              onClick={onUpload}
-              size="small"
-              sx={{ width: 1 }}
-              type="button"
-              variant="contained"
-            >
-              Generate
-            </Button>
-          </Box>
         </Box>
       ) : null}
+      <Box
+        sx={{
+          margin: "0 auto",
+          maxWidth: "sm",
+          display: "flex",
+          justifyContent: "center",
+          mt: 2,
+        }}
+      >
+        <Button
+          onClick={showDownload ? handleExport : onUpload}
+          size="small"
+          sx={{ width: 1 }}
+          type="button"
+          variant="contained"
+          disabled={loading}
+        >
+          {showDownload ? "Download" : "Generate"}
+        </Button>
+      </Box>
       {files.length > 0 && acceptedFiles.length > 0 ? (
         <video
           id="videoRef"
@@ -228,6 +247,7 @@ FileDropzone.propTypes = {
   onRemoveAll: PropTypes.func,
   onUpload: PropTypes.func,
   preventDropOnDocument: PropTypes.bool,
+  handleExport: PropTypes.func,
 };
 
 FileDropzone.defaultProps = {
