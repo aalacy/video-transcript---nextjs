@@ -29,12 +29,12 @@ export default function TopbarHome() {
       sx={{
         zIndex: 100,
         boxShadow: "none",
-        width: "100%",
       }}
     >
       <Toolbar
         variant="dense"
         sx={{
+          width: 1,
           backgroundColor: "background.paper",
           justifyContent: "space-between",
         }}

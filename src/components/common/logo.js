@@ -8,6 +8,7 @@ export default function Logo(props) {
         display: "flex",
         justifyContent: "center",
         ...props,
+        width: "auto",
       }}
     >
       <Typography variant="h3" fontWeight="bold" sx={{ color: "black" }}>
