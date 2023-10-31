@@ -53,8 +53,11 @@ export default function VideoPlayer(props) {
         height="100%"
         onProgress={handleProgress}
         style={{
-          "& > video": {
+          "&": {
             borderRadius: "10%",
+          },
+          "&::-webkit-media-controls-fullscreen-button": {
+            display: "none",
           },
         }}
         config={{
