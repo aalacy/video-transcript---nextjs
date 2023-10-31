@@ -17,12 +17,22 @@ import {
   ContentCopy as DuplicateIcon,
   Close as XIcon,
 } from "@mui/icons-material";
-import { createRef, useEffect } from "react";
+import { createRef, useCallback, useEffect } from "react";
 
 import { bytesToSize } from "@/utils/byte-to-size";
 import { useAuth } from "@/hooks/use-auth";
-import { UploadPlusIcon } from "@/icons";
+import {
+  ReadyToDownloadIcon,
+  TranscribingIcon,
+  UploadPlusIcon,
+  UploadingIcon,
+} from "@/icons";
 import ProgressBar from "../common/progress-bar";
+import {
+  MESSAGE_DOWNLOADING,
+  MESSAGE_TRANSCRIBING,
+  MESSAGE_UPLOADING,
+} from "@/constants";
 
 export const FileDropzone = (props) => {
   const {
@@ -51,6 +61,7 @@ export const FileDropzone = (props) => {
     loaded,
     setLoaded,
     setSize,
+    curFile,
     ...other
   } = props;
 
@@ -99,6 +110,19 @@ export const FileDropzone = (props) => {
         ?.removeEventListener("loadedmetadata");
   }, [acceptedFiles?.length]);
 
+  const HomeCenterIcon = useCallback(
+    ({ message }, showDownload) => {
+      if (message === MESSAGE_UPLOADING)
+        return <UploadingIcon sx={{ fontSize: 50 }} />;
+      else if (message === MESSAGE_DOWNLOADING || showDownload)
+        return <ReadyToDownloadIcon sx={{ fontSize: 50 }} />;
+      else if (message === MESSAGE_TRANSCRIBING)
+        return <TranscribingIcon sx={{ fontSize: 50 }} />;
+      return <UploadPlusIcon sx={{ fontSize: 50 }} />;
+    },
+    [loading, progress, showDownload],
+  );
+
   return (
     <div {...other}>
       <Box
@@ -129,10 +153,31 @@ export const FileDropzone = (props) => {
       >
         <input {...getInputProps()} />
 
-        <Box sx={{ px: 2, textAlign: "center" }}>
-          <UploadPlusIcon sx={{ fontSize: 50, mb: 1 }} />
-          {loading ? (
-            <Typography variant="h6">{progress?.message}</Typography>
+        <Box
+          sx={{
+            px: 2,
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Box sx={{ mb: 2 }}>{HomeCenterIcon(progress, showDownload)}</Box>
+          {loading || showDownload ? (
+            <>
+              <Typography variant="caption" color="GrayText">
+                {curFile.name}
+              </Typography>
+              {showDownload ? (
+                <Typography variant="body2" fontWeight="bold">
+                  File is ready to download
+                </Typography>
+              ) : (
+                <Typography variant="body2" fontWeight="bold">
+                  {progress?.message}&nbsp;{progress?.percent?.toFixed(2)}%...
+                </Typography>
+              )}
+            </>
           ) : (
             <>
               <Typography fontWeight="bold" variant="h6">
@@ -199,7 +244,7 @@ export const FileDropzone = (props) => {
         sx={{
           margin: "0 auto",
           maxWidth: "sm",
-          display: "flex",
+          display: loaded ? "flex" : "none",
           justifyContent: "center",
           mt: 2,
         }}
@@ -248,6 +293,7 @@ FileDropzone.propTypes = {
   onUpload: PropTypes.func,
   preventDropOnDocument: PropTypes.bool,
   handleExport: PropTypes.func,
+  curFile: PropTypes.object,
 };
 
 FileDropzone.defaultProps = {

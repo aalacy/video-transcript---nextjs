@@ -40,6 +40,11 @@ export const JOB_MONSTER_TRANSCRIPTION = "monster-transcription";
 export const JOB_FILE_UPLOAD = "file-upload";
 export const JOB_GENERATE_VIDEO = "generate-video";
 
+// Messages
+export const MESSAGE_UPLOADING = "Uploading";
+export const MESSAGE_TRANSCRIBING = "Transcribing";
+export const MESSAGE_DOWNLOADING = "Downloading";
+
 export const isoLangs = [
   {
     code: "en",
