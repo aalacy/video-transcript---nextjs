@@ -53,13 +53,14 @@ export default function UnmatchedFeatures() {
             sx={{
               display: "flex",
               justifyContent: "center",
+              flexWrap: "wrap",
               width: 1,
               mt: 5,
               gap: 2,
             }}
           >
             {features.map(({ icon, feature, content }) => (
-              <Box textAlign="center" key={feature}>
+              <Box maxWidth={216} textAlign="center" key={feature}>
                 {icon}
                 <Typography sx={{ my: 1 }}>
                   <b>{feature}</b>
