@@ -57,6 +57,13 @@ export default function VideoPlayer(props) {
             borderRadius: "10%",
           },
         }}
+        config={{
+          file: {
+            attributes: {
+              controlsList: "nofullscreen",
+            },
+          },
+        }}
       />
       <Box
         sx={{
