@@ -48,6 +48,7 @@ export default function TopbarHome() {
             <Link
               href="https://blog.submgic.pro/about/"
               style={{ color: "ButtonText", textDecoration: "none" }}
+              target="_blank"
             >
               About
             </Link>
@@ -56,6 +57,7 @@ export default function TopbarHome() {
             <Link
               href="https://blog.submgic.pro/contact/"
               style={{ color: "ButtonText", textDecoration: "none" }}
+              target="_blank"
             >
               Contact
             </Link>
