@@ -15,6 +15,7 @@ import Logo from "./logo";
 
 const LinkButton = styled(Button)(() => ({
   color: "ButtonText",
+  fontWeight: "500",
   "&:hover": {
     backgroundColor: "primary.light",
   },
@@ -29,18 +30,20 @@ export default function TopbarHome() {
       sx={{
         zIndex: 100,
         boxShadow: "none",
+        bgcolor: "background.paper",
       }}
     >
       <Toolbar
         variant="dense"
         sx={{
+          py: 1,
           width: 1,
           backgroundColor: "background.paper",
           justifyContent: "space-between",
         }}
       >
         <Logo
-          transform={isNonMobile ? "scale(1)" : "scale(0.7)"}
+          transform={isNonMobile ? "scale(0.6)" : "scale(0.5)"}
           width={isNonMobile ? "inherit" : "100px"}
         />
         <Box>

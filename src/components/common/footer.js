@@ -12,6 +12,7 @@ export default function Footer({ hasLayout }) {
         display: "flex",
         justifyContent: "space-between",
         my: 2,
+        px: 2,
         ml: isNonMobile && hasLayout ? `${DRAWER_WIDTH}px` : 0,
       }}
     >
