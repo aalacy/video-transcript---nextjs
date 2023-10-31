@@ -11,13 +11,17 @@ export default function Logo(props) {
         width: "auto",
       }}
     >
-      <Typography variant="h3" fontWeight="bold" sx={{ color: "black" }}>
+      <Typography
+        variant="h3"
+        fontWeight="bold"
+        sx={{ color: "black", fontFamily: "Times New Roman" }}
+      >
         Submagic
       </Typography>
       <Typography
         variant="h4"
         fontWeight="bold"
-        sx={{ color: "warning.light" }}
+        sx={{ color: "warning.light", fontFamily: "Times New Roman" }}
       >
         PRO
       </Typography>
