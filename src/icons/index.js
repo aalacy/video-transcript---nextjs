@@ -11,3 +11,6 @@ export * from "./customize-your-captions";
 export * from "./download-anytime";
 export * from "./edit-your-captions";
 export * from "./save-project";
+export * from "./uploading";
+export * from "./transcribing";
+export * from "./ready-to-download";

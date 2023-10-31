@@ -35,6 +35,7 @@ const client = new FileService();
 
 export default function HomePage() {
   const [files, setFiles] = useState([]);
+  const [curFile, setFile] = useState({});
   const [fileError, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [size, setSize] = useState({});
@@ -59,6 +60,7 @@ export default function HomePage() {
   const handleDrop = (newFiles, fileRejections) => {
     setProgress({ percent: 0, message: "" });
     setFiles(() => [...newFiles]);
+    setFile(newFiles[0]);
     if (fileRejections.length) {
       const { file, errors } = fileRejections[0];
       const { name } = file;
@@ -80,10 +82,12 @@ export default function HomePage() {
       prevFiles.filter((_file) => _file.path !== file.path),
     );
     setLoaded(false);
+    setFile({});
   };
 
   const handleRemoveAll = () => {
     setFiles([]);
+    setFile({});
     setLoaded(false);
   };
 
@@ -195,7 +199,7 @@ export default function HomePage() {
                   fontSize: 106,
                   position: "absolute",
                   top: "-32px",
-                  right: "-18px",
+                  right: "-20px",
                 }}
               />
             </Box>
@@ -248,6 +252,7 @@ export default function HomePage() {
           loaded={loaded}
           setLoaded={setLoaded}
           setSize={setSize}
+          curFile={curFile}
         />
       </form>
       <Pattern sx={{ width: 1, fontSize: 250, margin: "0 auto", mt: -7 }} />
