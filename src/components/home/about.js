@@ -14,7 +14,7 @@ export default function About() {
           mt: 10,
         }}
       >
-        <Box maxWidth="md" sx={{ width: 1 }}>
+        <Box maxWidth="sm" sx={{ width: 1 }}>
           <Typography variant="h5" sx={{ mb: 3, textAlign: "center" }}>
             About Submagic pro
           </Typography>
