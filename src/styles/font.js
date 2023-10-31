@@ -65,25 +65,21 @@ const vinaSans = Vina_Sans({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
-  adjustFontFallback: false,
 });
 const youngSerif = Young_Serif({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
-  adjustFontFallback: false,
 });
 const gabrioto = Gabarito({
   subsets: ["latin"],
   weight: ["400", "700"],
   display: "swap",
-  adjustFontFallback: false,
 });
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "700"],
   display: "swap",
-  adjustFontFallback: false,
 });
 
 export {
