@@ -22,8 +22,10 @@ export default function Footer({ hasLayout }) {
         spacing={1}
       >
         <Typography>All Rights Reserved</Typography>
-        <Link href="#">Terms and Conditions</Link>
-        <Link href="#">Privacy Policy</Link>
+        <Link href="https://blog.submagic.pro/tos/">Terms and Conditions</Link>
+        <Link href="https://blog.submagic.pro/privacy-policy/">
+          Privacy Policy
+        </Link>
       </Stack>
     </Box>
   );
