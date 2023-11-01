@@ -17,7 +17,7 @@ export const ProgressModal = (props) => {
   return (
     <Dialog
       fullWidth
-      fullScreen={fullScreen}
+      maxWidth="sm"
       open={loading}
       aria-labelledby="Progress Modal"
       aria-describedby="Progress Modal"

@@ -71,7 +71,7 @@ export default function VideoPlayer(props) {
       <Box
         sx={{
           position: "absolute",
-          top: `calc(${metadata.position || 0}% - 30px)`,
+          top: `calc(${metadata.position || 0}% + 10px)`,
           display: "flex",
           justifyContent: "center",
           width: 1,
@@ -84,11 +84,11 @@ export default function VideoPlayer(props) {
             textAlign: "center",
             fontWeight: metadata.fontWeight || "medium",
             fontStyle: metadata.fontWeight,
-            fontSize: (metadata.fontSize || 16) * scale * 0.5,
+            fontSize: metadata.fontSize || 16,
             fontFamily: GOOGLE_FONTS[metadata.font] || "Arial",
             color: metadata.fontColor || "inherit",
             backgroundColor: metadata.backgroundColor || "inherit",
-            px: 1,
+            mx: 3,
           }}
         >
           {selectedCue?.text}
