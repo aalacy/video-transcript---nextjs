@@ -89,6 +89,7 @@ export default function VideoPlayer(props) {
             color: metadata.fontColor || "inherit",
             backgroundColor: metadata.backgroundColor || "inherit",
             mx: 3,
+            px: "2px",
           }}
         >
           {selectedCue?.text}
