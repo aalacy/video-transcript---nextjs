@@ -209,10 +209,10 @@ const dayObj = (timestamp) => {
 
 export const downloadMedia = (fileName, output) => {
   const downloadLink = document.createElement("a");
-  downloadLink.download = fileName;
   downloadLink.href = output;
-  downloadLink.style.display = "none";
-  downloadLink.target = "_blank";
+  // downloadLink.style.display = "none";
+  // downloadLink.target = "_blank";
+  downloadLink.setAttribute("download", fileName);
   document.body.appendChild(downloadLink);
   downloadLink.click();
 };

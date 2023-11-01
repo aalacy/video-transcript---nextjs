@@ -24,6 +24,7 @@ import {
 import { useMounted } from "@/hooks/use-mounted";
 import ProgressBar from "@/components/common/progress-bar";
 import { gtm } from "@/utils/gtm";
+import { ProgressModal } from "@/components/common/progress-popup";
 
 function a11yProps(index) {
   return {
@@ -171,10 +172,10 @@ export default function UploadPage({ params }) {
   return (
     <>
       <title>SubmagicPro - Upload</title>
-      <ProgressBar loading={loading} progress={progress} />
+      <ProgressModal loading={loading} progress={progress} />
       <Box
         sx={{
-          display: !loading && canShow ? "flex" : "none",
+          display: canShow ? "flex" : "none",
           flexWrap: "wrap-reverse",
           justifyContent: "center",
           gap: 3,
