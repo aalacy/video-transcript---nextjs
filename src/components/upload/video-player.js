@@ -65,7 +65,7 @@ export default function VideoPlayer(props) {
             attributes: {
               controlsList: "nofullscreen",
             },
-          },
+          },sssssssssssssssssssssssssssssss
         }}
       />
       <Box
