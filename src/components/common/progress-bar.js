@@ -15,9 +15,6 @@ export default function ProgressBar({ loading, progress }) {
         value={progress?.percent || 0}
         sx={{ width: 1, height: 10 }}
       />
-      {/* <Typography variant="h5" sx={{ ml: 2, mt: 2 }}>
-        {progress?.message}
-      </Typography> */}
     </Box>
   );
 }

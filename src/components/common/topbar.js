@@ -35,6 +35,7 @@ export default function Topbar({ setState, state, ...props }) {
       sx={{
         zIndex: 100,
         boxShadow: "none",
+        bgcolor: "background.paper",
         width: isNonMobile ? `calc(100% - ${DRAWER_WIDTH}px)` : 1,
       }}
     >
@@ -42,6 +43,7 @@ export default function Topbar({ setState, state, ...props }) {
         variant="dense"
         sx={{
           width: 1,
+          py: 1,
           backgroundColor: "background.paper",
           justifyContent: "space-between",
         }}

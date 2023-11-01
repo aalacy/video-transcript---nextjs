@@ -65,14 +65,7 @@ export default function VideoPlayer(props) {
             attributes: {
               controlsList: "nofullscreen",
             },
-          },
-        }}
-        config={{
-          file: {
-            attributes: {
-              controlsList: "nofullscreen",
-            },
-          },
+          },sssssssssssssssssssssssssssssss
         }}
       />
       <Box
@@ -95,6 +88,7 @@ export default function VideoPlayer(props) {
             fontFamily: GOOGLE_FONTS[metadata.font] || "Arial",
             color: metadata.fontColor || "inherit",
             backgroundColor: metadata.backgroundColor || "inherit",
+            px: 1,
           }}
         >
           {selectedCue?.text}
