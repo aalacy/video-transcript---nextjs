@@ -80,6 +80,7 @@ export default function UploadPage({ params }) {
       await client.download({ fileId: params.id });
     } catch (error) {
       toast.error(error.message);
+      setLoading(false);
     }
   };
 
