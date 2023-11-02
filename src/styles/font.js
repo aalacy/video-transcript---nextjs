@@ -66,6 +66,7 @@ const youngSerif = Young_Serif({
 const gabrioto = Gabarito({
   subsets: ["latin"],
   weight: ["400", "700"],
+  display: "swap",
 });
 const poppins = Poppins({
   subsets: ["latin"],
