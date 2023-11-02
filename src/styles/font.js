@@ -18,38 +18,31 @@ import {
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
 });
 const lora = Lora({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
 });
 const lato = Lato({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
 });
 const amaticSC = Amatic_SC({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
 });
 const bebasNeue = Bebas_Neue({
   subsets: ["latin"],
   weight: ["400"],
-  display: "swap",
 });
 
 const orbitron = Orbitron({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
 });
 const oswald = Oswald({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
 });
 const raleway = Raleway({
   subsets: ["latin"],
@@ -59,7 +52,6 @@ const raleway = Raleway({
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
 });
 const vinaSans = Vina_Sans({
   subsets: ["latin"],
@@ -74,7 +66,6 @@ const youngSerif = Young_Serif({
 const gabrioto = Gabarito({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
 });
 const poppins = Poppins({
   subsets: ["latin"],

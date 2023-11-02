@@ -25,7 +25,7 @@ export const GOOGLE_FONTS = {
   Oswald: oswald.style.fontFamily,
   Raleway: raleway.style.fontFamily,
   Roboto: roboto.style.fontFamily,
-  "Vina Sans": vinaSans.style.fontFamily,
+  "vina sans": vinaSans.style.fontFamily,
   "Young Serif": youngSerif.style.fontFamily,
 };
 export const fontWeights = ["Light", "Bold", "Italic"];

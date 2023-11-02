@@ -22,7 +22,6 @@ import {
   MAX_POSITION,
 } from "@/constants";
 import { useMounted } from "@/hooks/use-mounted";
-import ProgressBar from "@/components/common/progress-bar";
 import { gtm } from "@/utils/gtm";
 import { ProgressModal } from "@/components/common/progress-popup";
 
@@ -66,62 +65,77 @@ export default function UploadPage({ params }) {
   const [data, setData] = useState({});
   const [canShow, setCanShow] = useState();
 
-  const handleSave = async () => {
+  const handleSave = () => {
     try {
-      await formik.submitForm();
+      formik.submitForm();
     } catch (error) {
       toast.error(error.message);
     }
   };
 
-  const handleExport = async () => {
+  const handleExport = () => {
     try {
       setLoading(true);
-      await client.download({ fileId: params.id });
+      client.saveAndDownload(
+        params.id,
+        compileVTT(cues, updatedCues),
+        formik.values,
+      );
     } catch (error) {
+      debugger;
       toast.error(error.message);
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (cues?.length < 1 || updatedCues?.length < 1) return;
+    setHandleSave(handleSave);
+    setHandleExport(handleExport);
+  }, [cues, updatedCues, metadata]);
 
   const getData = useCallback(async () => {
     try {
       const { data } = await client.get(params.id);
       setTitleInfo({ title: data.fileName });
       setData(data);
+      processData(data);
     } catch (error) {
+      debugger;
       toast.error(error.message);
     }
     gtm.push({ event: "page_view" });
   }, []);
 
   useEffect(() => {
-    setHandleSave(handleSave);
-    setHandleExport(handleExport);
     getData();
+
     return () => {
       setHandleSave(null);
       setHandleExport(null);
     };
   }, []);
 
-  useEffect(() => {
-    if (!data?.vtt) return;
-    const parsed = parseVtt(data.vtt);
-    const obj = {};
-    const bools = {};
-    if (parsed.valid) {
-      setCues(parsed.cues);
-      if (parsed.cues.length > 0) setSelectedCue(parsed.cues[0]);
-      Array.from(parsed.cues).forEach((cue) => {
-        obj[cue.identifier] = cue.text;
-        bools[cue.identifier] = false;
-      });
-    }
-    setInitialValues(obj);
-    setShowInputs(bools);
-    setTimeout(() => setCanShow(true), 300);
-  }, [data?.vtt]);
+  const processData = useCallback(
+    (data) => {
+      if (!data?.vtt) return;
+      const parsed = parseVtt(data.vtt);
+      const obj = {};
+      const bools = {};
+      if (parsed.valid) {
+        setCues(parsed.cues);
+        if (parsed.cues.length > 0) setSelectedCue(parsed.cues[0]);
+        Array.from(parsed.cues).forEach((cue) => {
+          obj[cue.identifier] = cue.text;
+          bools[cue.identifier] = false;
+        });
+      }
+      setInitialValues(obj);
+      setShowInputs(bools);
+      setTimeout(() => setCanShow(true), 300);
+    },
+    [data],
+  );
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

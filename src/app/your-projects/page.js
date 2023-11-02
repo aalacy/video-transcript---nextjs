@@ -144,10 +144,10 @@ export default function YourProjectsPage() {
       close: hideConfirm,
       callback: async () => {
         try {
+          hideConfirm();
           await client.delete(id);
           toast.success("Successfully deleted.");
           fetchData();
-          hideConfirm();
         } catch (error) {
           toast.error(error.message || "Something went wrong!");
         }

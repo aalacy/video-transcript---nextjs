@@ -15,17 +15,21 @@ export class FileService {
     return http.post(url, formData, config);
   }
 
-  download({ fileId, visitorId }) {
-    return http.post(`/api/file/download`, { fileId, visitorId });
+  download({ visitorId }) {
+    return http.post(`/api/file/download`, { visitorId });
+  }
+
+  saveAndDownload(fileId, vtt, metadata) {
+    return http.post(`/api/file/save-and-download`, { fileId, vtt, metadata });
   }
 
   generateTranscription(inputData) {
     return http.post("/api/file/generate-transcription", inputData);
   }
 
-  saveProject(id, vtt, metadata) {
+  saveProject(fileId, vtt, metadata) {
     return http.post("/api/file/save-project", {
-      id,
+      fileId,
       vtt,
       metadata,
     });

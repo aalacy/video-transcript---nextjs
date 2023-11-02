@@ -5,6 +5,8 @@ import { Box, Typography } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 
+import "./style.css";
+
 const WIDTH = 320;
 
 export default function VideoPlayer(props) {
@@ -40,6 +42,7 @@ export default function VideoPlayer(props) {
 
   return (
     <Box
+      id="video-player"
       sx={{
         position: "relative",
       }}
@@ -52,14 +55,6 @@ export default function VideoPlayer(props) {
         width={`${WIDTH}px`}
         height="100%"
         onProgress={handleProgress}
-        style={{
-          "&": {
-            borderRadius: "10%",
-          },
-          "&::-webkit-media-controls-fullscreen-button": {
-            display: "none",
-          },
-        }}
         config={{
           file: {
             attributes: {

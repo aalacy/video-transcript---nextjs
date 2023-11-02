@@ -1,0 +1,8 @@
+#video-player video {
+  & {
+    border-radius: 16px;
+  }
+  &::-webkit-media-controls-fullscreen-button {
+    display: none;
+  }
+}
