@@ -94,7 +94,7 @@ export default function HomePage() {
   const onUpload = async () => {
     setLoading(true);
     try {
-      // setProgress({ percent: 5, message: MESSAGE_UPLOADING });
+      setProgress({ percent: 5, message: MESSAGE_UPLOADING });
       await client.upload(visitorId, {
         file: files[0],
         ...size,
