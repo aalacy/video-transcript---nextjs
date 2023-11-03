@@ -28,8 +28,8 @@ export default function ForgotPassword() {
               my: 2,
             }}
           >
-            <Typography variant="h5">Forgot your password?</Typography>
-            <Typography sx={{ textAlign: "center" }}>
+            <Typography variant="h6">Forgot your password?</Typography>
+            <Typography sx={{ textAlign: "center", mt: 2 }}>
               Enter your email address and we will send you instructions to
               reset your password
             </Typography>

@@ -28,7 +28,7 @@ export default function ResetPassword() {
               my: 2,
             }}
           >
-            <Typography variant="h5">Reset your password</Typography>
+            <Typography variant="h6">Reset your password</Typography>
           </Box>
           <Box
             sx={{

@@ -31,7 +31,7 @@ export default function LoginPage() {
               my: 2,
             }}
           >
-            <Typography variant="h5">Welcome back</Typography>
+            <Typography variant="h6">Welcome back</Typography>
           </Box>
           <Box
             sx={{

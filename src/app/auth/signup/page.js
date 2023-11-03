@@ -32,7 +32,7 @@ export default function SignupPage() {
               my: 2,
             }}
           >
-            <Typography variant="h5">Create your account</Typography>
+            <Typography variant="h6">Create your account</Typography>
           </Box>
           <Box
             sx={{

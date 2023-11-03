@@ -43,8 +43,8 @@ export default function TopbarHome() {
         }}
       >
         <Logo
-          transform={isNonMobile ? "scale(0.6)" : "scale(0.5)"}
-          width={isNonMobile ? "inherit" : "100px"}
+          size={isNonMobile ? "medium" : "small"}
+          width={isNonMobile ? "auto" : "100px"}
         />
         <Box>
           <LinkButton size="small">
