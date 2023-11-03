@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import { useEffect, useMemo, useState } from "react";
 
 import { FileService } from "@/service/file-service";
-import { isoLangs } from "@/constants";
+import { MESSAGE_UPLOADING, isoLangs } from "@/constants";
 import { FileDropzone } from "@/components/home/file-dropzone";
 import { useAuth } from "@/hooks/use-auth";
 import ProgressBar from "@/components/common/progress-bar";
@@ -94,6 +94,7 @@ export default function HomePage() {
   const onUpload = async () => {
     setLoading(true);
     try {
+      setProgress({ percent: 5, message: MESSAGE_UPLOADING });
       await client.upload(visitorId, {
         file: files[0],
         ...size,
