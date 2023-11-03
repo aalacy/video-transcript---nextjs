@@ -17,7 +17,7 @@ export const DRAWER_WIDTH = 240;
 
 export const GOOGLE_FONTS = {
   "Amatic SC": amaticSC.style.fontFamily,
-  BebasNeue: bebasNeue.style.fontFamily,
+  "Bebas Neue": bebasNeue.style.fontFamily,
   Gabarito: gabrioto.style.fontFamily,
   Inter: inter.style.fontFamily,
   Lato: lato.style.fontFamily,

@@ -66,7 +66,9 @@ export default function VideoPlayer(props) {
       <Box
         sx={{
           position: "absolute",
-          top: `calc(${metadata.position || 0}% + 10px)`,
+          top: `calc(${metadata.position || 0}%)`,
+          marginTop: "-0.5em",
+          whiteSpace: "nowrap",
           display: "flex",
           justifyContent: "center",
           width: 1,
