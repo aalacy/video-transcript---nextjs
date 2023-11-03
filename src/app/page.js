@@ -94,7 +94,7 @@ export default function HomePage() {
   const onUpload = async () => {
     setLoading(true);
     try {
-      await client.upload({
+      await client.upload(visitorId, {
         file: files[0],
         ...size,
         lang: formik.values.lang,

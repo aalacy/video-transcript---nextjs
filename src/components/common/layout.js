@@ -98,7 +98,6 @@ export default function RootLayout({ children }) {
           }
         } else if (status === "failed") {
           setLoading(false);
-          console.error("job ", jobName, error);
           toast.error(`Something wrong happened.`);
         }
       }

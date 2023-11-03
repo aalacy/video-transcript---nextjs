@@ -1,9 +1,9 @@
 import http from "./http.js";
 
 export class FileService {
-  upload(fileData) {
+  upload(visitorId, fileData) {
     const formData = new FormData();
-    let url = "/api/file/upload";
+    let url = `/api/file/upload?visitorId=${visitorId}`;
     for (let key in fileData) {
       formData.append(key, fileData[key]);
     }

@@ -244,7 +244,7 @@ export const FileDropzone = (props) => {
         sx={{
           margin: "0 auto",
           maxWidth: "sm",
-          display: loaded ? "flex" : "none",
+          display: loaded || loading ? "flex" : "none",
           justifyContent: "center",
           mt: 2,
         }}
