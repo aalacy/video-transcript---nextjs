@@ -7,12 +7,12 @@ const mainSizeMap = {
 };
 
 const secondSizeMap = {
-  small: "h6",
+  small: "h5",
   medium: "h4",
   large: "h4",
 };
 
-export default function Logo({ size = "large", width = "100px" }) {
+export default function Logo({ size = "large", width = "auto" }) {
   return (
     <Box
       sx={{
@@ -20,7 +20,6 @@ export default function Logo({ size = "large", width = "100px" }) {
         display: "flex",
         justifyContent: "center",
         width: width || "auto",
-        margin: "0 auto",
       }}
     >
       <Typography

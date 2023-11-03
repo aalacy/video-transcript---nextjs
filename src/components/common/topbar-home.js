@@ -37,6 +37,7 @@ export default function TopbarHome() {
         variant="dense"
         sx={{
           py: 1,
+          ml: isNonMobile ? "inherit" : 1,
           width: 1,
           backgroundColor: "background.paper",
           justifyContent: "space-between",
