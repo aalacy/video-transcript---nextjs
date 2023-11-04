@@ -81,7 +81,7 @@ export default function VideoPlayer(props) {
             textAlign: "center",
             fontWeight: metadata.fontWeight || "medium",
             fontStyle: metadata.fontWeight,
-            fontSize: metadata.fontSize || 16,
+            fontSize: (metadata.fontSize || 16) * 0.78,
             fontFamily: GOOGLE_FONTS[metadata.font] || "Arial",
             color: metadata.fontColor || "inherit",
             backgroundColor: metadata.backgroundColor || "inherit",
