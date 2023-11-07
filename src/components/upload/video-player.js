@@ -67,7 +67,6 @@ export default function VideoPlayer(props) {
         sx={{
           position: "absolute",
           top: `calc(${metadata.position || 0}%)`,
-          marginTop: "-1em",
           whiteSpace: "nowrap",
           display: "flex",
           justifyContent: "center",
@@ -79,6 +78,7 @@ export default function VideoPlayer(props) {
           sx={{
             lineHeight: 1,
             textAlign: "center",
+            marginTop: "-1em",
             fontWeight: metadata.fontWeight || "medium",
             fontStyle: metadata.fontWeight,
             fontSize: (metadata.fontSize || 16) * 0.78,
