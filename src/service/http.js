@@ -9,7 +9,7 @@ const $api = axios.create({
   validateStatus: function (status) {
     return status == 200 || status == 201;
   },
-  // timeout: 1225000,
+  timeout: 12250000,
   baseURL: `${API_URL}`,
 });
 
