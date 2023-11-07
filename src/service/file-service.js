@@ -1,18 +1,27 @@
 import http from "./http.js";
 
 export class FileService {
-  upload(visitorId, fileData) {
+  upload(visitorId, fileData, setProgress) {
     const formData = new FormData();
     let url = `/api/file/upload?visitorId=${visitorId}`;
     for (let key in fileData) {
       formData.append(key, fileData[key]);
     }
-    const config = {
+
+    return http.request({
+      method: "POST",
+      url,
+      data: formData,
       headers: {
         "content-type": "multipart/form-data",
       },
-    };
-    return http.post(url, formData, config);
+      onUploadProgress: (ProgressEvent) =>
+        setProgress(
+          parseFloat((ProgressEvent.loaded / ProgressEvent.total) * 10).toFixed(
+            2,
+          ),
+        ),
+    });
   }
 
   download({ visitorId }) {

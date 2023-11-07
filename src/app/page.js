@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Box,
-  TextField,
-  MenuItem,
-  Typography,
-  CircularProgress,
-  Button,
-} from "@mui/material";
-import { Download as DownloadIcon } from "@mui/icons-material";
+import { Box, TextField, MenuItem, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import toast from "react-hot-toast";
@@ -18,7 +10,6 @@ import { FileService } from "@/service/file-service";
 import { MESSAGE_UPLOADING, isoLangs } from "@/constants";
 import { FileDropzone } from "@/components/home/file-dropzone";
 import { useAuth } from "@/hooks/use-auth";
-import ProgressBar from "@/components/common/progress-bar";
 import HowItWorks from "@/components/home/how-it-works";
 import CreateContentLike from "@/components/home/create-content-like";
 import SubmagicProVsTraditional from "@/components/home/compare";
@@ -94,13 +85,18 @@ export default function HomePage() {
   const onUpload = async () => {
     setLoading(true);
     try {
-      setProgress({ percent: 5, message: MESSAGE_UPLOADING });
-      await client.upload(visitorId, {
-        file: files[0],
-        ...size,
-        lang: formik.values.lang,
+      await client.upload(
         visitorId,
-      });
+        {
+          file: files[0],
+          ...size,
+          lang: formik.values.lang,
+          visitorId,
+        },
+        (percent) => {
+          setProgress({ percent: Number(percent), message: MESSAGE_UPLOADING });
+        },
+      );
       setFiles([]);
     } catch (error) {
       console.log("error", error);
