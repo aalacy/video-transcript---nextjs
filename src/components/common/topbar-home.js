@@ -50,7 +50,7 @@ export default function TopbarHome() {
         <Box>
           <LinkButton size="small">
             <Link
-              href="https://blog.submgic.pro/about/"
+              href="https://blog.submagic.pro/about/"
               style={{ color: "ButtonText", textDecoration: "none" }}
               target="_blank"
             >
@@ -59,7 +59,7 @@ export default function TopbarHome() {
           </LinkButton>
           <LinkButton size="small">
             <Link
-              href="https://blog.submgic.pro/contact/"
+              href="https://blog.submagic.pro/contact/"
               style={{ color: "ButtonText", textDecoration: "none" }}
               target="_blank"
             >
