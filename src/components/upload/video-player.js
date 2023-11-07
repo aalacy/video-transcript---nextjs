@@ -63,6 +63,7 @@ export default function VideoPlayer(props) {
           },
         }}
       />
+
       <Box
         sx={{
           position: "absolute",
@@ -74,7 +75,7 @@ export default function VideoPlayer(props) {
         }}
       >
         <Typography
-          component="span"
+          component="div"
           sx={{
             lineHeight: 1,
             textAlign: "center",
@@ -87,6 +88,8 @@ export default function VideoPlayer(props) {
             backgroundColor: metadata.backgroundColor || "inherit",
             mx: 3,
             px: "2px",
+            wordWrap: "break-word",
+            maxWidth: WIDTH,
           }}
         >
           {selectedCue?.text}
