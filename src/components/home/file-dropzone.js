@@ -2,6 +2,7 @@
 
 import PropTypes from "prop-types";
 import { useDropzone } from "react-dropzone";
+import ReactPlayer from "react-player";
 import {
   Box,
   Button,
@@ -111,17 +112,19 @@ export const FileDropzone = (props) => {
   }, [acceptedFiles?.length]);
 
   const HomeCenterIcon = useCallback(
-    ({ message }, showDownload) => {
+    ({ message }) => {
       if (message === MESSAGE_UPLOADING)
         return <UploadingIcon sx={{ fontSize: 50 }} />;
-      else if (message === MESSAGE_DOWNLOADING || showDownload)
+      else if (message === MESSAGE_DOWNLOADING)
         return <ReadyToDownloadIcon sx={{ fontSize: 50 }} />;
       else if (message === MESSAGE_TRANSCRIBING)
         return <TranscribingIcon sx={{ fontSize: 50 }} />;
       return <UploadPlusIcon sx={{ fontSize: 50 }} />;
     },
-    [loading, progress, showDownload],
+    [loading, progress],
   );
+
+  console.log(progress);
 
   return (
     <div {...other}>
@@ -138,7 +141,7 @@ export const FileDropzone = (props) => {
           flexWrap: "wrap",
           justifyContent: "center",
           outline: "none",
-          p: 6,
+
           ...(isDragActive && {
             backgroundColor: "action.active",
             opacity: 0.5,
@@ -151,10 +154,19 @@ export const FileDropzone = (props) => {
         }}
         {...getRootProps()}
       >
-        <input {...getInputProps()} />
+        {showDownload ? (
+          <ReactPlayer
+            url={progress?.file?.output}
+            width={`150px`}
+            height="100%"
+          />
+        ) : (
+          <input {...getInputProps()} />
+        )}
 
         <Box
           sx={{
+            p: 6,
             px: 2,
             textAlign: "center",
             display: "flex",
@@ -162,22 +174,19 @@ export const FileDropzone = (props) => {
             flexDirection: "column",
           }}
         >
-          <Box sx={{ mb: 2 }}>{HomeCenterIcon(progress, showDownload)}</Box>
-          {loading || showDownload ? (
-            <>
-              <Typography variant="caption" color="GrayText">
-                {curFile.name}
-              </Typography>
-              {showDownload ? (
-                <Typography variant="body2" fontWeight="bold">
-                  File is ready to download
-                </Typography>
-              ) : (
-                <Typography variant="body2" fontWeight="bold">
-                  {progress?.message}&nbsp;{progress?.percent?.toFixed(2)}%...
-                </Typography>
-              )}
-            </>
+          <Box sx={{ mb: 2 }}>
+            {showDownload ? null : HomeCenterIcon(progress)}
+          </Box>
+          {loading || showDownload || progress?.percent ? (
+            <Typography
+              variant="body2"
+              fontWeight="bold"
+              sx={{
+                display: progress?.percent ? "inherit" : "none",
+              }}
+            >
+              {progress?.message}&nbsp;{progress?.percent?.toFixed(2)}%...
+            </Typography>
           ) : (
             <>
               <Typography fontWeight="bold" variant="h6">
@@ -244,7 +253,7 @@ export const FileDropzone = (props) => {
         sx={{
           margin: "0 auto",
           maxWidth: "sm",
-          display: loaded || loading ? "flex" : "none",
+          display: loaded || loading || showDownload ? "flex" : "none",
           justifyContent: "center",
           mt: 2,
         }}

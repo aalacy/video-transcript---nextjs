@@ -21,6 +21,7 @@ import { YelloBottom } from "@/icons/yellow-bottom";
 import { FreeStarIcon } from "@/icons/free-star";
 import { Pattern } from "@/icons/pattern";
 import GetMoreFeatures from "@/components/home/get-more-features";
+import { downloadMedia } from "@/utils";
 
 const client = new FileService();
 
@@ -38,6 +39,7 @@ export default function HomePage() {
     visitorId,
     isAuthenticated,
     setProgress,
+    progress,
   } = useAuth();
 
   const initialValues = {
@@ -84,6 +86,7 @@ export default function HomePage() {
 
   const onUpload = async () => {
     setLoading(true);
+    setLoaded(false);
     try {
       await client.upload(
         visitorId,
@@ -106,8 +109,13 @@ export default function HomePage() {
 
   const handleExport = async () => {
     try {
-      setLoading(true);
-      await client.download({ visitorId });
+      // await client.download({ visitorId });
+      const { file } = progress;
+      downloadMedia(
+        `${file.fileName.substr(0, -4)}-subtitled.${file.ext}`,
+        file.output,
+      );
+      toast.success("Successfully downloaded a video");
       setShowDownload(false);
     } catch (error) {
       toast.error(error.message);

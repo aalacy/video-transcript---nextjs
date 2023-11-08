@@ -15,6 +15,10 @@ export const metadata = {
 export default function DefaultRootLayout({ children, session }) {
   return (
     <html lang="en">
+      <script
+        src="//code.tidio.co/hhgifx0lbs19h2a8rew6nd0drifqs2gj.js"
+        async
+      ></script>
       <body
         suppressHydrationWarning={true}
         style={{ backgroundColor: "background.default" }}

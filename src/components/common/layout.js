@@ -20,6 +20,7 @@ import ConfirmDialog from "./confirm";
 import { downloadMedia } from "@/utils";
 import TopbarHome from "./topbar-home";
 import Footer from "./footer";
+import { FileService } from "@/service/file-service";
 
 const socket = io(process.env.NEXT_PUBLIC_API_URL);
 socket.on("connect", () => {
@@ -29,6 +30,8 @@ socket.on("connect_error", () => {
   setTimeout(() => socket.connect(), 5000);
 });
 socket.on("disconnect", () => console.error("server disconnected"));
+
+const client = new FileService();
 
 export default function RootLayout({ children }) {
   const [state, setState] = useState(true);
@@ -60,7 +63,7 @@ export default function RootLayout({ children }) {
   }, [pathname, user]);
 
   useEffect(() => {
-    socket.on("monster", (data) => {
+    socket.on("monster", async (data) => {
       const {
         status,
         file,
@@ -83,17 +86,24 @@ export default function RootLayout({ children }) {
             [JOB_MONSTER_TRANSCRIPTION, JOB_GENERATE_VIDEO].includes(jobName)
           ) {
             setLoading(false);
-            setProgress({ percent: 0, message: "" });
+            setProgress({ percent: 0, message: "", file });
             if (jobName === JOB_MONSTER_TRANSCRIPTION) {
               toast.success(message);
               if (userId) router.push(`/upload/${file.id}`);
-              if (other.visitorId) setShowDownload(true);
+              if (other.visitorId) {
+                setLoading(true);
+                await client.download({ visitorId });
+              }
             } else if (jobName === JOB_GENERATE_VIDEO) {
-              downloadMedia(
-                `${file.fileName.substr(0, -4)}-subtitled.${file.ext}`,
-                file.output,
-              );
-              toast.success("Successfully downloaded a video");
+              if (userId) {
+                downloadMedia(
+                  `${file.fileName.substr(0, -4)}-subtitled.${file.ext}`,
+                  file.output,
+                );
+                toast.success("Successfully downloaded a video");
+              } else {
+                setShowDownload(true);
+              }
             }
           }
         } else if (status === "failed") {

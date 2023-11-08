@@ -57,7 +57,11 @@ export default function Sidebar({ setState, state }) {
       onClose={() => setState(false)}
     >
       <Logo size="small" />
-      <List>
+      <List
+        sx={{
+          overflow: "auto",
+        }}
+      >
         {LINKS.map(({ text, href, icon: Icon }) => (
           <ListItem key={href} disablePadding>
             <ListItemButton
