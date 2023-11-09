@@ -15,7 +15,7 @@ import {
   VisibilityOutlined as EyeIcon,
   VisibilityOffOutlined as EyeOffIcon,
 } from "@mui/icons-material";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { useAuth } from "@/hooks/use-auth";
 import { useMounted } from "@/hooks/use-mounted";
@@ -33,6 +33,8 @@ export default function JWTResetPassword(props) {
   const { setLoading, loading, passwordReset } = useAuth();
   const isMounted = useMounted();
   const searchParams = useSearchParams();
+
+  const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
@@ -63,6 +65,7 @@ export default function JWTResetPassword(props) {
         setLoading(true);
         await passwordReset(values.password, searchParams.get("token"));
         toast.success("Successfully Updated Password.");
+        router.push("/auth/login");
       } catch (err) {
         console.error(err);
 

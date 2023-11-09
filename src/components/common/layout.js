@@ -90,7 +90,7 @@ export default function RootLayout({ children }) {
             if (jobName === JOB_MONSTER_TRANSCRIPTION) {
               toast.success(message);
               if (userId) router.push(`/upload/${file.id}`);
-              if (other.visitorId) {
+              if (other.visitorId && !userId) {
                 setLoading(true);
                 await client.download({ visitorId });
               }

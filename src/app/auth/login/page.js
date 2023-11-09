@@ -1,10 +1,11 @@
 "use client";
 
-import { Container, Box, Card, Link, Divider, Typography } from "@mui/material";
+import { Container, Box, Card, Divider, Typography } from "@mui/material";
 
 import { JWTLogin } from "@/components/auth/jwt-login";
 import Logo from "@/components/common/logo";
 import GoogleAuthBtn from "@/components/auth/google-auth-btn";
+import Link from "next/link";
 
 export default function LoginPage() {
   return (

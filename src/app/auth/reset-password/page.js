@@ -1,9 +1,10 @@
 "use client";
 
-import { Container, Box, Card, Typography, Link } from "@mui/material";
+import { Container, Box, Card, Typography } from "@mui/material";
 
 import Logo from "@/components/common/logo";
 import JWTResetPassword from "@/components/auth/jwt-reset-password";
+import Link from "next/link";
 
 export default function ResetPassword() {
   return (

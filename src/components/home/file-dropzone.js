@@ -156,6 +156,7 @@ export const FileDropzone = (props) => {
       >
         {showDownload ? (
           <ReactPlayer
+            controls
             url={progress?.file?.output}
             width={`150px`}
             height="100%"

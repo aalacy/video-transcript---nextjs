@@ -1,11 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { Container, Box, Card, Link, Divider, Typography } from "@mui/material";
+import { Container, Box, Card, Divider, Typography } from "@mui/material";
 
 import Logo from "@/components/common/logo";
 import { JWTRegister } from "@/components/auth/jwt-register";
 import GoogleAuthBtn from "@/components/auth/google-auth-btn";
+import Link from "next/link";
 
 export default function SignupPage() {
   return (

@@ -20,3 +20,5 @@ public/**/*.*
 
 src/app/*.png
 src/app/*.ico
+
+*.ico
