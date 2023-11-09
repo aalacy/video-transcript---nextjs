@@ -133,7 +133,6 @@ export const FileDropzone = (props) => {
           margin: "0 auto",
           maxWidth: "sm",
           alignItems: "center",
-          border: 1,
           borderRadius: 4,
           borderStyle: "dashed",
           borderColor: "divider",
@@ -158,7 +157,7 @@ export const FileDropzone = (props) => {
           <ReactPlayer
             controls
             url={progress?.file?.output}
-            width={`150px`}
+            width={`200px`}
             height="100%"
           />
         ) : (

@@ -68,6 +68,7 @@ class GTM {
     `;
 
     leavescript.innerHTML = `window.addEventListener('beforeunload', function (e) { 
+      e.stopPropagation();
       e.preventDefault();
       const entries = performance.getEntriesByType("navigation");
       entries.forEach((entry) => {
