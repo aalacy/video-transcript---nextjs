@@ -185,7 +185,13 @@ export default function YourProjectsPage() {
             my: 1,
           }}
         >
-          <Link href={`/upload/${params.row.id}`}>
+          <Link
+            href={
+              ["completed", "transcripted"].includes(params.row.status)
+                ? `/upload/${params.row.id}`
+                : "#"
+            }
+          >
             <Image
               src={params.row.thumbnail}
               alt="Thumbnail image"

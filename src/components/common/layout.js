@@ -104,7 +104,8 @@ export default function RootLayout({ children }) {
           }
         } else if (status === "failed") {
           setLoading(false);
-          toast.error(`Something wrong happened.`);
+          setProgress({ percent: 0, message: "", file });
+          toast.error(`Something wrong happened. Please try it again.`);
         }
       }
     });
