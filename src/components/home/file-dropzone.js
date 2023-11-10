@@ -2,7 +2,6 @@
 
 import PropTypes from "prop-types";
 import { useDropzone } from "react-dropzone";
-import ReactPlayer from "react-player";
 import {
   Box,
   Button,
@@ -18,7 +17,7 @@ import {
   ContentCopy as DuplicateIcon,
   Close as XIcon,
 } from "@mui/icons-material";
-import { createRef, useCallback, useEffect } from "react";
+import { createRef, useCallback, useEffect, useState } from "react";
 
 import { bytesToSize } from "@/utils/byte-to-size";
 import { useAuth } from "@/hooks/use-auth";
@@ -34,6 +33,8 @@ import {
   MESSAGE_TRANSCRIBING,
   MESSAGE_UPLOADING,
 } from "@/constants";
+import { parseVtt } from "@/utils";
+import VideoPlayer from "../upload/video-player";
 
 export const FileDropzone = (props) => {
   const {
@@ -83,6 +84,9 @@ export const FileDropzone = (props) => {
 
   const videoRef = createRef();
 
+  const [selectedCue, setSelectedCue] = useState({});
+  const [cues, setCues] = useState([]);
+
   const videoEventListener = (params) => {
     const height = params.target.videoHeight;
     const width = params.target.videoWidth;
@@ -124,7 +128,14 @@ export const FileDropzone = (props) => {
     [loading, progress],
   );
 
-  console.log(progress);
+  useEffect(() => {
+    if (!progress?.file) return;
+    const parsed = parseVtt(progress?.file.vtt);
+    if (parsed.valid) {
+      setCues(parsed.cues);
+      if (parsed.cues.length > 0) setSelectedCue(parsed.cues[0]);
+    }
+  }, [progress?.file]);
 
   return (
     <div {...other}>
@@ -140,7 +151,6 @@ export const FileDropzone = (props) => {
           flexWrap: "wrap",
           justifyContent: "center",
           outline: "none",
-
           ...(isDragActive && {
             backgroundColor: "action.active",
             opacity: 0.5,
@@ -154,11 +164,13 @@ export const FileDropzone = (props) => {
         {...getRootProps()}
       >
         {showDownload ? (
-          <ReactPlayer
-            controls
-            url={progress?.file?.output}
-            width={`200px`}
-            height="100%"
+          <VideoPlayer
+            data={progress?.file}
+            updatedCues={cues}
+            setSelectedCue={setSelectedCue}
+            startPos={0}
+            selectedCue={selectedCue}
+            metadata={progress?.file.metadata}
           />
         ) : (
           <input {...getInputProps()} />

@@ -2,7 +2,7 @@
 
 import { GOOGLE_FONTS } from "@/constants";
 import { Box, Typography } from "@mui/material";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 
 import "./style.css";
@@ -18,11 +18,13 @@ export default function VideoPlayer(props) {
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
+    if (!startPos) return;
     setPlaying(false);
     ref.current.seekTo(startPos, "seconds");
   }, [startPos]);
 
   const handleProgress = (progress) => {
+    if (!setSelectedCue) return;
     for (let val of updatedCues) {
       if (
         progress.playedSeconds >= val.start &&
@@ -34,11 +36,6 @@ export default function VideoPlayer(props) {
       }
     }
   };
-
-  const scale = useMemo(() => {
-    if (!data) return 1;
-    return data.width / WIDTH;
-  }, [data]);
 
   return (
     <Box
@@ -67,7 +64,7 @@ export default function VideoPlayer(props) {
       <Box
         sx={{
           position: "absolute",
-          top: `calc(${metadata.position || 0}%)`,
+          top: `calc(${metadata.position || 50}%)`,
           whiteSpace: "nowrap",
           display: "flex",
           justifyContent: "center",

@@ -10,7 +10,7 @@ import * as yup from "yup";
 import DesignTabPanel from "@/components/upload/tab-design";
 import VideoPlayer from "@/components/upload/video-player";
 import TranscriptionTabPanel from "@/components/upload/tab-transcription";
-import { compileVTT, parseVtt } from "@/utils";
+import { compileVTT, downloadMedia, parseVtt } from "@/utils";
 import { FileService } from "@/service/file-service";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -75,11 +75,47 @@ export default function UploadPage({ params }) {
 
   const handleExport = () => {
     try {
-      setLoading(true);
-      client.saveAndDownload(
-        params.id,
-        compileVTT(cues, updatedCues),
-        formik.values,
+      // setLoading(true);
+      // client.saveAndDownload(
+      //   params.id,
+      //   compileVTT(cues, updatedCues),
+      //   formik.values,
+      // );
+      const file = {
+        id: 16,
+        localPath: "/tmp/8858ae60897bc9eb4d28c6f00",
+        key: "8858ae60897bc9eb4d28c6f00",
+        fileName: "small.mp4",
+        lang: "en",
+        audio:
+          "https://submagicpro.blob.core.windows.net/data/8858ae60897bc9eb4d28c6f00-audio.mp3?sv=2023-08-03&st=2023-11-10T10%3A30%3A38Z&se=2023-11-10T11%3A35%3A38Z&sr=b&sp=r&sig=6vLpkmofX51cd%2BMEMfdF29wedmttHuu0V64ewcvVf5s%3D",
+        thumbnail:
+          "https://submagicpro.blob.core.windows.net/data/8858ae60897bc9eb4d28c6f00-thumbnail.png?sv=2023-08-03&st=2023-11-10T10%3A30%3A47Z&se=2023-11-10T11%3A35%3A47Z&sr=b&sp=r&sig=8nCm14dtYGjGQ0FANo%2FvaUzz5xl2e6mJT48W%2FYO2w8w%3D",
+        output:
+          "https://submagicpro.blob.core.windows.net/data/8858ae60897bc9eb4d28c6f00.mp4?sv=2023-08-03&st=2023-11-10T10%3A30%3A47Z&se=2023-11-10T11%3A35%3A47Z&sr=b&sp=r&sig=gYlgT8wp1J8xH7XqgWKkhWNrxMJ5NjsYr8Lv1Lx7%2BKg%3D",
+        ext: "mp4",
+        vtt: "\n0\n00:00:03,880 --> 00:00:05,179\nIn this video, I\n\n1\n00:00:05,179 --> 00:00:05,799\nwill show you how\n\n2\n00:00:05,799 --> 00:00:06,940\nyou can use ListenMonster\n\n3\n00:00:06,940 --> 00:00:08,139\nto transcribe your content\n",
+        processId: "388fb9f2-a6db-4e0b-9bb4-f0ec44628758",
+        duration: 9.466667,
+        width: 720,
+        height: 1280,
+        metadata: {
+          font: "Roboto",
+          fontSize: 22,
+          position: 50,
+          fontColor: "#000101",
+          fontWeight: "Light",
+          backgroundColor: "#ffbc02",
+        },
+        status: "transcripted",
+        userId: 3,
+        visitorId: "6c4f3d46dd68f43ffe072ae633bd7268",
+        createdAt: "2023-11-10T10:35:39.767Z",
+        updatedAt: "2023-11-10T10:35:47.091Z",
+      };
+      downloadMedia(
+        `${file.fileName.substr(0, -4)}-subtitled.${file.ext}`,
+        file.output,
       );
     } catch (error) {
       debugger;
@@ -171,7 +207,7 @@ export default function UploadPage({ params }) {
       fontColor: data?.metadata?.fontColor || "#000101",
       font: data?.metadata?.font || "Roboto",
       fontWeight: data?.metadata?.fontWeight || fontWeights[0],
-      fontSize: data?.metadata?.fontSize || 17,
+      fontSize: data?.metadata?.fontSize || 22,
       position: data?.metadata?.position || 50,
     },
     validationSchema: yup.object().shape({

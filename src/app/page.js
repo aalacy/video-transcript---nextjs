@@ -108,14 +108,9 @@ export default function HomePage() {
   };
 
   const handleExport = async () => {
+    setLoading(true);
     try {
-      // await client.download({ visitorId });
-      const { file } = progress;
-      downloadMedia(
-        `${file.fileName.substr(0, -4)}-subtitled.${file.ext}`,
-        file.output,
-      );
-      toast.success("Successfully downloaded a video");
+      await client.download({ visitorId });
       setShowDownload(false);
     } catch (error) {
       toast.error(error.message);
@@ -196,7 +191,7 @@ export default function HomePage() {
                 margin: "0 auto",
               }}
             >
-              <Typography variant="h4" display="inline">
+              <Typography variant="h4" display="inline" zIndex={10}>
                 AI Video Caption Generator Free
               </Typography>
               <FreeStarIcon
@@ -208,7 +203,7 @@ export default function HomePage() {
                 }}
               />
             </Box>
-            <Typography variant="h4" sx={{ textAlign: "center" }}>
+            <Typography variant="h4" sx={{ textAlign: "center" }} zIndex={10}>
               Without Watermark
             </Typography>
             <YelloBottom sx={{ width: 1, mt: -1 }} />

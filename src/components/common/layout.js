@@ -91,19 +91,15 @@ export default function RootLayout({ children }) {
               toast.success(message);
               if (userId) router.push(`/upload/${file.id}`);
               if (other.visitorId && !userId) {
-                setLoading(true);
-                await client.download({ visitorId });
+                setShowDownload(true);
+                // await client.download({ visitorId });
               }
             } else if (jobName === JOB_GENERATE_VIDEO) {
-              if (userId) {
-                downloadMedia(
-                  `${file.fileName.substr(0, -4)}-subtitled.${file.ext}`,
-                  file.output,
-                );
-                toast.success("Successfully downloaded a video");
-              } else {
-                setShowDownload(true);
-              }
+              downloadMedia(
+                `${file.fileName.substr(0, -4)}-subtitled.${file.ext}`,
+                file.output,
+              );
+              toast.success("Successfully downloaded a video");
             }
           }
         } else if (status === "failed") {

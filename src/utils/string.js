@@ -208,11 +208,16 @@ const dayObj = (timestamp) => {
 };
 
 export const downloadMedia = (fileName, output) => {
-  const downloadLink = document.createElement("a");
-  downloadLink.href = output;
-  // downloadLink.style.display = "none";
-  // downloadLink.target = "_blank";
-  downloadLink.setAttribute("download", fileName);
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
+  const anchor = document.createElement("a");
+  anchor.href = output;
+  anchor.download = fileName;
+
+  // Append to the DOM
+  document.body.appendChild(anchor);
+
+  // Trigger `click` event
+  anchor.click();
+
+  // Remove element from DOM
+  document.body.removeChild(anchor);
 };
