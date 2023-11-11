@@ -7,7 +7,6 @@ import {
 } from "@/icons";
 import { PatternRounded } from "@/icons/pattern-rounded";
 import { Box, Grid, Typography } from "@mui/material";
-import Logo from "../common/logo";
 
 const items = [
   {
@@ -56,7 +55,7 @@ export default function GetMoreFeatures() {
         <Typography variant="h5" sx={{ width: 1, mb: 3 }}>
           Sign up to Get More Features
         </Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={10}>
           <Grid item xs={12} md={6}>
             {items.map(({ icon, title, content }) => (
               <Box
@@ -89,15 +88,18 @@ export default function GetMoreFeatures() {
               minHeight: 450,
             }}
           >
-            <Logo />
-            <PatternRounded
-              sx={{
-                width: 1,
-                fontSize: 450,
-                position: "absolute",
-                top: 0,
-                bottom: 0,
-                margin: "auto 0",
+            <img
+              src="/assets/static-asset.png"
+              alt="Static asset"
+              width="100%"
+              height="100%"
+              style={{
+                objectFit: "contain",
+                borderRadius: 2,
+                // box-shadow: 1px 1px 1px black;
+                /* box-shadow: 3px 3px red inset, -1em 0 0.4em olive; */
+                /* box-shadow: inset 5em 1em gold; */
+                boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.2)",
               }}
             />
           </Grid>

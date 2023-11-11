@@ -67,26 +67,28 @@ export default function SubmagicProVsTraditional() {
             content. Moreover, they make mistakes while generating subtitles.
             Correcting them can be a time-consuming process.
           </Typography>
-          <table>
-            <thead>
-              <tr>
-                <th>Feature</th>
-                <th>Traditional Captioning Tools</th>
-                <th>
-                  SubMagic<span style={{ color: "#FFBF4C" }}>PRO</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row) => (
-                <tr key={row.id}>
-                  <td>{row.feature}</td>
-                  <td>{row.traditional}</td>
-                  <td>{row.submagicPro}</td>
+          <Box sx={{ overflowX: "auto" }}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Traditional Captioning Tools</th>
+                  <th>
+                    SubMagic<span style={{ color: "#FFBF4C" }}>PRO</span>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <tr key={row.id}>
+                    <td>{row.feature}</td>
+                    <td>{row.traditional}</td>
+                    <td>{row.submagicPro}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Box>
         </Box>
       </Box>
     </>
