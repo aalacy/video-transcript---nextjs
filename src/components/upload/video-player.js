@@ -1,6 +1,6 @@
 "use client";
 
-import { GOOGLE_FONTS } from "@/constants";
+import { DEFAULT_DESIGN, GOOGLE_FONTS } from "@/constants";
 import { Box, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
@@ -77,12 +77,15 @@ export default function VideoPlayer(props) {
             lineHeight: 1,
             textAlign: "center",
             marginTop: "-1em",
-            fontWeight: metadata.fontWeight || "medium",
-            fontStyle: metadata.fontWeight,
-            fontSize: (metadata.fontSize || 16) * 0.78,
-            fontFamily: GOOGLE_FONTS[metadata.font] || "Arial",
-            color: metadata.fontColor || "inherit",
-            backgroundColor: metadata.backgroundColor || "inherit",
+            fontWeight: metadata.fontWeight || DEFAULT_DESIGN.fontWeight,
+            fontStyle: metadata.fontStyle || DEFAULT_DESIGN.fontStyle,
+            textTransform:
+              metadata.textTransform || DEFAULT_DESIGN.textTransform,
+            fontSize: (metadata.fontSize || DEFAULT_DESIGN.fontSize) * 0.78,
+            fontFamily: GOOGLE_FONTS[metadata.font] || DEFAULT_DESIGN.font,
+            color: metadata.fontColor || DEFAULT_DESIGN.color,
+            backgroundColor:
+              metadata.backgroundColor || DEFAULT_DESIGN.backgroundColor,
             mx: 3,
             px: "2px",
             wordWrap: "break-word",

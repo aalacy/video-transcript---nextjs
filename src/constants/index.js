@@ -1,6 +1,5 @@
 import {
   inter,
-  lora,
   lato,
   amaticSC,
   bebasNeue,
@@ -28,12 +27,26 @@ export const GOOGLE_FONTS = {
   "vina sans": vinaSans.style.fontFamily,
   "Young Serif": youngSerif.style.fontFamily,
 };
-export const fontWeights = ["Light", "Bold", "Italic"];
+export const fontWeights = ["Light", "Bold"];
+export const textTransforms = ["None", "Uppercase", "Lowercase", "Capitalize"];
+export const fontStyles = ["Normal", "Italic"];
 
 export const MIN_FONT = 16;
 export const MAX_FONT = 42;
 export const MIN_POSITION = 0;
 export const MAX_POSITION = 90;
+
+export const DEFAULT_DESIGN = {
+  backgroundColor: "#ffbc02",
+  fontColor: "#000101",
+  font: "Roboto",
+  textTransform: "None", // Uppercase, Lowercase, Capitalize
+  textShadow: 0,
+  fontWeight: "Light",
+  fontStyle: "Normal", // Italic
+  fontSize: 22,
+  position: 50,
+};
 
 // Jobs
 export const JOB_MONSTER_TRANSCRIPTION = "monster-transcription";
