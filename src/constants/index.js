@@ -443,3 +443,6 @@ export const isoLangs = [
     name: "Chinese",
   },
 ];
+
+export const DEFAULT_FILE_SIZE = 300;
+export const GUEST_FILE_SIZE = 100;

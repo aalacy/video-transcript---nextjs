@@ -7,7 +7,12 @@ import toast from "react-hot-toast";
 import { useEffect, useMemo, useState } from "react";
 
 import { FileService } from "@/service/file-service";
-import { MESSAGE_UPLOADING, isoLangs } from "@/constants";
+import {
+  DEFAULT_FILE_SIZE,
+  GUEST_FILE_SIZE,
+  MESSAGE_UPLOADING,
+  isoLangs,
+} from "@/constants";
 import { FileDropzone } from "@/components/home/file-dropzone";
 import { useAuth } from "@/hooks/use-auth";
 import HowItWorks from "@/components/home/how-it-works";
@@ -21,7 +26,6 @@ import { YelloBottom } from "@/icons/yellow-bottom";
 import { FreeStarIcon } from "@/icons/free-star";
 import { Pattern } from "@/icons/pattern";
 import GetMoreFeatures from "@/components/home/get-more-features";
-import { downloadMedia } from "@/utils";
 
 const client = new FileService();
 
@@ -60,9 +64,11 @@ export default function HomePage() {
       const { code } = errors[0];
       let message = "";
       if (code === "file-too-large") {
-        message = `The file ${name} is larger than ${
-          isAuthenticated ? 300 : 50
-        }MB.`;
+        if (isAuthenticated)
+          message = `The file ${name} is larger than ${
+            isAuthenticated ? DEFAULT_FILE_SIZE : GUEST_FILE_SIZE
+          }MB.`;
+        else message = "Please sign up for large file size";
       } else if (code === "file-invalid-type") {
         message = `The file ${name} is not MP4 or MOV format.`;
       }
@@ -137,7 +143,9 @@ export default function HomePage() {
   }, []);
 
   const maxSize = useMemo(() => {
-    return isAuthenticated ? 300 * 1024 * 1024 : 50 * 1024 * 1024;
+    return isAuthenticated
+      ? DEFAULT_FILE_SIZE * 1024 * 1024
+      : GUEST_FILE_SIZE * 1024 * 1024;
   }, [isAuthenticated]);
 
   return (

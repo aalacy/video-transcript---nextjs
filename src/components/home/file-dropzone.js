@@ -29,6 +29,8 @@ import {
 } from "@/icons";
 import ProgressBar from "../common/progress-bar";
 import {
+  DEFAULT_FILE_SIZE,
+  GUEST_FILE_SIZE,
   MESSAGE_DOWNLOADING,
   MESSAGE_TRANSCRIBING,
   MESSAGE_UPLOADING,
@@ -205,7 +207,9 @@ export const FileDropzone = (props) => {
                 Click to upload a file or drag and drop it here
               </Typography>
               <Typography fontWeight="medium" variant="h6">
-                Up to <b>{isAuthenticated ? 300 : 50}MB</b> in size.
+                Up to{" "}
+                <b>{isAuthenticated ? DEFAULT_FILE_SIZE : GUEST_FILE_SIZE}MB</b>{" "}
+                in size.
               </Typography>
               <Typography variant="caption" color="GrayText">
                 MP4, MOV formats & 1:1, 4:5, 9:16 ratio accepted
