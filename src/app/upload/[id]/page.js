@@ -10,12 +10,11 @@ import * as yup from "yup";
 import DesignTabPanel from "@/components/upload/tab-design";
 import VideoPlayer from "@/components/upload/video-player";
 import TranscriptionTabPanel from "@/components/upload/tab-transcription";
-import { compileVTT, downloadMedia, parseVtt } from "@/utils";
+import { compileVTT, parseVtt } from "@/utils";
 import { FileService } from "@/service/file-service";
 import { useAuth } from "@/hooks/use-auth";
 
 import {
-  fontWeights,
   MIN_FONT,
   MAX_FONT,
   MIN_POSITION,
@@ -26,12 +25,12 @@ import { useMounted } from "@/hooks/use-mounted";
 import { gtm } from "@/utils/gtm";
 import { ProgressModal } from "@/components/common/progress-popup";
 
-function a11yProps(index) {
+const a11yProps = (index) => {
   return {
     id: `full-width-tab-${index}`,
     "aria-controls": `full-width-tabpanel-${index}`,
   };
-}
+};
 
 const tabStyle = {
   mb: 1,
