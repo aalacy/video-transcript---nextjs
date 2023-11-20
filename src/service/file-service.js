@@ -53,8 +53,8 @@ export class FileService {
     );
   }
 
-  get(id) {
-    return http.get(`/api/file/${id}`);
+  get(id, visitorId) {
+    return http.post(`/api/file/get`, { id, visitorId });
   }
 
   delete(id) {

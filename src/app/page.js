@@ -43,7 +43,6 @@ export default function HomePage() {
     visitorId,
     isAuthenticated,
     setProgress,
-    progress,
   } = useAuth();
 
   const initialValues = {

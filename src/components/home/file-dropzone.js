@@ -81,7 +81,7 @@ export const FileDropzone = (props) => {
       minSize,
       onDrop,
       multiple: false,
-      disabled: loading,
+      disabled: loading || showDownload,
     });
 
   const videoRef = createRef();
@@ -111,6 +111,7 @@ export const FileDropzone = (props) => {
     document
       .getElementById("videoRef")
       .addEventListener("loadedmetadata", videoEventListener, { once: true });
+
     return () =>
       document
         .getElementById("videoRef")
@@ -158,9 +159,9 @@ export const FileDropzone = (props) => {
             opacity: 0.5,
           }),
           "&:hover": {
-            backgroundColor: "action.hover",
-            cursor: "pointer",
-            opacity: 0.5,
+            backgroundColor: showDownload ? "default" : "action.hover",
+            cursor: showDownload ? "default" : "pointer",
+            opacity: showDownload ? 1 : 0.5,
           },
         }}
         {...getRootProps()}
