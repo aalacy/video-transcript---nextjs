@@ -221,3 +221,14 @@ export const downloadMedia = (fileName, output) => {
   // Remove element from DOM
   document.body.removeChild(anchor);
 };
+
+export const saveText = (fileName, text) => {
+  var anchor = document.createElement("a");
+  anchor.download = fileName;
+
+  var t = new Blob([text], {
+    type: "text/plain",
+  });
+  anchor.href = window.URL.createObjectURL(t);
+  anchor.click();
+};

@@ -17,7 +17,7 @@ import Topbar from "@/components/common/topbar";
 import Sidebar from "@/components/common/sidebar";
 import { useAuth } from "@/hooks/use-auth";
 import ConfirmDialog from "./confirm";
-import { downloadMedia } from "@/utils";
+import { downloadMedia, saveText } from "@/utils";
 import TopbarHome from "./topbar-home";
 import Footer from "./footer";
 import { FileService } from "@/service/file-service";
@@ -95,10 +95,9 @@ export default function RootLayout({ children }) {
                 // await client.download({ visitorId });
               }
             } else if (jobName === JOB_GENERATE_VIDEO) {
-              downloadMedia(
-                `${file.fileName.substr(0, -4)}-subtitled.${file.ext}`,
-                file.output,
-              );
+              const fileName = file.fileName.slice(0, -4);
+              downloadMedia(`${fileName}-subtitled.${file.ext}`, file.output);
+              saveText(`${fileName}-sutitle.vtt`, file.vtt);
               toast.success("Successfully downloaded a video");
             }
           }
