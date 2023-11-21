@@ -1,8 +1,6 @@
 "use client";
 
 import { Box, TextField, MenuItem, Typography } from "@mui/material";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import toast from "react-hot-toast";
 import { useEffect, useMemo, useState } from "react";
 
@@ -26,37 +24,34 @@ import { YelloBottom } from "@/icons/yellow-bottom";
 import { FreeStarIcon } from "@/icons/free-star";
 import { Pattern } from "@/icons/pattern";
 import GetMoreFeatures from "@/components/home/get-more-features";
+import { compileVTT } from "@/utils";
 
 const client = new FileService();
 
 export default function HomePage() {
   const [files, setFiles] = useState([]);
-  const [curFile, setFile] = useState({});
   const [fileError, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [size, setSize] = useState({});
+  const [updatedCues, setUpdatedCues] = useState([]);
+  const [curFile, setCurFile] = useState({});
+  const [cues, setCues] = useState([]);
+  const [lang, setLang] = useState("en");
 
   const {
     setLoading,
+    loading,
     setTitleInfo,
     setShowDownload,
     visitorId,
     isAuthenticated,
+    showDownload,
     setProgress,
   } = useAuth();
-
-  const initialValues = {
-    lang: "en",
-  };
-
-  const validationSchema = yup.object().shape({
-    lang: yup.string(),
-  });
 
   const handleDrop = (newFiles, fileRejections) => {
     setProgress({ percent: 0, message: "" });
     setFiles(() => [...newFiles]);
-    setFile(newFiles[0]);
     if (fileRejections.length) {
       const { file, errors } = fileRejections[0];
       const { name } = file;
@@ -75,17 +70,19 @@ export default function HomePage() {
     }
   };
 
+  const handleChange = (e) => {
+    setLang(e.target.value);
+  };
+
   const handleRemove = (file) => {
     setFiles((prevFiles) =>
       prevFiles.filter((_file) => _file.path !== file.path),
     );
     setLoaded(false);
-    setFile({});
   };
 
   const handleRemoveAll = () => {
     setFiles([]);
-    setFile({});
     setLoaded(false);
   };
 
@@ -98,7 +95,7 @@ export default function HomePage() {
         {
           file: files[0],
           ...size,
-          lang: formik.values.lang,
+          lang,
           visitorId,
         },
         (percent) => {
@@ -115,17 +112,17 @@ export default function HomePage() {
   const handleExport = async () => {
     setLoading(true);
     try {
-      await client.download({ visitorId });
+      await client.saveAndDownload(
+        curFile.id,
+        compileVTT(cues, updatedCues),
+        curFile.metadata,
+        visitorId,
+      );
       setShowDownload(false);
     } catch (error) {
       toast.error(error.message);
     }
   };
-
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-  });
 
   useEffect(() => {
     if (!fileError) return;
@@ -174,94 +171,96 @@ export default function HomePage() {
       <meta property="og:locale" content="en" />
       <meta property="og:site_name" content="SubmagicPro" />
       <link rel="canonical" href="https://submagic.pro/" />
-      <form onSubmit={formik.handleSubmit}>
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        sx={{
+          maxWidth: "sm",
+          margin: "0 auto",
+          mb: 2,
+          gap: 3,
+          mt: 5,
+        }}
+      >
+        <Box>
+          <Box
+            sx={{
+              position: "relative",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              width: "fit-content",
+              margin: "0 auto",
+            }}
+          >
+            <Typography variant="h4" display="inline" zIndex={10}>
+              AI Video Caption Generator Free
+            </Typography>
+            <FreeStarIcon
+              sx={{
+                fontSize: 106,
+                position: "absolute",
+                top: "-32px",
+                right: "-20px",
+              }}
+            />
+          </Box>
+          <Typography variant="h4" sx={{ textAlign: "center" }} zIndex={10}>
+            Without Watermark
+          </Typography>
+          <YelloBottom sx={{ width: 1, mt: -1 }} />
+        </Box>
+        <Typography
+          color="GrayText"
+          textAlign="center"
+          variant="h6"
+          fontWeight="light"
+        >
+          Unlock the magic of effortless captioning with SubMagic Pro – the free
+          online caption generator for your videos.
+        </Typography>
+        <TextField
+          select
+          fullWidth
+          type="text"
+          size="small"
+          disabled={loading}
+          label={`* Language (${isoLangs.length} options)`}
+          onChange={handleChange}
+          value={lang}
+          name="lang"
           sx={{
-            maxWidth: "sm",
-            margin: "0 auto",
-            mb: 2,
-            gap: 3,
-            mt: 5,
+            display: showDownload ? "none" : "inherit",
           }}
         >
-          <Box>
-            <Box
-              sx={{
-                position: "relative",
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-                width: "fit-content",
-                margin: "0 auto",
-              }}
-            >
-              <Typography variant="h4" display="inline" zIndex={10}>
-                AI Video Caption Generator Free
-              </Typography>
-              <FreeStarIcon
-                sx={{
-                  fontSize: 106,
-                  position: "absolute",
-                  top: "-32px",
-                  right: "-20px",
-                }}
-              />
-            </Box>
-            <Typography variant="h4" sx={{ textAlign: "center" }} zIndex={10}>
-              Without Watermark
-            </Typography>
-            <YelloBottom sx={{ width: 1, mt: -1 }} />
-          </Box>
-          <Typography
-            color="GrayText"
-            textAlign="center"
-            variant="h6"
-            fontWeight="light"
-          >
-            Unlock the magic of effortless captioning with SubMagic Pro – the
-            free online caption generator for your videos.
-          </Typography>
-          <TextField
-            select
-            fullWidth
-            type="text"
-            size="small"
-            label={`* Language (${isoLangs.length} options)`}
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-            value={formik.values.lang}
-            name="lang"
-            error={!!formik.touched.lang && !!formik.errors.lang}
-            helperText={formik.touched.lang && formik.errors.lang}
-          >
-            {isoLangs.map((lang) => (
-              <MenuItem key={lang.code} value={lang.code}>
-                {lang.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Box>
-        <FileDropzone
-          accept={{ "video/*": [".mp4", ".mov"] }}
-          files={files}
-          setFiles={setFiles}
-          maxFiles={1}
-          maxSize={maxSize}
-          onDrop={handleDrop}
-          onRemove={handleRemove}
-          onRemoveAll={handleRemoveAll}
-          onUpload={onUpload}
-          handleExport={handleExport}
-          setError={setError}
-          loaded={loaded}
-          setLoaded={setLoaded}
-          setSize={setSize}
-          curFile={curFile}
-        />
-      </form>
+          {isoLangs.map((lang) => (
+            <MenuItem key={lang.code} value={lang.code}>
+              {lang.name}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Box>
+      <FileDropzone
+        accept={{ "video/*": [".mp4", ".mov"] }}
+        files={files}
+        setFiles={setFiles}
+        maxFiles={1}
+        maxSize={maxSize}
+        onDrop={handleDrop}
+        onRemove={handleRemove}
+        onRemoveAll={handleRemoveAll}
+        onUpload={onUpload}
+        handleExport={handleExport}
+        setError={setError}
+        loaded={loaded}
+        setLoaded={setLoaded}
+        setSize={setSize}
+        setUpdatedCues={setUpdatedCues}
+        setCurFile={setCurFile}
+        setCues={setCues}
+        cues={cues}
+      />
       <Pattern sx={{ width: 1, fontSize: 250, margin: "0 auto", mt: -7 }} />
       {!isAuthenticated ? (
         <>
