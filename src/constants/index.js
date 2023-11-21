@@ -40,7 +40,7 @@ export const DEFAULT_DESIGN = {
   backgroundColor: "#ffbc02",
   fontColor: "#000101",
   font: "Roboto",
-  textTransform: "None", // Uppercase, Lowercase, Capitalize
+  textTransform: "Uppercase", // None, Uppercase, Lowercase, Capitalize
   textShadow: 0,
   fontWeight: "Light",
   fontStyle: "Normal", // Italic
