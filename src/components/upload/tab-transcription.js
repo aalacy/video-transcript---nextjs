@@ -78,7 +78,7 @@ export default function TranscriptionTabPanel(props) {
   }, [selectedCue]);
 
   return (
-    <Card>
+    <Card sx={{ alignSelf: "baseline" }}>
       <CardContent sx={{ overflow: "auto", maxHeight: 460 }}>
         {cues.length > 0 ? (
           <form noValidate onSubmit={formik.handleSubmit}>

@@ -20,7 +20,6 @@ import ConfirmDialog from "./confirm";
 import { downloadMedia, saveText } from "@/utils";
 import TopbarHome from "./topbar-home";
 import Footer from "./footer";
-import { FileService } from "@/service/file-service";
 
 const socket = io(process.env.NEXT_PUBLIC_API_URL);
 socket.on("connect", () => {
@@ -30,8 +29,6 @@ socket.on("connect_error", () => {
   setTimeout(() => socket.connect(), 5000);
 });
 socket.on("disconnect", () => console.error("server disconnected"));
-
-const client = new FileService();
 
 export default function RootLayout({ children }) {
   const [state, setState] = useState(true);
@@ -114,11 +111,11 @@ export default function RootLayout({ children }) {
   useEffect(() => {
     const setFp = async () => {
       const fp = await FingerprintJS.load();
-      const { visitorId } = await fp.get();
-      setVisitorId(visitorId);
+      const visitor = await fp.get();
+      setVisitorId(visitor.visitorId);
     };
 
-    setFp();
+    if (!visitorId) setFp();
   }, [pathname, user]);
 
   return (

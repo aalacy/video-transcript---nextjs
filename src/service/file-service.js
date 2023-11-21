@@ -28,8 +28,13 @@ export class FileService {
     return http.post(`/api/file/download`, { visitorId });
   }
 
-  saveAndDownload(fileId, vtt, metadata) {
-    return http.post(`/api/file/save-and-download`, { fileId, vtt, metadata });
+  saveAndDownload(fileId, vtt, metadata, visitorId = undefined) {
+    return http.post(`/api/file/save-and-download`, {
+      fileId,
+      vtt,
+      metadata,
+      visitorId,
+    });
   }
 
   generateTranscription(inputData) {
@@ -53,8 +58,8 @@ export class FileService {
     );
   }
 
-  get(id) {
-    return http.get(`/api/file/${id}`);
+  get(id, visitorId) {
+    return http.post(`/api/file/get`, { id, visitorId });
   }
 
   delete(id) {

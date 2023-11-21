@@ -13,7 +13,8 @@ export async function middleware(request) {
           },
         },
       );
-      await res.json();
+      const data = await res.json();
+      console.log("data", data);
     } catch (error) {
       NextResponse.redirect(new URL("auth/login", request.url));
     }
@@ -27,5 +28,6 @@ export async function middleware(request) {
 export const config = {
   matcher: [
     "/((?!api|_next/static|_next/image|_next/assets|favicon.ico|auth/signup|auth/login|auth/forgot-password|auth/reset-password).*)",
+    "/!upload/:path*",
   ],
 };

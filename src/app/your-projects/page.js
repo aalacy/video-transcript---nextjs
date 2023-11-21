@@ -161,7 +161,7 @@ export default function YourProjectsPage() {
   }, []);
 
   useEffect(() => {
-    if (isMounted && isAuthenticated) fetchData();
+    fetchData();
   }, [paginationModel, filterModel]);
 
   useEffect(() => {
@@ -199,7 +199,6 @@ export default function YourProjectsPage() {
               height={100}
               placeholder="blur"
               blurDataURL="/assets/placeholder.jpg"
-              onError={() => setSrc("/assets/placeholder.jpg")}
               style={{
                 objectFit: "contain",
                 borderRadius: 2,

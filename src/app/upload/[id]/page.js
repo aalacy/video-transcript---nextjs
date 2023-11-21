@@ -51,6 +51,7 @@ export default function UploadPage({ params }) {
     loading,
     setLoading,
     progress,
+    visitorId,
   } = useAuth();
   const isMounted = useMounted();
 
@@ -95,12 +96,11 @@ export default function UploadPage({ params }) {
 
   const getData = useCallback(async () => {
     try {
-      const { data } = await client.get(params.id);
+      const { data } = await client.get(params.id, visitorId);
       setTitleInfo({ title: data.fileName });
       setData(data);
       processData(data);
     } catch (error) {
-      debugger;
       toast.error(error.message);
     }
     gtm.push({ event: "page_view" });

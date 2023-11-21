@@ -6,7 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 import { AuthService } from "@/service/auth-service";
-import { checkAdmin } from "@/utils/check-admin";
 import { gtm } from "@/utils/gtm";
 
 const gtmConfig = {
@@ -195,7 +194,6 @@ export const AuthProvider = (props) => {
             type: "INITIALIZE",
             payload: {
               isAuthenticated: true,
-              isAdmin: checkAdmin(data),
               user: data,
             },
           });
@@ -204,7 +202,6 @@ export const AuthProvider = (props) => {
             type: "INITIALIZE",
             payload: {
               isAuthenticated: false,
-              isAdmin: false,
               user: null,
             },
           });
@@ -220,7 +217,7 @@ export const AuthProvider = (props) => {
           },
         });
         Cookies.remove("accessToken");
-        router.push("/");
+        // router.push("/");
       }
     };
 

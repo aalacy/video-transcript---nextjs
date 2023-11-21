@@ -37,6 +37,7 @@ import {
 } from "@/constants";
 import { parseVtt } from "@/utils";
 import VideoPlayer from "../upload/video-player";
+import TranscriptionTabPanel from "../upload/tab-transcription";
 
 export const FileDropzone = (props) => {
   const {
@@ -65,7 +66,10 @@ export const FileDropzone = (props) => {
     loaded,
     setLoaded,
     setSize,
-    curFile,
+    setCurFile,
+    setUpdatedCues,
+    setCues,
+    cues,
     ...other
   } = props;
 
@@ -81,29 +85,31 @@ export const FileDropzone = (props) => {
       minSize,
       onDrop,
       multiple: false,
-      disabled: loading,
+      disabled: loading || showDownload,
     });
 
   const videoRef = createRef();
 
   const [selectedCue, setSelectedCue] = useState({});
-  const [cues, setCues] = useState([]);
+  const [startPos, setStartPos] = useState(0);
+  const [initialValues, setInitialValues] = useState({});
+  const [showInputs, setShowInputs] = useState({});
 
   const videoEventListener = (params) => {
     const height = params.target.videoHeight;
     const width = params.target.videoWidth;
     setSize({ width, height });
-    if (width > 1080) {
-      setLoaded(false);
-      setTimeout(() => {
-        setError(true);
+    // if (width > 1080) {
+    //   setLoaded(false);
+    //   setTimeout(() => {
+    //     setError(true);
 
-        videoRef.current = null;
-        setFiles([]);
-      }, 0);
-    } else {
-      setLoaded(true);
-    }
+    //     videoRef.current = null;
+    //     setFiles([]);
+    //   }, 0);
+    // } else {
+    setLoaded(true);
+    // }
   };
 
   useEffect(() => {
@@ -111,6 +117,7 @@ export const FileDropzone = (props) => {
     document
       .getElementById("videoRef")
       .addEventListener("loadedmetadata", videoEventListener, { once: true });
+
     return () =>
       document
         .getElementById("videoRef")
@@ -132,90 +139,126 @@ export const FileDropzone = (props) => {
 
   useEffect(() => {
     if (!progress?.file) return;
+    setCurFile(progress.file);
+
     const parsed = parseVtt(progress?.file.vtt);
+    const obj = {};
+    const bools = {};
     if (parsed.valid) {
       setCues(parsed.cues);
       if (parsed.cues.length > 0) setSelectedCue(parsed.cues[0]);
+      Array.from(parsed.cues).forEach((cue) => {
+        obj[cue.identifier] = cue.text;
+        bools[cue.identifier] = false;
+      });
     }
+    setInitialValues(obj);
+    setShowInputs(bools);
   }, [progress?.file]);
 
   return (
     <div {...other}>
       <Box
         sx={{
-          margin: "0 auto",
-          maxWidth: "sm",
           alignItems: "center",
-          borderRadius: 4,
-          borderStyle: "dashed",
-          borderColor: "divider",
-          display: "flex",
-          flexWrap: "wrap",
           justifyContent: "center",
-          outline: "none",
-          ...(isDragActive && {
-            backgroundColor: "action.active",
-            opacity: 0.5,
-          }),
-          "&:hover": {
-            backgroundColor: "action.hover",
-            cursor: "pointer",
-            opacity: 0.5,
-          },
+          display: "flex",
+          gap: 2,
+          flexWrap: "wrap",
+          margin: "0 auto",
         }}
-        {...getRootProps()}
       >
-        {showDownload ? (
-          <VideoPlayer
-            data={progress?.file}
-            updatedCues={cues}
-            setSelectedCue={setSelectedCue}
-            startPos={0}
+        {progress?.file && showDownload ? (
+          <TranscriptionTabPanel
+            cues={cues}
+            initialValues={initialValues}
+            showInputs={showInputs}
+            setShowInputs={setShowInputs}
             selectedCue={selectedCue}
-            metadata={progress?.file.metadata}
+            setSelectedCue={setSelectedCue}
+            setUpdatedCues={setUpdatedCues}
+            setStartPos={setStartPos}
           />
-        ) : (
-          <input {...getInputProps()} />
-        )}
-
+        ) : null}
         <Box
           sx={{
-            p: 6,
-            px: 2,
-            textAlign: "center",
+            maxWidth: "sm",
+            width: 1,
+            alignItems: "center",
+            borderRadius: 4,
+            borderStyle: "dashed",
+            borderColor: "divider",
             display: "flex",
+            flexWrap: "wrap",
             justifyContent: "center",
-            flexDirection: "column",
+            outline: "none",
+            ...(isDragActive && {
+              backgroundColor: "action.active",
+              opacity: 0.5,
+            }),
+            "&:hover": {
+              backgroundColor:
+                showDownload || loading ? "default" : "action.hover",
+              cursor: showDownload || loading ? "default" : "pointer",
+              opacity: showDownload || loading ? 1 : 0.5,
+            },
           }}
+          {...getRootProps()}
         >
-          <Box sx={{ mb: 2 }}>
-            {showDownload ? null : HomeCenterIcon(progress)}
-          </Box>
-          {loading || showDownload || progress?.percent ? (
-            <Typography
-              variant="body2"
-              fontWeight="bold"
-              sx={{
-                display: progress?.percent ? "inherit" : "none",
-              }}
-            >
-              {progress?.message}&nbsp;{progress?.percent?.toFixed(2)}%...
-            </Typography>
+          {showDownload ? (
+            <VideoPlayer
+              data={progress?.file}
+              updatedCues={cues}
+              setSelectedCue={setSelectedCue}
+              startPos={startPos}
+              selectedCue={selectedCue}
+              metadata={progress?.file.metadata}
+            />
           ) : (
-            <>
-              <Typography fontWeight="bold" variant="h6">
-                Click to upload a file or drag and drop it here
-              </Typography>
-              <Typography fontWeight="medium" variant="h6">
-                Up to{" "}
-                <b>{isAuthenticated ? DEFAULT_FILE_SIZE : GUEST_FILE_SIZE}MB</b>{" "}
-                in size.
-              </Typography>
-              <Typography variant="caption" color="GrayText">
-                MP4, MOV formats & 1:1, 4:5, 9:16 ratio accepted
-              </Typography>
-            </>
+            <input {...getInputProps()} />
           )}
+
+          <Box
+            sx={{
+              p: 6,
+              px: 2,
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Box sx={{ mb: 2 }}>
+              {showDownload ? null : HomeCenterIcon(progress)}
+            </Box>
+            {loading || showDownload || progress?.percent ? (
+              <Typography
+                variant="body2"
+                fontWeight="bold"
+                sx={{
+                  display: progress?.percent ? "inherit" : "none",
+                }}
+              >
+                {progress?.message}&nbsp;{progress?.percent?.toFixed(2)}%...
+              </Typography>
+            ) : (
+              <>
+                <Typography fontWeight="bold" variant="h6">
+                  Click to upload a file or drag and drop it here
+                </Typography>
+                <Typography fontWeight="medium" variant="h6">
+                  Up to{" "}
+                  <b>
+                    {isAuthenticated ? DEFAULT_FILE_SIZE : GUEST_FILE_SIZE}MB
+                  </b>{" "}
+                  in size.
+                </Typography>
+                <Typography variant="caption" color="GrayText">
+                  MP4, MOV formats {/*& 1:1, 4:5, 9:16 ratio accepted */}
+                </Typography>
+              </>
+            )}
+          </Box>
         </Box>
       </Box>
       <Box
@@ -318,7 +361,8 @@ FileDropzone.propTypes = {
   onUpload: PropTypes.func,
   preventDropOnDocument: PropTypes.bool,
   handleExport: PropTypes.func,
-  curFile: PropTypes.object,
+  setCurFile: PropTypes.func,
+  setUpdatedCues: PropTypes.func,
 };
 
 FileDropzone.defaultProps = {
