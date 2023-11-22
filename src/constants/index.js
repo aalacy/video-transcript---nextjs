@@ -10,6 +10,14 @@ import {
   roboto,
   vinaSans,
   youngSerif,
+  nunito,
+  anton,
+  agbalumo,
+  archivoBlack,
+  lilitaOne,
+  kalam,
+  bungee,
+  montserrat,
 } from "@/styles/font";
 
 export const DRAWER_WIDTH = 240;
@@ -26,22 +34,54 @@ export const GOOGLE_FONTS = {
   Roboto: roboto.style.fontFamily,
   "vina sans": vinaSans.style.fontFamily,
   "Young Serif": youngSerif.style.fontFamily,
+  Nunito: nunito.style.fontFamily,
+  Anton: anton.style.fontFamily,
+  Agbalumo: agbalumo.style.fontFamily,
+  "Archivo Black": archivoBlack.style.fontFamily,
+  "Lilita One": lilitaOne.style.fontFamily,
+  Kalam: kalam.style.fontFamily,
+  Bungee: bungee.style.fontFamily,
+  Montserrat: montserrat.style.fontFamily,
 };
 export const fontWeights = ["Light", "Bold"];
 export const textTransforms = ["None", "Uppercase", "Lowercase", "Capitalize"];
 export const fontStyles = ["Normal", "Italic"];
+export const textStyles = ["None", "Shadow", "Outline"];
 
 export const MIN_FONT = 16;
 export const MAX_FONT = 42;
 export const MIN_POSITION = 0;
 export const MAX_POSITION = 90;
+export const MARKS = [
+  {
+    value: 0,
+    label: "0",
+  },
+  {
+    value: 1,
+    label: "1",
+  },
+  {
+    value: 2,
+    label: "2",
+  },
+  {
+    value: 3,
+    label: "3",
+  },
+  {
+    value: 4,
+    label: "4",
+  },
+];
 
 export const DEFAULT_DESIGN = {
   backgroundColor: "#ffbc02",
   fontColor: "#000101",
   font: "Roboto",
   textTransform: "Uppercase", // None, Uppercase, Lowercase, Capitalize
-  textShadow: 0,
+  textShadow: 0, // 0 - 4
+  textOutline: 0, // 0 - 4
   fontWeight: "Light",
   fontStyle: "Normal", // Italic
   fontSize: 22,
