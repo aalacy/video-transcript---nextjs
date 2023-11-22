@@ -146,7 +146,7 @@ export default function HomePage() {
 
   return (
     <>
-      <title>SubmagicPro - Free AI Video Caption Generator</title>
+      <title>Submagic Pro - Free AI Video Caption Generator</title>
       <meta
         name="description"
         content="Submagic pro make adding words to your videos super easy and totally free. Our smart tool helps you create captions fast. Try it now"
@@ -160,7 +160,7 @@ export default function HomePage() {
       <meta property="og:type" content="website" />
       <meta
         property="og:title"
-        content="SubmagicPro - Free AI Video Caption Generator"
+        content="Submagic Pro - Free AI Video Caption Generator"
       />
       <meta
         property="og:description"
@@ -169,7 +169,7 @@ export default function HomePage() {
       <meta charSet="UTF-8" />
       <meta name="theme-color" content="#febf4b" />
       <meta property="og:locale" content="en" />
-      <meta property="og:site_name" content="SubmagicPro" />
+      <meta property="og:site_name" content="Submagic Pro" />
       <link rel="canonical" href="https://submagic.pro/" />
       <Box
         display="flex"
