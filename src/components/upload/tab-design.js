@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   Box,
-  Button,
   TextField,
   useMediaQuery,
   FormHelperText,
@@ -12,61 +11,22 @@ import {
   Stack,
   Slider,
   InputAdornment,
-  Menu,
-  MenuItem,
 } from "@mui/material";
-import {
-  Brush as BrushIcon,
-  FormatBold as BoldIcon,
-  FormatItalic as FormatItalicIcon,
-} from "@mui/icons-material";
-import { MuiColorInput } from "mui-color-input";
-import { useEffect, useState } from "react";
 
-import {
-  fontWeights,
-  MIN_FONT,
-  MAX_FONT,
-  MIN_POSITION,
-  MAX_POSITION,
-  GOOGLE_FONTS,
-  textTransforms,
-  fontStyles,
-  MARKS,
-} from "@/constants";
+import { MuiColorInput } from "mui-color-input";
+import { useEffect } from "react";
+
+import { MIN_FONT, MAX_FONT, MIN_POSITION, MAX_POSITION } from "@/constants";
+import FontWeightSelect from "./design/design-weight";
+import FontTransformSelect from "./design/design-transform";
+import FontStyleSelect from "./design/design-style";
+import FontSelect from "./design/design-font";
+import TemplateSelect from "./design/design-template";
 
 export default function DesignTabPanel(props) {
   const { setMetadata, formik } = props;
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
-
-  const [anchorWeightEl, setAnchorWeightEl] = useState(null);
-  const [anchorTransformEl, setAnchorTransformEl] = useState(null);
-  const [anchorStyleEl, setAnchorStyleEl] = useState(null);
-  const openWeight = Boolean(anchorWeightEl);
-  const openTransform = Boolean(anchorTransformEl);
-  const openStyle = Boolean(anchorStyleEl);
-
-  const handleWeightClick = (event) => {
-    setAnchorWeightEl(event.currentTarget);
-  };
-  const handleWeightClose = () => {
-    setAnchorWeightEl(null);
-  };
-
-  const handleTransformClick = (event) => {
-    setAnchorTransformEl(event.currentTarget);
-  };
-  const handleTransformClose = () => {
-    setAnchorTransformEl(null);
-  };
-
-  const handleStyleClick = (event) => {
-    setAnchorStyleEl(event.currentTarget);
-  };
-  const handleStyleClose = () => {
-    setAnchorStyleEl(null);
-  };
 
   useEffect(() => {
     setMetadata(formik.values);
@@ -87,163 +47,14 @@ export default function DesignTabPanel(props) {
             }}
           >
             <Box sx={{ gridColumn: "span 2" }}>
-              <TextField
-                select
-                fullWidth
-                name="font"
-                value={formik.values.font}
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                error={!!formik.touched.font && !!formik.errors.font}
-                helperText={formik.touched.font && formik.errors.font}
-                label="Font"
-                size="small"
-                sx={{ mb: 1 }}
-              >
-                {Array.from(Object.keys(GOOGLE_FONTS)).map((font) => (
-                  <MenuItem key={font} value={font}>
-                    <Typography
-                      fontWeight="medium"
-                      variant="h6"
-                      sx={{
-                        fontFamily: GOOGLE_FONTS[font],
-                      }}
-                    >
-                      {font}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </TextField>
+              <TemplateSelect formik={formik} />
+            </Box>
+            <Box sx={{ gridColumn: "span 2" }}>
+              <FontSelect formik={formik} />
               <Stack direction="row" spacing={1}>
-                <div>
-                  <Button
-                    id="weight-button"
-                    startIcon={<BoldIcon fontSize="small" />}
-                    color="inherit"
-                    size="small"
-                    variant="outlined"
-                    sx={{ borderRadius: 8, p: 1, py: 0 }}
-                    aria-controls={openWeight ? "weight-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={openWeight ? "true" : undefined}
-                    onClick={handleWeightClick}
-                  >
-                    <Typography
-                      variant="caption"
-                      fontWeight={formik.values.fontWeight}
-                    >
-                      {formik.values.fontWeight}
-                    </Typography>
-                  </Button>
-                  <Menu
-                    id="weight-menu"
-                    anchorEl={anchorWeightEl}
-                    open={openWeight}
-                    onClose={handleWeightClose}
-                    MenuListProps={{
-                      "aria-labelledby": "weight-button",
-                    }}
-                  >
-                    {fontWeights.map((fontWeight) => (
-                      <MenuItem
-                        key={fontWeight}
-                        selected={formik.values.fontWeight == fontWeight}
-                        onClick={() => {
-                          handleWeightClose();
-                          formik.setFieldValue("fontWeight", fontWeight);
-                        }}
-                      >
-                        {fontWeight}
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </div>
-                <div>
-                  <Button
-                    id="transform-button"
-                    startIcon={<BrushIcon fontSize="small" />}
-                    color="inherit"
-                    size="small"
-                    variant="outlined"
-                    sx={{ borderRadius: 8, p: 1, py: 0 }}
-                    aria-controls={openTransform ? "transform-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={openTransform ? "true" : undefined}
-                    onClick={handleTransformClick}
-                  >
-                    <Typography
-                      variant="caption"
-                      textTransform={formik.values.textTransform}
-                    >
-                      {formik.values.textTransform}
-                    </Typography>
-                  </Button>
-                  <Menu
-                    id="transform-menu"
-                    anchorEl={anchorTransformEl}
-                    open={openTransform}
-                    onClose={handleTransformClose}
-                    MenuListProps={{
-                      "aria-labelledby": "transform-button",
-                    }}
-                  >
-                    {textTransforms.map((textTransform) => (
-                      <MenuItem
-                        key={textTransform}
-                        selected={formik.values.textTransform == textTransform}
-                        onClick={() => {
-                          handleTransformClose();
-                          formik.setFieldValue("textTransform", textTransform);
-                        }}
-                      >
-                        {textTransform}
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </div>
-                <div>
-                  <Button
-                    id="italic-button"
-                    startIcon={<FormatItalicIcon fontSize="small" />}
-                    color="inherit"
-                    size="small"
-                    variant="outlined"
-                    sx={{ borderRadius: 8, p: 1, py: 0 }}
-                    aria-controls={openStyle ? "italic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={openStyle ? "true" : undefined}
-                    onClick={handleStyleClick}
-                  >
-                    <Typography
-                      variant="caption"
-                      fontStyle={formik.values.fontStyle}
-                    >
-                      {formik.values.fontStyle}
-                    </Typography>
-                  </Button>
-                  <Menu
-                    id="italic-menu"
-                    anchorEl={anchorStyleEl}
-                    open={openStyle}
-                    onClose={handleStyleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "italic-button",
-                    }}
-                  >
-                    {fontStyles.map((fontStyle) => (
-                      <MenuItem
-                        key={fontStyle}
-                        selected={formik.values.fontStyle == fontStyle}
-                        onClick={() => {
-                          handleStyleClose();
-                          formik.setFieldValue("fontStyle", fontStyle);
-                        }}
-                      >
-                        {fontStyle}
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </div>
+                <FontWeightSelect formik={formik} />
+                <FontTransformSelect formik={formik} />
+                <FontStyleSelect formik={formik} />
               </Stack>
             </Box>
             <Stack sx={{ gridColumn: "span 2" }}>

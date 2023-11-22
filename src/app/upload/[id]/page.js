@@ -175,6 +175,7 @@ export default function UploadPage({ params }) {
       backgroundColor:
         data?.metadata?.backgroundColor || DEFAULT_DESIGN.backgroundColor,
       fontColor: data?.metadata?.fontColor || DEFAULT_DESIGN.fontColor,
+      template: data?.metadata?.template || DEFAULT_DESIGN.template,
       font: data?.metadata?.font || DEFAULT_DESIGN.font,
       textTransform:
         data?.metadata?.textTransform || DEFAULT_DESIGN.textTransform,

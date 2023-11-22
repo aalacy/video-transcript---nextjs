@@ -43,10 +43,38 @@ export const GOOGLE_FONTS = {
   Bungee: bungee.style.fontFamily,
   Montserrat: montserrat.style.fontFamily,
 };
-export const fontWeights = ["Light", "Bold"];
-export const textTransforms = ["None", "Uppercase", "Lowercase", "Capitalize"];
-export const fontStyles = ["Normal", "Italic"];
-export const textStyles = ["None", "Shadow", "Outline"];
+export const FONT_WEIGHTS = ["Light", "Bold"];
+export const TEXT_TRANSFORMS = ["None", "Uppercase", "Lowercase", "Capitalize"];
+export const FONT_STYLES = ["Normal", "Italic"];
+export const TEMPLATES = [
+  {
+    id: 1,
+    name: "Template 1",
+    metadata: {
+      font: "Amatic SC",
+      backgroundColor: "#000000",
+      fontColor: "#ffffff",
+    },
+  },
+  {
+    id: 2,
+    name: "Template 2",
+    metadata: {
+      font: "Roboto",
+      backgroundColor: "#ffbc02",
+      fontColor: "#000000",
+    },
+  },
+  {
+    id: 3,
+    name: "Template 3",
+    metadata: {
+      font: "Roboto",
+      backgroundColor: "#ffffff",
+      fontColor: "#000000",
+    },
+  },
+];
 
 export const MIN_FONT = 16;
 export const MAX_FONT = 42;
@@ -79,13 +107,14 @@ export const DEFAULT_DESIGN = {
   backgroundColor: "#ffbc02",
   fontColor: "#000101",
   font: "Roboto",
+  template: 1, // Template 1, 2, 3, 4, 5
   textTransform: "Uppercase", // None, Uppercase, Lowercase, Capitalize
   textShadow: 0, // 0 - 4
   textOutline: 0, // 0 - 4
   fontWeight: "Light",
   fontStyle: "Normal", // Italic
   fontSize: 22,
-  position: 50,
+  position: 77,
 };
 
 // Jobs
