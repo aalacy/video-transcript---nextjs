@@ -85,7 +85,7 @@ export const DEFAULT_DESIGN = {
   fontWeight: "Light",
   fontStyle: "Normal", // Italic
   fontSize: 22,
-  position: 50,
+  position: 77,
 };
 
 // Jobs
