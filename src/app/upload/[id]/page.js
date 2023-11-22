@@ -10,7 +10,7 @@ import * as yup from "yup";
 import DesignTabPanel from "@/components/upload/tab-design";
 import VideoPlayer from "@/components/upload/video-player";
 import TranscriptionTabPanel from "@/components/upload/tab-transcription";
-import { compileVTT, parseVtt } from "@/utils";
+import { compileVTT, parseVtt, saveText } from "@/utils";
 import { FileService } from "@/service/file-service";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -74,17 +74,23 @@ export default function UploadPage({ params }) {
     }
   };
 
-  const handleExport = () => {
-    try {
-      setLoading(true);
-      client.saveAndDownload(
-        params.id,
-        compileVTT(cues, updatedCues),
-        formik.values,
-      );
-    } catch (error) {
-      toast.error(error.message);
-      setLoading(false);
+  const handleExport = async (type = "Video") => {
+    if (type === "Video") {
+      try {
+        setLoading(true);
+        await client.saveAndDownload(
+          params.id,
+          compileVTT(cues, updatedCues),
+          formik.values,
+        );
+      } catch (error) {
+        toast.error(error.message);
+        setLoading(false);
+      }
+    } else {
+      const fileName = data.fileName.slice(0, -4);
+      saveText(`${fileName}-sutitle.vtt`, data.vtt);
+      toast.success("Successfully downloaded a vtt");
     }
   };
 
@@ -172,6 +178,8 @@ export default function UploadPage({ params }) {
       font: data?.metadata?.font || DEFAULT_DESIGN.font,
       textTransform:
         data?.metadata?.textTransform || DEFAULT_DESIGN.textTransform,
+      textShadow: data?.metadata?.textShadow || DEFAULT_DESIGN.textShadow,
+      textOutline: data?.metadata?.textOutline || DEFAULT_DESIGN.textOutline,
       fontStyle: data?.metadata?.fontStyle || DEFAULT_DESIGN.fontStyle,
       fontWeight: data?.metadata?.fontWeight || DEFAULT_DESIGN.fontWeight,
       fontSize: data?.metadata?.fontSize || DEFAULT_DESIGN.fontSize,

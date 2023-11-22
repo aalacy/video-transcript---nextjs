@@ -94,7 +94,8 @@ export default function RootLayout({ children }) {
             } else if (jobName === JOB_GENERATE_VIDEO) {
               const fileName = file.fileName.slice(0, -4);
               downloadMedia(`${fileName}-subtitled.${file.ext}`, file.output);
-              saveText(`${fileName}-sutitle.vtt`, file.vtt);
+              if (other.visitorId)
+                saveText(`${fileName}-sutitle.vtt`, file.vtt);
               toast.success("Successfully downloaded a video");
             }
           }

@@ -2,7 +2,7 @@
 
 import { DEFAULT_DESIGN, GOOGLE_FONTS } from "@/constants";
 import { Box, Typography } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 
 import "./style.css";
@@ -36,6 +36,16 @@ export default function VideoPlayer(props) {
       }
     }
   };
+
+  const textShadow = useMemo(() => {
+    const { backgroundColor, textOutline, textShadow } = metadata;
+    const color = backgroundColor || DEFAULT_DESIGN.backgroundColor;
+    const factor = 1.1 * textShadow + (textShadow - 1) * 0.2;
+    if (textShadow)
+      return `${factor / 2}px ${factor / 2}px ${factor / 2}px ${color}`;
+    else if (textOutline) return `0px 2px ${textOutline}px ${color}`;
+    else return "inherit";
+  }, [metadata]);
 
   return (
     <Box
@@ -85,7 +95,16 @@ export default function VideoPlayer(props) {
             fontFamily: GOOGLE_FONTS[metadata.font] || DEFAULT_DESIGN.font,
             color: metadata.fontColor || DEFAULT_DESIGN.color,
             backgroundColor:
-              metadata.backgroundColor || DEFAULT_DESIGN.backgroundColor,
+              metadata.textOutline || metadata.textShadow
+                ? "inherit"
+                : metadata.backgroundColor || DEFAULT_DESIGN.backgroundColor,
+            "-webkit-text-fill-color":
+              metadata.fontColor || DEFAULT_DESIGN.color,
+            "-webkit-text-stroke-color": metadata.textOutline
+              ? metadata.backgroundColor || DEFAULT_DESIGN.backgroundColor
+              : "transparent",
+            "-webkit-text-stroke": `${metadata.textOutline / 2}px`,
+            textShadow,
             mx: 3,
             px: "2px",
             wordWrap: "break-word",

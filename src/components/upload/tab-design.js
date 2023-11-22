@@ -32,6 +32,7 @@ import {
   GOOGLE_FONTS,
   textTransforms,
   fontStyles,
+  MARKS,
 } from "@/constants";
 
 export default function DesignTabPanel(props) {
@@ -116,6 +117,7 @@ export default function DesignTabPanel(props) {
               <Stack direction="row" spacing={1}>
                 <div>
                   <Button
+                    id="weight-button"
                     startIcon={<BoldIcon fontSize="small" />}
                     color="inherit"
                     size="small"
@@ -158,6 +160,7 @@ export default function DesignTabPanel(props) {
                 </div>
                 <div>
                   <Button
+                    id="transform-button"
                     startIcon={<BrushIcon fontSize="small" />}
                     color="inherit"
                     size="small"
@@ -200,12 +203,13 @@ export default function DesignTabPanel(props) {
                 </div>
                 <div>
                   <Button
+                    id="italic-button"
                     startIcon={<FormatItalicIcon fontSize="small" />}
                     color="inherit"
                     size="small"
                     variant="outlined"
                     sx={{ borderRadius: 8, p: 1, py: 0 }}
-                    aria-controls={openStyle ? "style-menu" : undefined}
+                    aria-controls={openStyle ? "italic-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={openStyle ? "true" : undefined}
                     onClick={handleStyleClick}
@@ -218,12 +222,12 @@ export default function DesignTabPanel(props) {
                     </Typography>
                   </Button>
                   <Menu
-                    id="style-menu"
+                    id="italic-menu"
                     anchorEl={anchorStyleEl}
                     open={openStyle}
                     onClose={handleStyleClose}
                     MenuListProps={{
-                      "aria-labelledby": "style-button",
+                      "aria-labelledby": "italic-button",
                     }}
                   >
                     {fontStyles.map((fontStyle) => (
@@ -242,6 +246,56 @@ export default function DesignTabPanel(props) {
                 </div>
               </Stack>
             </Box>
+            <Stack sx={{ gridColumn: "span 2" }}>
+              <Typography id="shadow-slider" variant="caption" color="GrayText">
+                Text Shadow
+              </Typography>
+              <Slider
+                fullWidth
+                aria-label="text shadow steps"
+                value={
+                  typeof formik.values.textShadow === "number"
+                    ? formik.values.textShadow
+                    : 0
+                }
+                onChange={(event, value) =>
+                  formik.setFieldValue("textShadow", value)
+                }
+                valueLabelDisplay="auto"
+                aria-labelledby="shadow-slider"
+                step={1}
+                marks
+                min={0}
+                max={4}
+              />
+            </Stack>
+            <Stack sx={{ gridColumn: "span 2" }}>
+              <Typography
+                id="outline-slider"
+                variant="caption"
+                color="GrayText"
+              >
+                Text Outline
+              </Typography>
+              <Slider
+                fullWidth
+                aria-label="text outline steps"
+                value={
+                  typeof formik.values.textOutline === "number"
+                    ? formik.values.textOutline
+                    : 0
+                }
+                onChange={(event, value) =>
+                  formik.setFieldValue("textOutline", value)
+                }
+                valueLabelDisplay="auto"
+                aria-labelledby="outline-slider"
+                step={1}
+                marks
+                min={0}
+                max={4}
+              />
+            </Stack>
             <MuiColorInput
               fullWidth
               size="small"
