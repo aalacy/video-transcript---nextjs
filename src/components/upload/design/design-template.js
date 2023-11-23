@@ -32,10 +32,24 @@ export default function TemplateSelect({ formik }) {
         const id = event.target.value;
         const template = TEMPLATES.find((template) => template.id === id);
         formik.setFieldValue("template", id);
-        const { metadata } = template;
-        formik.setFieldValue("font", metadata.font);
-        formik.setFieldValue("fontColor", metadata.fontColor);
-        formik.setFieldValue("backgroundColor", metadata.backgroundColor);
+        const {
+          metadata: {
+            font,
+            fontColor,
+            backgroundColor,
+            textTransform,
+            textShadow,
+            textOutline,
+            fontStyle,
+          },
+        } = template;
+        formik.setFieldValue("font", font);
+        formik.setFieldValue("fontColor", fontColor);
+        formik.setFieldValue("backgroundColor", backgroundColor);
+        formik.setFieldValue("textTransform", textTransform);
+        formik.setFieldValue("textShadow", textShadow);
+        formik.setFieldValue("textOutline", textOutline);
+        formik.setFieldValue("fontStyle", fontStyle);
       }}
       error={!!formik.touched.template && !!formik.errors.template}
       helperText={formik.touched.template && formik.errors.template}

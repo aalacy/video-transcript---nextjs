@@ -98,12 +98,11 @@ export default function VideoPlayer(props) {
               metadata.textOutline || metadata.textShadow
                 ? "inherit"
                 : metadata.backgroundColor || DEFAULT_DESIGN.backgroundColor,
-            "-webkit-text-fill-color":
-              metadata.fontColor || DEFAULT_DESIGN.color,
-            "-webkit-text-stroke-color": metadata.textOutline
+            WebkitTextFillColor: metadata.fontColor || DEFAULT_DESIGN.color,
+            WebkitTextStrokeColor: metadata.textOutline
               ? metadata.backgroundColor || DEFAULT_DESIGN.backgroundColor
               : "transparent",
-            "-webkit-text-stroke": `${metadata.textOutline / 2}px`,
+            WebkitTextStroke: `${metadata.textOutline / 2}px`,
             textShadow,
             mx: 3,
             px: "2px",
