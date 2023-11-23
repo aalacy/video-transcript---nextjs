@@ -63,6 +63,9 @@ export const TEMPLATES = [
       font: "Roboto",
       backgroundColor: "#ffbc02",
       fontColor: "#000000",
+      fontStyle: "Normal",
+      textShadow: 0,
+      textOutline: 0,
     },
   },
   {
@@ -72,6 +75,23 @@ export const TEMPLATES = [
       font: "Roboto",
       backgroundColor: "#ffffff",
       fontColor: "#000000",
+      fontStyle: "Normal",
+      textShadow: 0,
+      textOutline: 0,
+    },
+  },
+  {
+    id: 5,
+    name: "Template 5",
+    metadata: {
+      font: "Roboto",
+      backgroundColor: "#ffffff00",
+      fontColor: "#ffbc02",
+      secondColor: "#ffffff",
+      textTransform: "None",
+      fontStyle: "Normal",
+      textShadow: 0,
+      textOutline: 0,
     },
   },
 ];
