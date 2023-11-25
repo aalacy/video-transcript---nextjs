@@ -94,6 +94,18 @@ export const TEMPLATES = [
     name: "Template 4",
     metadata: {
       ...DEFAULT_DESIGN,
+      backgroundColor: "#ffffff00",
+      secondaryColor: "#ffffff00",
+      font: "Roboto",
+      fontWeight: "Bold",
+      fontColor: "#000000",
+    },
+  },
+  {
+    id: 5,
+    name: "Template 5",
+    metadata: {
+      ...DEFAULT_DESIGN,
       font: "Roboto",
       backgroundColor: "#000000",
       fontColor: "#ffbc02",
