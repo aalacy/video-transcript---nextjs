@@ -99,6 +99,7 @@ export const TEMPLATES = [
       fontColor: "#ffbc02",
       fontWeight: "Bold",
       textOutline: 2,
+      textTransform: "None",
     },
   },
 ];
