@@ -185,7 +185,7 @@ export default function Topbar({ setState, state, ...props }) {
               disableRipple
             >
               <DownloadIcon />
-              Vtt
+              Srt
             </MenuItem>
           </StyledMenu>
         </Box>

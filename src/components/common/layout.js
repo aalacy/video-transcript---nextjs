@@ -17,7 +17,7 @@ import Topbar from "@/components/common/topbar";
 import Sidebar from "@/components/common/sidebar";
 import { useAuth } from "@/hooks/use-auth";
 import ConfirmDialog from "./confirm";
-import { downloadMedia, saveText } from "@/utils";
+import { downloadMedia } from "@/utils";
 import TopbarHome from "./topbar-home";
 import Footer from "./footer";
 

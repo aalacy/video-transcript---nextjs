@@ -9,9 +9,9 @@ function RenderTemplate({ template }) {
       sx={{
         textTransform: "uppercase",
         fontWeight: "medium",
-        color: template.metadata.fontColor,
-        bgcolor: template.metadata.backgroundColor,
-        fontFamily: GOOGLE_FONTS[template.metadata.font],
+        color: template?.metadata?.fontColor,
+        bgcolor: template?.metadata?.backgroundColor,
+        fontFamily: GOOGLE_FONTS[template?.metadata?.font],
         px: 1,
       }}
     >
@@ -32,24 +32,29 @@ export default function TemplateSelect({ formik }) {
         const id = event.target.value;
         const template = TEMPLATES.find((template) => template.id === id);
         formik.setFieldValue("template", id);
+
         const {
           metadata: {
             font,
+            secondaryColor,
             fontColor,
             backgroundColor,
             textTransform,
             textShadow,
             textOutline,
             fontStyle,
+            fontWeight,
           },
         } = template;
         formik.setFieldValue("font", font);
         formik.setFieldValue("fontColor", fontColor);
+        formik.setFieldValue("secondaryColor", secondaryColor);
         formik.setFieldValue("backgroundColor", backgroundColor);
         formik.setFieldValue("textTransform", textTransform);
         formik.setFieldValue("textShadow", textShadow);
         formik.setFieldValue("textOutline", textOutline);
         formik.setFieldValue("fontStyle", fontStyle);
+        formik.setFieldValue("fontWeight", fontWeight);
       }}
       error={!!formik.touched.template && !!formik.errors.template}
       helperText={formik.touched.template && formik.errors.template}

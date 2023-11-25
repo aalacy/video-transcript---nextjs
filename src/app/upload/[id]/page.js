@@ -89,8 +89,8 @@ export default function UploadPage({ params }) {
       }
     } else {
       const fileName = data.fileName.slice(0, -4);
-      saveText(`${fileName}-sutitle.vtt`, data.vtt);
-      toast.success("Successfully downloaded a vtt");
+      saveText(`${fileName}.srt`, data.vtt);
+      toast.success("Successfully downloaded a srt");
     }
   };
 
@@ -175,6 +175,8 @@ export default function UploadPage({ params }) {
       backgroundColor:
         data?.metadata?.backgroundColor || DEFAULT_DESIGN.backgroundColor,
       fontColor: data?.metadata?.fontColor || DEFAULT_DESIGN.fontColor,
+      secondaryColor:
+        data?.metadata?.secondaryColor || DEFAULT_DESIGN.secondaryColor,
       template: data?.metadata?.template || DEFAULT_DESIGN.template,
       font: data?.metadata?.font || DEFAULT_DESIGN.font,
       textTransform:
