@@ -36,6 +36,7 @@ export default function TemplateSelect({ formik }) {
         const {
           metadata: {
             font,
+            fontSize,
             secondaryColor,
             fontColor,
             backgroundColor,
@@ -44,9 +45,11 @@ export default function TemplateSelect({ formik }) {
             textOutline,
             fontStyle,
             fontWeight,
+            position,
           },
         } = template;
         formik.setFieldValue("font", font);
+        formik.setFieldValue("fontSize", fontSize);
         formik.setFieldValue("fontColor", fontColor);
         formik.setFieldValue("secondaryColor", secondaryColor);
         formik.setFieldValue("backgroundColor", backgroundColor);
@@ -55,6 +58,7 @@ export default function TemplateSelect({ formik }) {
         formik.setFieldValue("textOutline", textOutline);
         formik.setFieldValue("fontStyle", fontStyle);
         formik.setFieldValue("fontWeight", fontWeight);
+        formik.setFieldValue("position", position);
       }}
       error={!!formik.touched.template && !!formik.errors.template}
       helperText={formik.touched.template && formik.errors.template}

@@ -46,63 +46,58 @@ export const GOOGLE_FONTS = {
 export const FONT_WEIGHTS = ["Light", "Bold"];
 export const TEXT_TRANSFORMS = ["None", "Uppercase", "Lowercase", "Capitalize"];
 export const FONT_STYLES = ["Normal", "Italic"];
+export const DEFAULT_DESIGN = {
+  backgroundColor: "#ffbc02",
+  fontColor: "#000101",
+  secondaryColor: "#ffffff",
+  font: "Roboto",
+  template: 1, // Template 1, 2, 3, 4, 5
+  textTransform: "Uppercase", // None, Uppercase, Lowercase, Capitalize
+  textShadow: 0, // 0 - 4
+  textOutline: 0, // 0 - 4
+  fontWeight: "Light",
+  fontStyle: "Normal", // Italic
+  fontSize: 22,
+  position: 77,
+};
 export const TEMPLATES = [
   {
     id: 1,
     name: "Template 1",
     metadata: {
+      ...DEFAULT_DESIGN,
       font: "Roboto",
       fontColor: "#ffffff",
-      secondaryColor: "#ffffff",
       backgroundColor: "#000000",
-      textTransform: "Uppercase",
-      fontWeight: "Light",
-      fontStyle: "Normal",
-      textShadow: 0,
-      textOutline: 0,
     },
   },
   {
     id: 2,
     name: "Template 2",
     metadata: {
+      ...DEFAULT_DESIGN,
       font: "Roboto",
-      secondaryColor: "#ffffff",
       backgroundColor: "#ffbc02",
-      textTransform: "Uppercase",
-      fontWeight: "Light",
-      fontColor: "#000000",
-      fontStyle: "Normal",
-      textShadow: 0,
-      textOutline: 0,
     },
   },
   {
     id: 3,
     name: "Template 3",
     metadata: {
+      ...DEFAULT_DESIGN,
       font: "Roboto",
-      secondaryColor: "#ffffff",
       backgroundColor: "#ffffff",
-      textTransform: "Uppercase",
-      fontWeight: "Light",
-      fontStyle: "Normal",
-      textShadow: 0,
-      textOutline: 0,
     },
   },
   {
     id: 4,
     name: "Template 4",
     metadata: {
+      ...DEFAULT_DESIGN,
       font: "Roboto",
       backgroundColor: "#000000",
       fontColor: "#ffbc02",
-      secondaryColor: "#ffffffff",
       fontWeight: "Bold",
-      textTransform: "None",
-      fontStyle: "Normal",
-      textShadow: 0,
       textOutline: 2,
     },
   },
@@ -134,21 +129,6 @@ export const MARKS = [
     label: "4",
   },
 ];
-
-export const DEFAULT_DESIGN = {
-  backgroundColor: "#ffbc02",
-  fontColor: "#000101",
-  secondaryColor: "#ffffff",
-  font: "Roboto",
-  template: 1, // Template 1, 2, 3, 4, 5
-  textTransform: "Uppercase", // None, Uppercase, Lowercase, Capitalize
-  textShadow: 0, // 0 - 4
-  textOutline: 0, // 0 - 4
-  fontWeight: "Light",
-  fontStyle: "Normal", // Italic
-  fontSize: 22,
-  position: 77,
-};
 
 // Jobs
 export const JOB_MONSTER_TRANSCRIPTION = "monster-transcription";
