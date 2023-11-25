@@ -105,7 +105,7 @@ export default function VideoPlayer(props) {
               : "transparent",
             textShadow,
             mx: 3,
-            px: "2px",
+            p: "3px",
             wordWrap: "break-word",
             maxWidth: WIDTH,
           }}
