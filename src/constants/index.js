@@ -51,9 +51,15 @@ export const TEMPLATES = [
     id: 1,
     name: "Template 1",
     metadata: {
-      font: "Amatic SC",
-      backgroundColor: "#000000",
+      font: "Roboto",
       fontColor: "#ffffff",
+      secondaryColor: "#ffffff",
+      backgroundColor: "#000000",
+      textTransform: "Uppercase",
+      fontWeight: "Light",
+      fontStyle: "Normal",
+      textShadow: 0,
+      textOutline: 0,
     },
   },
   {
@@ -61,7 +67,10 @@ export const TEMPLATES = [
     name: "Template 2",
     metadata: {
       font: "Roboto",
+      secondaryColor: "#ffffff",
       backgroundColor: "#ffbc02",
+      textTransform: "Uppercase",
+      fontWeight: "Light",
       fontColor: "#000000",
       fontStyle: "Normal",
       textShadow: 0,
@@ -73,25 +82,28 @@ export const TEMPLATES = [
     name: "Template 3",
     metadata: {
       font: "Roboto",
+      secondaryColor: "#ffffff",
       backgroundColor: "#ffffff",
-      fontColor: "#000000",
+      textTransform: "Uppercase",
+      fontWeight: "Light",
       fontStyle: "Normal",
       textShadow: 0,
       textOutline: 0,
     },
   },
   {
-    id: 5,
-    name: "Template 5",
+    id: 4,
+    name: "Template 4",
     metadata: {
       font: "Roboto",
-      backgroundColor: "#ffffff00",
+      backgroundColor: "#000000",
       fontColor: "#ffbc02",
-      secondColor: "#ffffff",
+      secondaryColor: "#ffffffff",
+      fontWeight: "Bold",
       textTransform: "None",
       fontStyle: "Normal",
       textShadow: 0,
-      textOutline: 0,
+      textOutline: 2,
     },
   },
 ];
@@ -126,6 +138,7 @@ export const MARKS = [
 export const DEFAULT_DESIGN = {
   backgroundColor: "#ffbc02",
   fontColor: "#000101",
+  secondaryColor: "#ffffff",
   font: "Roboto",
   template: 1, // Template 1, 2, 3, 4, 5
   textTransform: "Uppercase", // None, Uppercase, Lowercase, Capitalize
