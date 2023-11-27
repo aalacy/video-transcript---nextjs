@@ -91,7 +91,7 @@ export default function UploadPage({ params }) {
       }
     } else {
       const fileName = data.fileName.slice(0, -4);
-      saveText(`${fileName}.srt`, data.vtt);
+      saveText(`${fileName}.srt`, compileVTT(cues, updatedCues));
       toast.success("Successfully downloaded a srt");
     }
   };
