@@ -92,10 +92,10 @@ export const TEMPLATES = [
     name: "Template 4",
     metadata: {
       ...DEFAULT_DESIGN,
-      backgroundColor: "#ffffff00",
+      backgroundColor: "#000000",
       secondaryColor: "#ffffff00",
       fontWeight: "Bold",
-      fontColor: "#000000",
+      fontColor: "#ffffff",
     },
   },
   {

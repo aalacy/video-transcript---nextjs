@@ -86,7 +86,6 @@ export default function VideoPlayer(props) {
         sx={{
           position: "absolute",
           top: `calc(${metadata.position || 50}%)`,
-          whiteSpace: "nowrap",
           display: "flex",
           justifyContent: "center",
           width: 1,
@@ -114,8 +113,10 @@ export default function VideoPlayer(props) {
             textShadow,
             mx: 3,
             p: "3px",
-            wordWrap: "break-word",
+            // wordWrap: "break-word",
+            wordBreak: "keep-all",
             maxWidth: WIDTH,
+            // inlineSize: (metadata.template === 4 || metadata.template === 5) ? `${selectedCue?.text.length * (metadata.fontSize || DEFAULT_DESIGN.fontSize) * 0.78 / 3}px` : 'auto',
           }}
         >
           {selectedCue?.text}
