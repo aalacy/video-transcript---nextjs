@@ -37,6 +37,10 @@ export default function DesignTabPanel(props) {
 
   useEffect(() => {
     setMetadata(formik.values);
+    if (formik?.values?.template === 4) {
+      formik.setFieldValue("textOutline", 0);
+      formik.setFieldValue("textShadow", 0);
+    }
   }, [formik.values]);
 
   return (
@@ -102,7 +106,9 @@ export default function DesignTabPanel(props) {
                   width: "90%",
                   mb: 1,
                 }}
-                disabled={formik?.values?.textShadow}
+                disabled={
+                  formik?.values?.textShadow || formik?.values?.template === 4
+                }
               />
               <MuiColorInput
                 fullWidth
@@ -121,7 +127,9 @@ export default function DesignTabPanel(props) {
                   formik.touched.outlineColor && formik.errors.outlineColor
                 }
                 disabled={
-                  formik?.value?.textOutline < 1 || formik?.values?.textShadow
+                  formik?.value?.textOutline < 1 ||
+                  formik?.values?.textShadow ||
+                  formik?.values?.template === 4
                 }
                 sx={{ gridColumn: "span 2" }}
               />
@@ -149,6 +157,7 @@ export default function DesignTabPanel(props) {
                 onChange={(event, value) =>
                   formik.setFieldValue("textShadow", value)
                 }
+                disabled={formik?.values?.template === 4}
                 valueLabelDisplay="auto"
                 aria-labelledby="shadow-slider"
                 step={1}
@@ -175,7 +184,10 @@ export default function DesignTabPanel(props) {
                 helperText={
                   formik.touched.shadowColor && formik.errors.shadowColor
                 }
-                disabled={formik?.value?.textShadow < 1}
+                disabled={
+                  formik?.value?.textShadow < 1 ||
+                  formik?.values?.template === 4
+                }
                 sx={{ gridColumn: "span 2" }}
               />
             </Stack>

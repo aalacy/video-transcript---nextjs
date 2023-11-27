@@ -60,6 +60,13 @@ export default function VideoPlayer(props) {
     return color || DEFAULT_DESIGN.backgroundColor;
   }, [metadata]);
 
+  const backgroundColor = useMemo(() => {
+    const { textOutline, textShadow, backgroundColor, template } = metadata;
+    const bgColor = backgroundColor || DEFAULT_DESIGN.backgroundColor;
+    //if (template === 4) return bgColor;
+    /*else*/ return textOutline || textShadow ? "inherit" : bgColor;
+  }, [metadata]);
+
   return (
     <Box
       id="video-player"
@@ -106,10 +113,7 @@ export default function VideoPlayer(props) {
             fontSize: (metadata.fontSize || DEFAULT_DESIGN.fontSize) * 0.78,
             fontFamily: GOOGLE_FONTS[metadata.font] || DEFAULT_DESIGN.font,
             color: metadata.fontColor || DEFAULT_DESIGN.color,
-            backgroundColor:
-              metadata.textOutline || metadata.textShadow
-                ? "inherit"
-                : metadata.backgroundColor || DEFAULT_DESIGN.backgroundColor,
+            backgroundColor,
             WebkitTextFillColor: metadata.fontColor || DEFAULT_DESIGN.color,
             WebkitTextStrokeColor,
             textShadow,
