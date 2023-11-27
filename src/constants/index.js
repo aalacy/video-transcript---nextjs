@@ -48,6 +48,8 @@ export const TEXT_TRANSFORMS = ["None", "Uppercase", "Lowercase", "Capitalize"];
 export const FONT_STYLES = ["Normal", "Italic"];
 export const DEFAULT_DESIGN = {
   backgroundColor: "#ffbc02",
+  outlineColor: "#000000",
+  shadowColor: "#000000",
   fontColor: "#000101",
   secondaryColor: "#ffffff",
   font: "Roboto",
@@ -66,9 +68,6 @@ export const TEMPLATES = [
     name: "Template 1",
     metadata: {
       ...DEFAULT_DESIGN,
-      font: "Roboto",
-      fontColor: "#ffffff",
-      backgroundColor: "#000000",
     },
   },
   {
@@ -76,8 +75,8 @@ export const TEMPLATES = [
     name: "Template 2",
     metadata: {
       ...DEFAULT_DESIGN,
-      font: "Roboto",
-      backgroundColor: "#ffbc02",
+      fontColor: "#ffffff",
+      backgroundColor: "#000000",
     },
   },
   {
@@ -85,7 +84,6 @@ export const TEMPLATES = [
     name: "Template 3",
     metadata: {
       ...DEFAULT_DESIGN,
-      font: "Roboto",
       backgroundColor: "#ffffff",
     },
   },
@@ -96,7 +94,6 @@ export const TEMPLATES = [
       ...DEFAULT_DESIGN,
       backgroundColor: "#ffffff00",
       secondaryColor: "#ffffff00",
-      font: "Roboto",
       fontWeight: "Bold",
       fontColor: "#000000",
     },
@@ -106,11 +103,10 @@ export const TEMPLATES = [
     name: "Template 5",
     metadata: {
       ...DEFAULT_DESIGN,
-      font: "Roboto",
       backgroundColor: "#000000",
       fontColor: "#ffbc02",
       fontWeight: "Bold",
-      textOutline: 2,
+      textOutline: 4,
       textTransform: "None",
     },
   },
@@ -120,6 +116,8 @@ export const MIN_FONT = 16;
 export const MAX_FONT = 42;
 export const MIN_POSITION = 0;
 export const MAX_POSITION = 90;
+export const MIN_SHADOW = 0;
+export const MAX_SHADOW = 4;
 export const MARKS = [
   {
     value: 0,

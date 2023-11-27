@@ -17,6 +17,8 @@ import { useAuth } from "@/hooks/use-auth";
 import {
   MIN_FONT,
   MAX_FONT,
+  MIN_SHADOW,
+  MAX_SHADOW,
   MIN_POSITION,
   MAX_POSITION,
   DEFAULT_DESIGN,
@@ -174,6 +176,8 @@ export default function UploadPage({ params }) {
     initialValues: {
       backgroundColor:
         data?.metadata?.backgroundColor || DEFAULT_DESIGN.backgroundColor,
+      outlineColor: data?.metadata?.outlineColor || DEFAULT_DESIGN.outlineColor,
+      shadowColor: data?.metadata?.shadowColor || DEFAULT_DESIGN.shadowColor,
       fontColor: data?.metadata?.fontColor || DEFAULT_DESIGN.fontColor,
       secondaryColor:
         data?.metadata?.secondaryColor || DEFAULT_DESIGN.secondaryColor,
@@ -194,6 +198,8 @@ export default function UploadPage({ params }) {
       font: yup.string(),
       fontSize: yup.number().min(MIN_FONT).max(MAX_FONT),
       position: yup.number().min(MIN_POSITION).max(MAX_POSITION),
+      textShadow: yup.number().min(MIN_SHADOW).max(MAX_SHADOW),
+      textOutline: yup.number().min(MIN_SHADOW).max(MAX_SHADOW),
     }),
     onSubmit,
   });

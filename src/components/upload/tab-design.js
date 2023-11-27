@@ -16,7 +16,14 @@ import {
 import { MuiColorInput } from "mui-color-input";
 import { useEffect } from "react";
 
-import { MIN_FONT, MAX_FONT, MIN_POSITION, MAX_POSITION } from "@/constants";
+import {
+  MIN_FONT,
+  MAX_FONT,
+  MIN_POSITION,
+  MAX_POSITION,
+  MIN_SHADOW,
+  MAX_SHADOW,
+} from "@/constants";
 import FontWeightSelect from "./design/design-weight";
 import FontTransformSelect from "./design/design-transform";
 import FontStyleSelect from "./design/design-style";
@@ -57,30 +64,15 @@ export default function DesignTabPanel(props) {
                 <FontStyleSelect formik={formik} />
               </Stack>
             </Box>
-            <Stack sx={{ gridColumn: "span 2" }}>
-              <Typography id="shadow-slider" variant="caption" color="GrayText">
-                Text Shadow
-              </Typography>
-              <Slider
-                fullWidth
-                aria-label="text shadow steps"
-                value={
-                  typeof formik.values.textShadow === "number"
-                    ? formik.values.textShadow
-                    : 0
-                }
-                onChange={(event, value) =>
-                  formik.setFieldValue("textShadow", value)
-                }
-                valueLabelDisplay="auto"
-                aria-labelledby="shadow-slider"
-                step={1}
-                marks
-                min={0}
-                max={4}
-              />
-            </Stack>
-            <Stack sx={{ gridColumn: "span 2" }}>
+            <Stack
+              sx={{
+                gridColumn: "span 2",
+                border: 1,
+                borderColor: "GrayText",
+                p: 1,
+                borderRadius: 3,
+              }}
+            >
               <Typography
                 id="outline-slider"
                 variant="caption"
@@ -103,8 +95,88 @@ export default function DesignTabPanel(props) {
                 aria-labelledby="outline-slider"
                 step={1}
                 marks
-                min={0}
-                max={4}
+                min={MIN_SHADOW}
+                max={MAX_SHADOW}
+                sx={{
+                  ml: 1,
+                  width: "90%",
+                  mb: 1,
+                }}
+                disabled={formik?.values?.textShadow}
+              />
+              <MuiColorInput
+                fullWidth
+                size="small"
+                format="hex8"
+                name="outlineColor"
+                label="Outline Color"
+                value={formik.values.outlineColor}
+                onChange={(color) =>
+                  formik.setFieldValue("outlineColor", color)
+                }
+                error={
+                  !!formik.touched.outlineColor && !!formik.errors.outlineColor
+                }
+                helperText={
+                  formik.touched.outlineColor && formik.errors.outlineColor
+                }
+                disabled={
+                  formik?.value?.textOutline < 1 || formik?.values?.textShadow
+                }
+                sx={{ gridColumn: "span 2" }}
+              />
+            </Stack>
+            <Stack
+              sx={{
+                gridColumn: "span 2",
+                border: 1,
+                borderColor: "GrayText",
+                p: 1,
+                borderRadius: 3,
+              }}
+            >
+              <Typography id="shadow-slider" variant="caption" color="GrayText">
+                Text Shadow
+              </Typography>
+              <Slider
+                fullWidth
+                aria-label="text shadow steps"
+                value={
+                  typeof formik.values.textShadow === "number"
+                    ? formik.values.textShadow
+                    : 0
+                }
+                onChange={(event, value) =>
+                  formik.setFieldValue("textShadow", value)
+                }
+                valueLabelDisplay="auto"
+                aria-labelledby="shadow-slider"
+                step={1}
+                marks
+                min={MIN_SHADOW}
+                max={MAX_SHADOW}
+                sx={{
+                  ml: 1,
+                  width: "90%",
+                  mb: 1,
+                }}
+              />
+              <MuiColorInput
+                fullWidth
+                size="small"
+                format="hex8"
+                name="shadowColor"
+                label="Shadow Color"
+                value={formik.values.shadowColor}
+                onChange={(color) => formik.setFieldValue("shadowColor", color)}
+                error={
+                  !!formik.touched.shadowColor && !!formik.errors.shadowColor
+                }
+                helperText={
+                  formik.touched.shadowColor && formik.errors.shadowColor
+                }
+                disabled={formik?.value?.textShadow < 1}
+                sx={{ gridColumn: "span 2" }}
               />
             </Stack>
             <MuiColorInput
@@ -123,6 +195,9 @@ export default function DesignTabPanel(props) {
               }
               helperText={
                 formik.touched.backgroundColor && formik.errors.backgroundColor
+              }
+              disabled={
+                formik?.values?.textShadow || formik?.values?.textOutline
               }
               sx={{ gridColumn: "span 2" }}
             />

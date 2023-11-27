@@ -40,12 +40,22 @@ export default function VideoPlayer(props) {
   const textShadow = useMemo(() => {
     const { backgroundColor, textOutline, textShadow } = metadata;
     const color = backgroundColor || DEFAULT_DESIGN.backgroundColor;
-    const shadowFactor = (1.1 * textShadow + (textShadow - 1) * 0.2) / 2;
-    const outlineFactor = (1.1 * textOutline + (textOutline - 1) * 0.2) / 2;
+    const shadowFactor = (1.1 * textShadow + (textShadow - 1) * 0.4) / 2;
+    const outlineFactor = (1.1 * textOutline + (textOutline - 1) * 0.8) / 2;
     if (textShadow)
       return `${shadowFactor}px ${shadowFactor}px ${shadowFactor}px ${color}`;
     else if (textOutline) return `0px 0.5px ${outlineFactor}px ${color}`;
     else return "inherit";
+  }, [metadata]);
+
+  const WebkitTextStrokeColor = useMemo(() => {
+    let color;
+    if (metadata.textOutline) color = metadata.outlineColor;
+    if (metadata.textShadow) color = metadata.shadowColor;
+    if (metadata.textOutline < 1 && metadata.textShadow < 1)
+      color = "transparent";
+
+    return color || DEFAULT_DESIGN.backgroundColor;
   }, [metadata]);
 
   return (
@@ -100,9 +110,7 @@ export default function VideoPlayer(props) {
                 ? "inherit"
                 : metadata.backgroundColor || DEFAULT_DESIGN.backgroundColor,
             WebkitTextFillColor: metadata.fontColor || DEFAULT_DESIGN.color,
-            WebkitTextStrokeColor: metadata.textOutline
-              ? metadata.backgroundColor || DEFAULT_DESIGN.backgroundColor
-              : "transparent",
+            WebkitTextStrokeColor,
             textShadow,
             mx: 3,
             p: "3px",
