@@ -1,3 +1,4 @@
+import { SPECIAL_MARKS, SUBTITLES_LENGTH } from "@/constants";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat.js";
 import duration from "dayjs/plugin/duration.js";
@@ -231,4 +232,114 @@ export const saveText = (fileName, text) => {
   });
   anchor.href = window.URL.createObjectURL(t);
   anchor.click();
+};
+
+const checkSpecialMark = (cue, idx, vars) => {
+  if (SPECIAL_MARKS.includes(cue.text.at(-1))) {
+    vars.delta++;
+    vars.isNew = true;
+    vars.offset = SUBTITLES_LENGTH - 1 - (+idx % SUBTITLES_LENGTH);
+
+    return true;
+  }
+  return false;
+};
+
+export const extractVTT = (data) => {
+  const [startOrg, second] = data.split("-->");
+  const [endOrg, text] = second.split("::");
+  return {
+    start: dayObj(startOrg),
+    startOrg: startOrg.trim(),
+    end: dayObj(endOrg),
+    endOrg: endOrg.trim(),
+    text: text.trim(),
+  };
+};
+
+const addCueToList = (newCues, cue) => {
+  newCues.at(-1).cues.push(cue);
+};
+
+const checkAndAddTextWithEffect = (
+  newCues,
+  cue,
+  template,
+  curIndex,
+  hasEffect,
+  metadata,
+) => {
+  const { secondaryColour, backColourWithoutAlpha, primaryColourWithoutAlpha } =
+    metadata;
+
+  addCueToList(newCues, cue);
+};
+
+export const parseRawVtt = (data, metadata) => {
+  const vars = {
+    delta: 0,
+    isNew: false,
+    offset: 0,
+  };
+  const { template } = metadata;
+  const newCues = [];
+  let identifier = 0;
+
+  for (let idx in data) {
+    const cue = extractVTT(data[idx]);
+    const curIndex = (+idx + vars.offset) % SUBTITLES_LENGTH;
+    cue.index = curIndex;
+    if (curIndex === 0 || vars.isNew || +idx === data.length) {
+      newCues.push({
+        identifier,
+        cues: [cue],
+      });
+      identifier++;
+      vars.isNew = false;
+      checkSpecialMark(cue, idx, vars);
+    } else {
+      const hasMark = checkSpecialMark(cue, idx, vars);
+      checkAndAddTextWithEffect(
+        newCues,
+        cue,
+        template,
+        curIndex,
+        hasMark,
+        metadata,
+      );
+    }
+  }
+
+  return newCues;
+};
+
+export const generateRawVtt = (content) => {
+  let output = [];
+  for (const { cues } of content) {
+    for (const { startOrg, endOrg, text } of cues) {
+      output.push(`${startOrg} --> ${endOrg}:: ${text}`);
+    }
+  }
+  return output;
+};
+
+export const normalizeCue = (newCue) => {
+  const { identifier, cues } = newCue;
+  return {
+    identifier,
+    start: cues[0].start,
+    text: cues.map(({ text }) => text).join(" "),
+  };
+};
+
+export const generateCues2Vtt = (newCues) => {
+  let output = "";
+  for (let { identifier, cues } of newCues) {
+    output += "\n";
+    output += `${identifier}\n`;
+    output += `${cues[0].startOrg} --> ${cues.at(-1).endOrg}`;
+    output += `\n${cues.map(({ text }) => text).join(" ")}`;
+    output += "\n";
+  }
+  return output;
 };

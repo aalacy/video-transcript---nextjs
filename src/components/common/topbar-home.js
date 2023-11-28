@@ -17,7 +17,7 @@ import {
 import Link from "next/link";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import Logo from "./logo";
 
@@ -82,7 +82,11 @@ export default function TopbarHome() {
           {isNonMobile ? (
             <Box>
               {menuList.map(({ href, title, style, target, variant }) => (
-                <LinkButton key={title} size="small" variant={variant}>
+                <LinkButton
+                  key={title}
+                  size="small"
+                  variant={variant || "text"}
+                >
                   <Link href={href} style={style} target={target}>
                     {title}
                   </Link>

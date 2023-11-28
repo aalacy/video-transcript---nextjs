@@ -1,0 +1,17 @@
+.cue-editable {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 0.25rem 0.125rem;
+  border-radius: 0.25rem;
+
+  &:focus {
+    outline-color: rgb(16, 16, 16);
+  }
+
+  &:empty {
+    border-width: 1px;
+    border-style: dotted;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}

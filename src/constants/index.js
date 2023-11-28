@@ -552,3 +552,7 @@ export const isoLangs = [
 
 export const DEFAULT_FILE_SIZE = 300;
 export const GUEST_FILE_SIZE = 100;
+
+export const SUBTITLES_LENGTH = 4;
+
+export const SPECIAL_MARKS = ",.?!";

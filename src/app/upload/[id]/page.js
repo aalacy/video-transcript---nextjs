@@ -10,7 +10,15 @@ import * as yup from "yup";
 import DesignTabPanel from "@/components/upload/tab-design";
 import VideoPlayer from "@/components/upload/video-player";
 import TranscriptionTabPanel from "@/components/upload/tab-transcription";
-import { compileVTT, parseVtt, saveText } from "@/utils";
+import {
+  compileVTT,
+  generateCues2Vtt,
+  generateRawVtt,
+  normalizeCue,
+  parseRawVtt,
+  parseVtt,
+  saveText,
+} from "@/utils";
 import { FileService } from "@/service/file-service";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -26,6 +34,7 @@ import {
 import { useMounted } from "@/hooks/use-mounted";
 import { gtm } from "@/utils/gtm";
 import { ProgressModal } from "@/components/common/progress-popup";
+import EditableTranscriptionPanel from "@/components/upload/tab-editable-transcription";
 
 const a11yProps = (index) => {
   return {
@@ -59,14 +68,12 @@ export default function UploadPage({ params }) {
 
   const [value, setValue] = useState(0);
   const [metadata, setMetadata] = useState({});
-  const [cues, setCues] = useState([]);
-  const [initialValues, setInitialValues] = useState({});
-  const [showInputs, setShowInputs] = useState({});
+  const [newCues, setNewCues] = useState([]);
   const [selectedCue, setSelectedCue] = useState({});
   const [startPos, setStartPos] = useState(0);
-  const [updatedCues, setUpdatedCues] = useState([]);
   const [data, setData] = useState({});
   const [canShow, setCanShow] = useState();
+  const [content, setContent] = useState([]);
 
   const handleSave = () => {
     try {
@@ -82,7 +89,7 @@ export default function UploadPage({ params }) {
         setLoading(true);
         await client.saveAndDownload(
           params.id,
-          compileVTT(cues, updatedCues),
+          generateRawVtt(content),
           formik.values,
         );
       } catch (error) {
@@ -91,16 +98,16 @@ export default function UploadPage({ params }) {
       }
     } else {
       const fileName = data.fileName.slice(0, -4);
-      saveText(`${fileName}.srt`, compileVTT(cues, updatedCues));
+      saveText(`${fileName}.srt`, generateCues2Vtt(content));
       toast.success("Successfully downloaded a srt");
     }
   };
 
   useEffect(() => {
-    if (cues?.length < 1 || updatedCues?.length < 1) return;
+    if (content?.length < 1) return;
     setHandleSave(handleSave);
     setHandleExport(handleExport);
-  }, [cues, updatedCues, metadata]);
+  }, [content, metadata]);
 
   const getData = useCallback(async () => {
     try {
@@ -126,20 +133,12 @@ export default function UploadPage({ params }) {
   const processData = useCallback(
     (data) => {
       if (!data?.vtt) return;
-      const parsed = parseVtt(data.vtt);
-      const obj = {};
-      const bools = {};
-      if (parsed.valid) {
-        setCues(parsed.cues);
-        if (parsed.cues.length > 0) setSelectedCue(parsed.cues[0]);
-        Array.from(parsed.cues).forEach((cue) => {
-          obj[cue.identifier] = cue.text;
-          bools[cue.identifier] = false;
-        });
+      const parsed = parseRawVtt(data.rawVtt, data.metadata);
+      setNewCues(parsed);
+      if (parsed.length > 0) {
+        setSelectedCue(normalizeCue(parsed[0]));
+        setTimeout(() => setCanShow(true), 300);
       }
-      setInitialValues(obj);
-      setShowInputs(bools);
-      setTimeout(() => setCanShow(true), 300);
     },
     [data],
   );
@@ -156,7 +155,7 @@ export default function UploadPage({ params }) {
     try {
       const { data } = await client.saveProject(
         params.id,
-        compileVTT(cues, updatedCues),
+        generateRawVtt(content),
         values,
       );
       toast.success(data.message);
@@ -232,15 +231,13 @@ export default function UploadPage({ params }) {
             <Tab label="Design" sx={tabStyle} {...a11yProps(1)} />
           </Tabs>
           <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
-            <TranscriptionTabPanel
-              cues={cues}
-              initialValues={initialValues}
-              showInputs={showInputs}
-              setShowInputs={setShowInputs}
-              selectedCue={selectedCue}
-              setSelectedCue={setSelectedCue}
-              setUpdatedCues={setUpdatedCues}
+            <EditableTranscriptionPanel
+              newCues={newCues}
               setStartPos={setStartPos}
+              setSelectedCue={setSelectedCue}
+              selectedCue={selectedCue}
+              setContent={setContent}
+              content={content}
             />
             <DesignTabPanel
               index={1}
@@ -251,7 +248,7 @@ export default function UploadPage({ params }) {
         </Box>
         <VideoPlayer
           data={data}
-          updatedCues={updatedCues}
+          content={content}
           setSelectedCue={setSelectedCue}
           startPos={startPos}
           selectedCue={selectedCue}

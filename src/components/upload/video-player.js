@@ -5,12 +5,13 @@ import { Box, Typography } from "@mui/material";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 
-import "./style.css";
+import "./video-style.css";
+import { normalizeCue } from "@/utils";
 
 const WIDTH = 320;
 
 export default function VideoPlayer(props) {
-  const { metadata, data, startPos, selectedCue, setSelectedCue, updatedCues } =
+  const { metadata, data, startPos, selectedCue, setSelectedCue, content } =
     props;
 
   const ref = useRef();
@@ -25,14 +26,12 @@ export default function VideoPlayer(props) {
 
   const handleProgress = (progress) => {
     if (!setSelectedCue) return;
-    for (let val of updatedCues) {
+    for (let val of content) {
       if (
-        progress.playedSeconds >= val.start &&
-        progress.playedSeconds < val.end
+        progress.playedSeconds >= val.cues[0].start &&
+        progress.playedSeconds < val.cues.at(-1).end
       ) {
-        setSelectedCue({
-          ...val,
-        });
+        setSelectedCue(normalizeCue(val));
       }
     }
   };

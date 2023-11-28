@@ -28,10 +28,10 @@ export class FileService {
     return http.post(`/api/file/download`, { visitorId });
   }
 
-  saveAndDownload(fileId, vtt, metadata, visitorId = undefined) {
+  saveAndDownload(fileId, rawVtt, metadata, visitorId = undefined) {
     return http.post(`/api/file/save-and-download`, {
       fileId,
-      vtt,
+      rawVtt,
       metadata,
       visitorId,
     });
@@ -41,10 +41,10 @@ export class FileService {
     return http.post("/api/file/generate-transcription", inputData);
   }
 
-  saveProject(fileId, vtt, metadata) {
+  saveProject(fileId, rawVtt, metadata) {
     return http.post("/api/file/save-project", {
       fileId,
-      vtt,
+      rawVtt,
       metadata,
     });
   }

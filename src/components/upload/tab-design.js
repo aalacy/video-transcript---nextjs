@@ -107,7 +107,8 @@ export default function DesignTabPanel(props) {
                   mb: 1,
                 }}
                 disabled={
-                  formik?.values?.textShadow || formik?.values?.template === 4
+                  formik?.values?.textShadow > 0 ||
+                  formik?.values?.template === 4
                 }
               />
               <MuiColorInput
@@ -128,7 +129,7 @@ export default function DesignTabPanel(props) {
                 }
                 disabled={
                   formik?.value?.textOutline < 1 ||
-                  formik?.values?.textShadow ||
+                  formik?.values?.textShadow > 0 ||
                   formik?.values?.template === 4
                 }
                 sx={{ gridColumn: "span 2" }}
@@ -209,7 +210,8 @@ export default function DesignTabPanel(props) {
                 formik.touched.backgroundColor && formik.errors.backgroundColor
               }
               disabled={
-                formik?.values?.textShadow || formik?.values?.textOutline
+                formik?.values?.textShadow > 0 ||
+                formik?.values?.textOutline > 0
               }
               sx={{ gridColumn: "span 2" }}
             />
