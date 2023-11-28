@@ -116,7 +116,7 @@ export default function VideoPlayer(props) {
             WebkitTextFillColor: metadata.fontColor || DEFAULT_DESIGN.color,
             WebkitTextStrokeColor,
             textShadow,
-            mx: 3,
+            // mx: 3,
             p: "3px",
             // wordWrap: "break-word",
             wordBreak: "keep-all",
