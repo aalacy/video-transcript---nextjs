@@ -24,6 +24,7 @@ import { YelloBottom } from "@/icons/yellow-bottom";
 import { FreeStarIcon } from "@/icons/free-star";
 import { Pattern } from "@/icons/pattern";
 import GetMoreFeatures from "@/components/home/get-more-features";
+import { generateRawVtt } from "@/utils";
 
 const client = new FileService();
 
