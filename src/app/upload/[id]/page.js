@@ -9,14 +9,11 @@ import * as yup from "yup";
 
 import DesignTabPanel from "@/components/upload/tab-design";
 import VideoPlayer from "@/components/upload/video-player";
-import TranscriptionTabPanel from "@/components/upload/tab-transcription";
 import {
-  compileVTT,
   generateCues2Vtt,
   generateRawVtt,
   normalizeCue,
   parseRawVtt,
-  parseVtt,
   saveText,
 } from "@/utils";
 import { FileService } from "@/service/file-service";
@@ -69,11 +66,11 @@ export default function UploadPage({ params }) {
   const [value, setValue] = useState(0);
   const [metadata, setMetadata] = useState({});
   const [newCues, setNewCues] = useState([]);
+  const [content, setContent] = useState([]);
   const [selectedCue, setSelectedCue] = useState({});
   const [startPos, setStartPos] = useState(0);
   const [data, setData] = useState({});
   const [canShow, setCanShow] = useState();
-  const [content, setContent] = useState([]);
 
   const handleSave = () => {
     try {
@@ -132,7 +129,7 @@ export default function UploadPage({ params }) {
 
   const processData = useCallback(
     (data) => {
-      if (!data?.vtt) return;
+      if (!data?.rawVtt) return;
       const parsed = parseRawVtt(data.rawVtt, data.metadata);
       setNewCues(parsed);
       if (parsed.length > 0) {

@@ -35,9 +35,9 @@ import {
   MESSAGE_TRANSCRIBING,
   MESSAGE_UPLOADING,
 } from "@/constants";
-import { parseVtt } from "@/utils";
 import VideoPlayer from "../upload/video-player";
-import TranscriptionTabPanel from "../upload/tab-transcription";
+import EditableTranscriptionPanel from "../upload/tab-editable-transcription";
+import { parseRawVtt } from "@/utils";
 
 export const FileDropzone = (props) => {
   const {
@@ -67,9 +67,10 @@ export const FileDropzone = (props) => {
     setLoaded,
     setSize,
     setCurFile,
-    setUpdatedCues,
-    setCues,
-    cues,
+    newCues,
+    setNewCues,
+    setContent,
+    content,
     ...other
   } = props;
 
@@ -92,8 +93,6 @@ export const FileDropzone = (props) => {
 
   const [selectedCue, setSelectedCue] = useState({});
   const [startPos, setStartPos] = useState(0);
-  const [initialValues, setInitialValues] = useState({});
-  const [showInputs, setShowInputs] = useState({});
 
   const videoEventListener = (params) => {
     const height = params.target.videoHeight;
@@ -141,19 +140,8 @@ export const FileDropzone = (props) => {
     if (!progress?.file) return;
     setCurFile(progress.file);
 
-    const parsed = parseVtt(progress?.file.vtt);
-    const obj = {};
-    const bools = {};
-    if (parsed.valid) {
-      setCues(parsed.cues);
-      if (parsed.cues.length > 0) setSelectedCue(parsed.cues[0]);
-      Array.from(parsed.cues).forEach((cue) => {
-        obj[cue.identifier] = cue.text;
-        bools[cue.identifier] = false;
-      });
-    }
-    setInitialValues(obj);
-    setShowInputs(bools);
+    const parsed = parseRawVtt(progress.file.rawVtt, progress.file.metadata);
+    setNewCues(parsed);
   }, [progress?.file]);
 
   return (
@@ -169,15 +157,13 @@ export const FileDropzone = (props) => {
         }}
       >
         {progress?.file && showDownload ? (
-          <TranscriptionTabPanel
-            cues={cues}
-            initialValues={initialValues}
-            showInputs={showInputs}
-            setShowInputs={setShowInputs}
-            selectedCue={selectedCue}
-            setSelectedCue={setSelectedCue}
-            setUpdatedCues={setUpdatedCues}
+          <EditableTranscriptionPanel
+            newCues={newCues}
             setStartPos={setStartPos}
+            setSelectedCue={setSelectedCue}
+            selectedCue={selectedCue}
+            setContent={setContent}
+            content={content}
           />
         ) : null}
         <Box
@@ -208,7 +194,7 @@ export const FileDropzone = (props) => {
           {showDownload ? (
             <VideoPlayer
               data={progress?.file}
-              updatedCues={cues}
+              content={content}
               setSelectedCue={setSelectedCue}
               startPos={startPos}
               selectedCue={selectedCue}

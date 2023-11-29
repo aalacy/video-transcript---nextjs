@@ -24,7 +24,6 @@ import { YelloBottom } from "@/icons/yellow-bottom";
 import { FreeStarIcon } from "@/icons/free-star";
 import { Pattern } from "@/icons/pattern";
 import GetMoreFeatures from "@/components/home/get-more-features";
-import { compileVTT } from "@/utils";
 
 const client = new FileService();
 
@@ -33,10 +32,10 @@ export default function HomePage() {
   const [fileError, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [size, setSize] = useState({});
-  const [updatedCues, setUpdatedCues] = useState([]);
   const [curFile, setCurFile] = useState({});
-  const [cues, setCues] = useState([]);
   const [lang, setLang] = useState("en");
+  const [newCues, setNewCues] = useState([]);
+  const [content, setContent] = useState([]);
 
   const {
     setLoading,
@@ -114,7 +113,7 @@ export default function HomePage() {
     try {
       await client.saveAndDownload(
         curFile.id,
-        compileVTT(cues, updatedCues),
+        generateRawVtt(content),
         curFile.metadata,
         visitorId,
       );
@@ -256,10 +255,11 @@ export default function HomePage() {
         loaded={loaded}
         setLoaded={setLoaded}
         setSize={setSize}
-        setUpdatedCues={setUpdatedCues}
+        newCues={newCues}
+        setNewCues={setNewCues}
         setCurFile={setCurFile}
-        setCues={setCues}
-        cues={cues}
+        setContent={setContent}
+        content={content}
       />
       <Pattern sx={{ width: 1, fontSize: 250, margin: "0 auto", mt: -7 }} />
       {!isAuthenticated ? (

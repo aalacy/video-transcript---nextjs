@@ -54,7 +54,7 @@ export default function EditableTranscriptionPanel(props) {
 
   const handleChange = (evt, identifier, index) => {
     setContent((prev) => {
-      return prev.map((newCue) => {
+      const updatedContent = prev.map((newCue) => {
         if (newCue.identifier === identifier) {
           return {
             identifier,
@@ -73,9 +73,9 @@ export default function EditableTranscriptionPanel(props) {
           return { ...newCue };
         }
       });
+      setSelectedCue(normalizeCue(updatedContent[identifier]));
+      return updatedContent;
     });
-
-    setSelectedCue(normalizeCue(content[identifier]));
   };
 
   useEffect(() => {
