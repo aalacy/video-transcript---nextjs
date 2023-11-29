@@ -37,10 +37,10 @@ export default function DesignTabPanel(props) {
 
   useEffect(() => {
     setMetadata(formik.values);
-    if (formik?.values?.template === 4) {
-      formik.setFieldValue("textOutline", 0);
-      formik.setFieldValue("textShadow", 0);
-    }
+    // if (formik?.values?.template === 4) {
+    //   formik.setFieldValue("textOutline", 0);
+    //   formik.setFieldValue("textShadow", 0);
+    // }
   }, [formik.values]);
 
   return (
@@ -85,7 +85,6 @@ export default function DesignTabPanel(props) {
                 Text Outline
               </Typography>
               <Slider
-                fullWidth
                 aria-label="text outline steps"
                 value={
                   typeof formik.values.textOutline === "number"
@@ -148,7 +147,6 @@ export default function DesignTabPanel(props) {
                 Text Shadow
               </Typography>
               <Slider
-                fullWidth
                 aria-label="text shadow steps"
                 value={
                   typeof formik.values.textShadow === "number"
@@ -158,7 +156,7 @@ export default function DesignTabPanel(props) {
                 onChange={(event, value) =>
                   formik.setFieldValue("textShadow", value)
                 }
-                disabled={formik?.values?.template === 4}
+                // disabled={formik?.values?.template === 4}
                 valueLabelDisplay="auto"
                 aria-labelledby="shadow-slider"
                 step={1}
@@ -185,10 +183,7 @@ export default function DesignTabPanel(props) {
                 helperText={
                   formik.touched.shadowColor && formik.errors.shadowColor
                 }
-                disabled={
-                  formik?.value?.textShadow < 1 ||
-                  formik?.values?.template === 4
-                }
+                disabled={formik?.value?.textShadow < 1}
                 sx={{ gridColumn: "span 2" }}
               />
             </Stack>

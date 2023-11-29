@@ -73,7 +73,7 @@ export default function EditableTranscriptionPanel(props) {
           return { ...newCue };
         }
       });
-      setSelectedCue(normalizeCue(updatedContent[identifier]));
+      setSelectedCue(updatedContent[identifier]);
       return updatedContent;
     });
   };
@@ -115,7 +115,7 @@ export default function EditableTranscriptionPanel(props) {
             >
               <ListItemButton
                 onClick={() => {
-                  setSelectedCue(normalizeCue({ identifier, cues }));
+                  setSelectedCue({ identifier, cues });
                   setStartPos(cues[0].start);
                 }}
                 selected={selectedCue.identifier === identifier}

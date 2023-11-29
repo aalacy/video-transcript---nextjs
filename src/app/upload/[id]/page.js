@@ -133,7 +133,7 @@ export default function UploadPage({ params }) {
       const parsed = parseRawVtt(data.rawVtt, data.metadata);
       setNewCues(parsed);
       if (parsed.length > 0) {
-        setSelectedCue(normalizeCue(parsed[0]));
+        setSelectedCue(parsed[0]);
         setTimeout(() => setCanShow(true), 300);
       }
     },

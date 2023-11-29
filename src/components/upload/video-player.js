@@ -2,11 +2,10 @@
 
 import { DEFAULT_DESIGN, GOOGLE_FONTS } from "@/constants";
 import { Box, Typography } from "@mui/material";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 
 import "./video-style.css";
-import { normalizeCue } from "@/utils";
 
 const WIDTH = 320;
 
@@ -14,14 +13,14 @@ export default function VideoPlayer(props) {
   const { metadata, data, startPos, selectedCue, setSelectedCue, content } =
     props;
 
-  const ref = useRef();
+  const playerRef = useRef();
 
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     if (!startPos) return;
     setPlaying(false);
-    ref.current.seekTo(startPos, "seconds");
+    playerRef.current.seekTo(startPos, "seconds");
   }, [startPos]);
 
   const handleProgress = (progress) => {
@@ -31,7 +30,26 @@ export default function VideoPlayer(props) {
         progress.playedSeconds >= val.cues[0].start &&
         progress.playedSeconds < val.cues.at(-1).end
       ) {
-        setSelectedCue(normalizeCue(val));
+        if (metadata.template === 4) {
+          const curCue = {
+            ...val,
+            cues: val.cues.map((cue) => {
+              if (
+                progress.playedSeconds >= cue.start &&
+                progress.playedSeconds < cue.end
+              ) {
+                return {
+                  ...cue,
+                  active: true,
+                };
+              } else return cue;
+            }),
+          };
+          setSelectedCue(curCue);
+        } /*else if (metadata.template === 5) {
+        } */ else {
+          setSelectedCue(val);
+        }
       }
     }
   };
@@ -59,12 +77,44 @@ export default function VideoPlayer(props) {
     return color || DEFAULT_DESIGN.backgroundColor;
   }, [metadata]);
 
-  const backgroundColor = useMemo(() => {
-    const { textOutline, textShadow, backgroundColor, template } = metadata;
-    const bgColor = backgroundColor || DEFAULT_DESIGN.backgroundColor;
-    //if (template === 4) return bgColor;
-    /*else*/ return textOutline || textShadow ? "inherit" : bgColor;
-  }, [metadata]);
+  const backgroundColor = useCallback(
+    (active) => {
+      const { backgroundColor, template } = metadata;
+      const bgColor = backgroundColor || DEFAULT_DESIGN.backgroundColor;
+      if (template !== 4 && template !== 5) return bgColor;
+      return active ? bgColor : "inherit";
+    },
+    [metadata],
+  );
+
+  const style = useCallback(
+    (active) => {
+      return {
+        display: "inline-block",
+        lineHeight: 1,
+        textAlign: "center",
+        marginTop: "-1em",
+        fontWeight: metadata.fontWeight || DEFAULT_DESIGN.fontWeight,
+        fontStyle: metadata.fontStyle || DEFAULT_DESIGN.fontStyle,
+        textTransform: metadata.textTransform || DEFAULT_DESIGN.textTransform,
+        fontSize: (metadata.fontSize || DEFAULT_DESIGN.fontSize) * 0.78,
+        fontFamily: GOOGLE_FONTS[metadata.font] || DEFAULT_DESIGN.font,
+        color: metadata.fontColor || DEFAULT_DESIGN.color,
+        // WebkitTextFillColor: metadata.fontColor || DEFAULT_DESIGN.color,
+        WebkitTextStrokeColor,
+        backgroundColor: backgroundColor(active),
+        textShadow,
+        // mx: 3,
+        p: "2px",
+        // wordWrap: "break-word",
+        wordBreak: "keep-all",
+        maxWidth: WIDTH,
+        // height: "fit-content",
+        // inlineSize: (metadata.template === 4 || metadata.template === 5) ? `${selectedCue?.text.length * (metadata.fontSize || DEFAULT_DESIGN.fontSize) * 0.78 / 3}px` : 'auto',
+      };
+    },
+    [metadata],
+  );
 
   return (
     <Box
@@ -75,11 +125,13 @@ export default function VideoPlayer(props) {
     >
       <ReactPlayer
         playing={playing}
-        ref={ref}
-        controls
+        ref={playerRef}
         url={data?.output}
+        controls
+        playsinline
         width={`${WIDTH}px`}
         height="100%"
+        progressInterval="50ms"
         onProgress={handleProgress}
         config={{
           file: {
@@ -99,33 +151,24 @@ export default function VideoPlayer(props) {
           width: 1,
         }}
       >
-        <Typography
-          component="div"
+        <Box
           sx={{
-            lineHeight: 1,
             textAlign: "center",
-            marginTop: "-1em",
-            fontWeight: metadata.fontWeight || DEFAULT_DESIGN.fontWeight,
-            fontStyle: metadata.fontStyle || DEFAULT_DESIGN.fontStyle,
-            textTransform:
-              metadata.textTransform || DEFAULT_DESIGN.textTransform,
-            fontSize: (metadata.fontSize || DEFAULT_DESIGN.fontSize) * 0.78,
-            fontFamily: GOOGLE_FONTS[metadata.font] || DEFAULT_DESIGN.font,
-            color: metadata.fontColor || DEFAULT_DESIGN.color,
-            backgroundColor,
-            WebkitTextFillColor: metadata.fontColor || DEFAULT_DESIGN.color,
-            WebkitTextStrokeColor,
-            textShadow,
-            // mx: 3,
-            p: "3px",
-            // wordWrap: "break-word",
-            wordBreak: "keep-all",
             maxWidth: WIDTH,
-            // inlineSize: (metadata.template === 4 || metadata.template === 5) ? `${selectedCue?.text.length * (metadata.fontSize || DEFAULT_DESIGN.fontSize) * 0.78 / 3}px` : 'auto',
           }}
         >
-          {selectedCue?.text}
-        </Typography>
+          {selectedCue?.cues?.map(({ text, active, index }) => (
+            <>
+              <Typography key={index} component="div" sx={{ ...style(active) }}>
+                {text}
+              </Typography>
+              {(metadata.template === 4 || metadata.template === 5) &&
+              index === 1 ? (
+                <br />
+              ) : null}
+            </>
+          ))}
+        </Box>
       </Box>
     </Box>
   );
