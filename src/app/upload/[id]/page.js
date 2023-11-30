@@ -248,6 +248,7 @@ export default function UploadPage({ params }) {
           content={content}
           setSelectedCue={setSelectedCue}
           startPos={startPos}
+          setStartPos={setStartPos}
           selectedCue={selectedCue}
           metadata={metadata}
         />

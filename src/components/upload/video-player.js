@@ -10,8 +10,15 @@ import "./video-style.css";
 const WIDTH = 320;
 
 export default function VideoPlayer(props) {
-  const { metadata, data, startPos, selectedCue, setSelectedCue, content } =
-    props;
+  const {
+    metadata,
+    data,
+    startPos,
+    setStartPos,
+    selectedCue,
+    setSelectedCue,
+    content,
+  } = props;
 
   const playerRef = useRef();
 
@@ -21,6 +28,7 @@ export default function VideoPlayer(props) {
     if (!startPos) return;
     setPlaying(false);
     playerRef.current.seekTo(startPos, "seconds");
+    updateCurrentCueBasedTime(startPos);
   }, [startPos]);
 
   const updateCurrentCueBasedTime = (time) => {
@@ -78,7 +86,7 @@ export default function VideoPlayer(props) {
   };
 
   const handleSeek = (seek) => {
-    setPlaying(false);
+    setStartPos(seek);
     updateCurrentCueBasedTime(seek);
   };
 
