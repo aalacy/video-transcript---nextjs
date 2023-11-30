@@ -68,6 +68,8 @@ export const TEMPLATES = [
     name: "Template 1",
     metadata: {
       ...DEFAULT_DESIGN,
+      font: "Montserrat",
+      fontWeight: "Bold",
     },
   },
   {
@@ -106,7 +108,6 @@ export const TEMPLATES = [
       backgroundColor: "#000000",
       fontColor: "#ffbc02",
       fontWeight: "Bold",
-      textOutline: 4,
       textTransform: "None",
     },
   },
