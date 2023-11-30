@@ -23,21 +23,14 @@ export default function VideoPlayer(props) {
     playerRef.current.seekTo(startPos, "seconds");
   }, [startPos]);
 
-  const handleProgress = (progress) => {
-    if (!setSelectedCue) return;
+  const updateCurrentCueBasedTime = (time) => {
     for (let val of content) {
-      if (
-        progress.playedSeconds >= val.cues[0].start &&
-        progress.playedSeconds < val.cues.at(-1).end
-      ) {
+      if (time >= val.cues[0].start && time < val.cues.at(-1).end) {
         if (metadata.template === 4) {
           const curCue = {
             ...val,
             cues: val.cues.map((cue) => {
-              if (
-                progress.playedSeconds >= cue.start &&
-                progress.playedSeconds < cue.end
-              ) {
+              if (time >= cue.start && time < cue.end) {
                 return {
                   ...cue,
                   active: true,
@@ -47,11 +40,20 @@ export default function VideoPlayer(props) {
           };
           setSelectedCue(curCue);
         } /*else if (metadata.template === 5) {
-        } */ else {
+      } */ else {
           setSelectedCue(val);
         }
       }
     }
+  };
+
+  const handleProgress = (progress) => {
+    if (!setSelectedCue) return;
+    updateCurrentCueBasedTime(progress.playedSeconds);
+  };
+
+  const handleSeek = (seek) => {
+    updateCurrentCueBasedTime(seek);
   };
 
   const textShadow = useMemo(() => {
@@ -133,6 +135,7 @@ export default function VideoPlayer(props) {
         height="100%"
         progressInterval="50ms"
         onProgress={handleProgress}
+        onSeek={handleSeek}
         config={{
           file: {
             attributes: {
