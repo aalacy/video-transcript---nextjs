@@ -2,7 +2,14 @@
 
 import { DEFAULT_DESIGN, GOOGLE_FONTS } from "@/constants";
 import { Box, Typography } from "@mui/material";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import ReactPlayer from "react-player";
 
 import "./video-style.css";
@@ -10,25 +17,26 @@ import "./video-style.css";
 const WIDTH = 320;
 
 export default function VideoPlayer(props) {
-  const {
-    metadata,
-    data,
-    startPos,
-    setStartPos,
-    selectedCue,
-    setSelectedCue,
-    content,
-  } = props;
+  const { metadata, data, startPos, selectedCue, setSelectedCue, content } =
+    props;
 
   const playerRef = useRef();
 
-  const [playing, setPlaying] = useState(false);
+  const [playInfo, setPlayInfo] = useState({
+    playing: false,
+    seeking: false,
+    duration: 0,
+  });
 
   useEffect(() => {
     if (!startPos) return;
-    setPlaying(false);
+    setPlayInfo({
+      ...playInfo,
+      playing: false,
+      seeking: false,
+    });
+    console.log("startPos", startPos);
     playerRef.current.seekTo(startPos, "seconds");
-    updateCurrentCueBasedTime(startPos);
   }, [startPos]);
 
   const updateCurrentCueBasedTime = (time) => {
@@ -81,12 +89,17 @@ export default function VideoPlayer(props) {
   };
 
   const handleProgress = (progress) => {
-    if (!setSelectedCue) return;
+    if (!setSelectedCue || playInfo.seeking) return;
+    setPlayInfo({ ...playInfo, ...progress, played: progress.played * 100 });
     updateCurrentCueBasedTime(progress.playedSeconds);
   };
 
   const handleSeek = (seek) => {
-    setStartPos(seek);
+    console.log("seek");
+    setPlayInfo({
+      ...playInfo,
+      seeking: true,
+    });
     updateCurrentCueBasedTime(seek);
   };
 
@@ -176,16 +189,20 @@ export default function VideoPlayer(props) {
       }}
     >
       <ReactPlayer
-        playing={playing}
+        playing={playInfo.playing}
         ref={playerRef}
         url={data?.output}
         controls
         playsinline
         width={`${WIDTH}px`}
         height="100%"
-        progressInterval="50ms"
+        progressInterval={50}
         onProgress={handleProgress}
         onSeek={handleSeek}
+        onDuration={(duration) => setPlayInfo({ ...playInfo, duration })}
+        onPlay={() => setPlayInfo({ ...playInfo, playing: true })}
+        onPause={() => setPlayInfo({ ...playInfo, playing: false })}
+        onEnded={() => setPlayInfo({ ...playInfo, playing: false })}
         config={{
           file: {
             attributes: {
@@ -211,15 +228,15 @@ export default function VideoPlayer(props) {
           }}
         >
           {selectedCue?.cues?.map(({ text, active, index }) => (
-            <>
-              <Typography key={index} component="div" sx={{ ...style(active) }}>
+            <Fragment key={index}>
+              <Typography component="div" sx={{ ...style(active) }}>
                 {text}
               </Typography>
               {(metadata.template === 4 || metadata.template === 5) &&
               index === 1 ? (
                 <br />
               ) : null}
-            </>
+            </Fragment>
           ))}
         </Box>
       </Box>
