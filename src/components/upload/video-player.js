@@ -27,20 +27,45 @@ export default function VideoPlayer(props) {
     for (let val of content) {
       if (time >= val.cues[0].start && time < val.cues.at(-1).end) {
         if (metadata.template === 4) {
-          const curCue = {
+          setSelectedCue({
             ...val,
             cues: val.cues.map((cue) => {
-              if (time >= cue.start && time < cue.end) {
+              if (time >= cue.start && time <= cue.end) {
                 return {
                   ...cue,
                   active: true,
                 };
               } else return cue;
             }),
+          });
+        } else if (metadata.template === 5) {
+          const state = {};
+          const curCue = {
+            ...val,
+            cues: val.cues.map((cue) => {
+              if (time >= cue.start && time <= cue.end) {
+                state[cue.index] = true;
+                if (cue.index === 1 || cue.index === 3) {
+                  val.cues.at(cue.index - 1).active = true;
+                }
+                if (cue.index >= 2) {
+                  val.cues.at(0).active = false;
+                  val.cues.at(1).active = false;
+                }
+                return {
+                  ...cue,
+                  active: true,
+                };
+              } else if (cue.index === 1 || cue.index === 3) {
+                return {
+                  ...cue,
+                  active: state[cue.index - 1],
+                };
+              } else return cue;
+            }),
           };
           setSelectedCue(curCue);
-        } /*else if (metadata.template === 5) {
-      } */ else {
+        } else {
           setSelectedCue(val);
         }
       }
@@ -53,11 +78,13 @@ export default function VideoPlayer(props) {
   };
 
   const handleSeek = (seek) => {
+    setPlaying(false);
     updateCurrentCueBasedTime(seek);
   };
 
   const textShadow = useMemo(() => {
     const { shadowColor, outlineColor, textOutline, textShadow } = metadata;
+
     const shadowColor1 = shadowColor || DEFAULT_DESIGN.shadowColor;
     const outlineColor1 = outlineColor || DEFAULT_DESIGN.outlineColor;
     const shadowFactor = 0.8 * textShadow;
@@ -70,10 +97,11 @@ export default function VideoPlayer(props) {
 
   const WebkitTextStrokeColor = useMemo(() => {
     let color;
-    if (metadata.textOutline) color = metadata.outlineColor;
-    if (metadata.textShadow) color = metadata.shadowColor;
-    if (metadata.textOutline < 1 && metadata.textShadow < 1)
-      color = "transparent";
+    const { textOutline, outlineColor, textShadow, shadowColor } = metadata;
+
+    if (textOutline) color = outlineColor;
+    if (textShadow) color = shadowColor;
+    if (textOutline < 1 && textShadow < 1) color = "transparent";
 
     return color || DEFAULT_DESIGN.backgroundColor;
   }, [metadata]);
@@ -81,26 +109,41 @@ export default function VideoPlayer(props) {
   const backgroundColor = useCallback(
     (active) => {
       const { backgroundColor, template } = metadata;
+
       const bgColor = backgroundColor || DEFAULT_DESIGN.backgroundColor;
-      if (template !== 4 && template !== 5) return bgColor;
-      return active ? bgColor : "inherit";
+      if (template === 4) return active ? bgColor : "inherit";
+      else if (template === 5) return "inherit";
+      return bgColor;
+    },
+    [metadata],
+  );
+
+  const color = useCallback(
+    (active) => {
+      const { fontColor, secondaryColor, template } = metadata;
+
+      return template !== 5 || active
+        ? fontColor || DEFAULT_DESIGN.color
+        : secondaryColor;
     },
     [metadata],
   );
 
   const style = useCallback(
     (active) => {
+      const { fontWeight, fontStyle, textTransform, fontSize } = metadata;
+
       return {
         display: "inline-block",
         lineHeight: 1,
         textAlign: "center",
         marginTop: "-1em",
-        fontWeight: metadata.fontWeight || DEFAULT_DESIGN.fontWeight,
-        fontStyle: metadata.fontStyle || DEFAULT_DESIGN.fontStyle,
-        textTransform: metadata.textTransform || DEFAULT_DESIGN.textTransform,
-        fontSize: (metadata.fontSize || DEFAULT_DESIGN.fontSize) * 0.78,
+        fontWeight: fontWeight || DEFAULT_DESIGN.fontWeight,
+        fontStyle: fontStyle || DEFAULT_DESIGN.fontStyle,
+        textTransform: textTransform || DEFAULT_DESIGN.textTransform,
+        fontSize: (fontSize || DEFAULT_DESIGN.fontSize) * 0.78,
         fontFamily: GOOGLE_FONTS[metadata.font] || DEFAULT_DESIGN.font,
-        color: metadata.fontColor || DEFAULT_DESIGN.color,
+        color: color(active),
         // WebkitTextFillColor: metadata.fontColor || DEFAULT_DESIGN.color,
         WebkitTextStrokeColor,
         backgroundColor: backgroundColor(active),
