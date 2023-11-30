@@ -60,12 +60,11 @@ export default function VideoPlayer(props) {
     const { shadowColor, outlineColor, textOutline, textShadow } = metadata;
     const shadowColor1 = shadowColor || DEFAULT_DESIGN.shadowColor;
     const outlineColor1 = outlineColor || DEFAULT_DESIGN.outlineColor;
-    const shadowFactor = (1.1 * textShadow + (textShadow - 1) * 0.5) / 2;
-    const outlineFactor = (1.1 * textOutline + (textOutline - 1) * 0.8) / 2;
+    const shadowFactor = 0.8 * textShadow;
+    const outlineFactor = 0.8 * textOutline;
     if (textShadow)
-      return `${shadowFactor}px ${shadowFactor}px ${shadowFactor}px ${shadowColor1}`;
-    else if (textOutline)
-      return `0px 0.5px ${outlineFactor}px ${outlineColor1}`;
+      return `${shadowFactor}px ${shadowFactor / 2}px 1px ${shadowColor1}`;
+    else if (textOutline) return `0px 1px ${outlineFactor}px ${outlineColor1}`;
     else return "inherit";
   }, [metadata]);
 

@@ -128,7 +128,7 @@ export default function DesignTabPanel(props) {
                   formik.touched.outlineColor && formik.errors.outlineColor
                 }
                 disabled={
-                  formik?.value?.textOutline < 1 ||
+                  formik?.values?.textOutline < 1 ||
                   formik?.values?.textShadow > 0 ||
                   formik?.values?.template === 4 ||
                   formik?.values?.template === 5
@@ -189,7 +189,7 @@ export default function DesignTabPanel(props) {
                   formik.touched.shadowColor && formik.errors.shadowColor
                 }
                 disabled={
-                  formik?.value?.textShadow < 1 ||
+                  formik?.values?.textShadow < 1 ||
                   formik?.values?.template === 4 ||
                   formik?.values?.template === 5
                 }

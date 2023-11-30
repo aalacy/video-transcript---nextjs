@@ -22,7 +22,7 @@ export default function FontWeightSelect({ formik }) {
         color="inherit"
         size="small"
         variant="outlined"
-        sx={{ borderRadius: 8, p: 1, py: 0 }}
+        sx={{ borderRadius: 8, p: 0, py: 0 }}
         aria-controls={openWeight ? "weight-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={openWeight ? "true" : undefined}
