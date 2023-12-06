@@ -16,10 +16,10 @@ export default function About() {
       >
         <Box maxWidth="sm" sx={{ width: 1 }}>
           <Typography variant="h5" sx={{ mb: 3, textAlign: "center" }}>
-            About Submagic pro
+            About CapHacker
           </Typography>
           <Typography color="GrayText" textAlign="center">
-            Submagic lets you effortlessly add captions to your videos. It is
+            CapHacker lets you effortlessly add captions to your videos. It is
             completely FREE & NO sign up required.
           </Typography>
         </Box>

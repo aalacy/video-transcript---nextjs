@@ -13,13 +13,13 @@ const items = [
     icon: <UploadLargeFilesIcon sx={{ fontSize: 40 }} />,
     title: "Upload Large Files",
     content:
-      "Logged in users can upload large files up to 100 MB. Submagic empowers you to get the most out of your captions.",
+      "Logged in users can upload large files up to 100 MB. CapHacker empowers you to get the most out of your captions.",
   },
   {
     icon: <CustomizeYourCaptionsIcon sx={{ fontSize: 40 }} />,
     title: "Customize your Captions",
     content:
-      "Submagic lets you choose font family, color, background color, position and size. Make your captions uniquely yours.",
+      "CapHacker lets you choose font family, color, background color, position and size. Make your captions uniquely yours.",
   },
   {
     icon: <DownloadAnytimeIcon sx={{ fontSize: 40 }} />,

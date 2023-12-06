@@ -11,7 +11,7 @@ import Link from "next/link";
 export default function SignupPage() {
   return (
     <>
-      <title>SubmagicPro - SignUp</title>
+      <title>Cap Hacker - SignUp</title>
       <meta name="robots" content="noindex" />
       <Container
         fixed

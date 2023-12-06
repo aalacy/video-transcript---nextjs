@@ -15,7 +15,7 @@ import { FileDropzone } from "@/components/home/file-dropzone";
 import { useAuth } from "@/hooks/use-auth";
 import HowItWorks from "@/components/home/how-it-works";
 import CreateContentLike from "@/components/home/create-content-like";
-import SubmagicProVsTraditional from "@/components/home/compare";
+import CapHackerProVsTraditional from "@/components/home/compare";
 import UnmatchedFeatures from "@/components/home/unmatched-features";
 import About from "@/components/home/about";
 import Faq from "@/components/home/faq";
@@ -146,31 +146,31 @@ export default function HomePage() {
 
   return (
     <>
-      <title>Submagic Pro - Free AI Video Caption Generator</title>
+      <title>Cap Hacker - Free AI Video Caption Generator</title>
       <meta
         name="description"
-        content="Submagic pro make adding words to your videos super easy and totally free. Our smart tool helps you create captions fast. Try it now"
+        content="Cap hacker make adding words to your videos super easy and totally free. Our smart tool helps you create captions fast. Try it now"
       />
       <meta name="viewport" content="width=device-width,initial-scale=1" />
       <meta
         name="robots"
         content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
       />
-      <meta property="og:url" content="https://submagic.pro/" />
+      <meta property="og:url" content="https://caphacker.com/" />
       <meta property="og:type" content="website" />
       <meta
         property="og:title"
-        content="Submagic Pro - Free AI Video Caption Generator"
+        content="Cap Hacker - Free AI Video Caption Generator"
       />
       <meta
         property="og:description"
-        content="Submagic pro make make adding words to your videos super easy and totally free. Our smart tool helps you create captions fast. Try it now"
+        content="Cap hacker make make adding words to your videos super easy and totally free. Our smart tool helps you create captions fast. Try it now"
       />
       <meta charSet="UTF-8" />
       <meta name="theme-color" content="#febf4b" />
       <meta property="og:locale" content="en" />
-      <meta property="og:site_name" content="Submagic Pro" />
-      <link rel="canonical" href="https://submagic.pro/" />
+      <meta property="og:site_name" content="Cap Hacker" />
+      <link rel="canonical" href="https://caphacker.com/" />
       <Box
         display="flex"
         flexDirection="column"
@@ -217,7 +217,7 @@ export default function HomePage() {
           variant="h6"
           fontWeight="light"
         >
-          Unlock the magic of effortless captioning with SubMagic Pro – the free
+          Unlock the magic of effortless captioning with Cap Hacker – the free
           online caption generator for your videos.
         </Typography>
         <TextField
@@ -268,7 +268,7 @@ export default function HomePage() {
           <HowItWorks />
           <GetMoreFeatures />
           <CreateContentLike />
-          <SubmagicProVsTraditional />
+          <CapHackerProVsTraditional />
           <UnmatchedFeatures />
           <About />
           <Faq />

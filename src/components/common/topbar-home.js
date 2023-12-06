@@ -31,13 +31,13 @@ const LinkButton = styled(Button)(() => ({
 
 const menuList = [
   {
-    href: "https://blog.submagic.pro/about/",
+    href: "https://blog.caphacker.com/about/",
     style: { color: "ButtonText", textDecoration: "none" },
     target: "_blank",
     title: "About",
   },
   {
-    href: "https://blog.submagic.pro/contact/",
+    href: "https://blog.caphacker.com/contact/",
     style: { color: "ButtonText", textDecoration: "none" },
     target: "_blank",
     title: "Contact",

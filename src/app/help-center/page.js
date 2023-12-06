@@ -16,7 +16,7 @@ export default function FaqPage() {
   }, []);
   return (
     <>
-      <title>SubmagicPro - Help Center</title>
+      <title>Cap Hacker - Help Center</title>
       <Box sx={{ width: 1, margin: "0 auto" }} maxWidth="sm">
         <iframe
           height="315"

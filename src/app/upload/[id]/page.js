@@ -202,7 +202,7 @@ export default function UploadPage({ params }) {
 
   return (
     <>
-      <title>SubmagicPro - Upload</title>
+      <title>Cap Hacker - Upload</title>
       <ProgressModal loading={loading} progress={progress} />
       <Box
         sx={{

@@ -11,7 +11,7 @@ const features = [
     icon: <SuperDuperAccurate sx={{ fontSize: 60 }} />,
     feature: "Super Duper Accurate",
     content:
-      "Submagic is using the latest tech to convert your speech into text. Our AI is the most accurate when it comes to transcribing content.",
+      "CapHacker is using the latest tech to convert your speech into text. Our AI is the most accurate when it comes to transcribing content.",
   },
   {
     icon: <EditCaptions sx={{ fontSize: 60 }} />,
@@ -47,7 +47,7 @@ export default function UnmatchedFeatures() {
       >
         <Box maxWidth="md" sx={{ width: 1 }}>
           <Typography variant="h5" sx={{ mb: 5, textAlign: "center" }}>
-            SubMagic Pro Unmatched Features
+            Cap Hacker Unmatched Features
           </Typography>
           <Box
             sx={{

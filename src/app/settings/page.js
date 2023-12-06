@@ -18,7 +18,7 @@ export default function SettingsPage() {
 
   return (
     <>
-      <title>SubmagicPro - Settings</title>
+      <title>Cap Hacker - Settings</title>
       <Container
         fixed
         maxWidth="xs"

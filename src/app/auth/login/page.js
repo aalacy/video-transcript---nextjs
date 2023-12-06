@@ -10,7 +10,7 @@ import Link from "next/link";
 export default function LoginPage() {
   return (
     <>
-      <title>SubmagicPro - SignIn</title>
+      <title>Cap Hacker - SignIn</title>
       <meta name="robots" content="noindex" />
       <Container
         fixed

@@ -257,7 +257,7 @@ export default function YourProjectsPage() {
 
   return (
     <>
-      <title>SubmagicPro - Your Projects</title>
+      <title>Cap Hacker - Your Projects</title>
       <Container>
         <Card>
           <CardContent>

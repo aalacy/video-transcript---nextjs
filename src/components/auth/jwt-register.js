@@ -209,7 +209,7 @@ export const JWTRegister = (props) => {
           />
           <Typography color="textSecondary" variant="body2">
             I have read the{" "}
-            <Link component="a" href="https://blog.submagic.pro/tos/">
+            <Link component="a" href="https://blog.caphacker.com/tos/">
               Terms and Conditions
             </Link>
           </Typography>

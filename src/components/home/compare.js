@@ -7,41 +7,41 @@ const rows = [
     id: 1,
     feature: "Cost",
     traditional: "Usually Start at $16/month",
-    submagicPro: "Free",
+    capHacker: "Free",
   },
   {
     id: 2,
     feature: "Accuracy",
     traditional: "Limited",
-    submagicPro: "Highly Accurate",
+    capHacker: "Highly Accurate",
   },
   {
     id: 3,
     feature: "Free",
     traditional: "Watermarked Results & Limited",
-    submagicPro: "No Watermark & Unlimited",
+    capHacker: "No Watermark & Unlimited",
   },
   {
     id: 4,
     feature: "Customization",
     traditional: "Limited",
-    submagicPro: "Extensive",
+    capHacker: "Extensive",
   },
   {
     id: 5,
     feature: "Real-Time Editing",
     traditional: "Rarely Available",
-    submagicPro: "Available",
+    capHacker: "Available",
   },
   {
     id: 6,
     feature: "Multi-Language Support",
     traditional: "Usually 56 languages",
-    submagicPro: "99 languages",
+    capHacker: "99 languages",
   },
 ];
 
-export default function SubmagicProVsTraditional() {
+export default function CapHackerProVsTraditional() {
   return (
     <>
       <Box
@@ -55,7 +55,7 @@ export default function SubmagicProVsTraditional() {
       >
         <Box maxWidth="md" sx={{ width: 1 }}>
           <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
-            SubMagic Pro vs Traditional Captioning Tools
+            Cap Hacker vs Traditional Captioning Tools
           </Typography>
           <Typography
             maxWidth="sm"
@@ -74,7 +74,7 @@ export default function SubmagicProVsTraditional() {
                   <th>Feature</th>
                   <th>Traditional Captioning Tools</th>
                   <th>
-                    SubMagic<span style={{ color: "#FFBF4C" }}>PRO</span>
+                    Cap<span style={{ color: "#FFBF4C" }}>Hacker</span>
                   </th>
                 </tr>
               </thead>
@@ -83,7 +83,7 @@ export default function SubmagicProVsTraditional() {
                   <tr key={row.id}>
                     <td>{row.feature}</td>
                     <td>{row.traditional}</td>
-                    <td>{row.submagicPro}</td>
+                    <td>{row.capHacker}</td>
                   </tr>
                 ))}
               </tbody>

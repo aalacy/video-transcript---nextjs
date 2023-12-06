@@ -16,17 +16,17 @@ export default function Footer({ hasLayout }) {
         ml: isNonMobile && hasLayout ? `${DRAWER_WIDTH}px` : 0,
       }}
     >
-      <Typography>Copyright © 2023 SubmagicPRO</Typography>
+      <Typography>Copyright © 2023 Cap Hacker</Typography>
       <Stack
         direction="row"
         divider={<Divider orientation="vertical" flexItem />}
         spacing={1}
       >
         <Typography>All Rights Reserved</Typography>
-        <Link href="https://blog.submagic.pro/tos/" target="_blank">
+        <Link href="https://blog.caphacker.com/tos/" target="_blank">
           Terms and Conditions
         </Link>
-        <Link href="https://blog.submagic.pro/privacy-policy/" target="_blank">
+        <Link href="https://blog.caphacker.com/privacy-policy/" target="_blank">
           Privacy Policy
         </Link>
       </Stack>

@@ -35,7 +35,6 @@ export default function VideoPlayer(props) {
       playing: false,
       seeking: false,
     });
-    console.log("startPos", startPos);
     playerRef.current.seekTo(startPos, "seconds");
   }, [startPos]);
 
@@ -95,7 +94,6 @@ export default function VideoPlayer(props) {
   };
 
   const handleSeek = (seek) => {
-    console.log("seek");
     setPlayInfo({
       ...playInfo,
       seeking: true,

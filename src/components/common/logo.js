@@ -27,14 +27,14 @@ export default function Logo({ size = "large", width = "auto" }) {
         fontWeight="bold"
         sx={{ color: "black", fontFamily: "Times New Roman" }}
       >
-        Submagic
+        Cap
       </Typography>
       <Typography
         variant={secondSizeMap[size]}
         fontWeight="bold"
         sx={{ color: "warning.light", fontFamily: "Times New Roman" }}
       >
-        PRO
+        Hacker
       </Typography>
     </Box>
   );

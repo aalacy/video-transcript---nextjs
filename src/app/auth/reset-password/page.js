@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function ResetPassword() {
   return (
     <>
-      <title>SubmagicPro - Reset your Password</title>
+      <title>Cap Hacker - Reset your Password</title>
       <meta name="robots" content="noindex" />
       <Container
         fixed
