@@ -30,12 +30,13 @@ export default function VideoPlayer(props) {
 
   useEffect(() => {
     if (!startPos) return;
+    console.log("startPos effect", startPos);
     setPlayInfo({
       ...playInfo,
       playing: false,
-      seeking: false,
+      seeking: true,
     });
-    playerRef.current.seekTo(startPos, "seconds");
+    playerRef.current.seekTo(+startPos, "seconds");
   }, [startPos]);
 
   const updateCurrentCueBasedTime = (time) => {
@@ -85,15 +86,21 @@ export default function VideoPlayer(props) {
         }
       }
     }
+    setPlayInfo({
+      ...playInfo,
+      seeking: false,
+    });
   };
 
   const handleProgress = (progress) => {
+    console.log("handleProgress", progress);
     if (!setSelectedCue || playInfo.seeking) return;
     setPlayInfo({ ...playInfo, ...progress, played: progress.played * 100 });
     updateCurrentCueBasedTime(progress.playedSeconds);
   };
 
   const handleSeek = (seek) => {
+    console.log("handleSeek", seek);
     setPlayInfo({
       ...playInfo,
       seeking: true,
@@ -184,6 +191,7 @@ export default function VideoPlayer(props) {
       id="video-player"
       sx={{
         position: "relative",
+        paddingTop: "56.25%",
       }}
     >
       <ReactPlayer
@@ -192,7 +200,7 @@ export default function VideoPlayer(props) {
         url={data?.output}
         controls
         playsinline
-        width={`${WIDTH}px`}
+        width="100%"
         height="100%"
         progressInterval={50}
         onProgress={handleProgress}
@@ -207,6 +215,11 @@ export default function VideoPlayer(props) {
               controlsList: "nofullscreen",
             },
           },
+        }}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
         }}
       />
 

@@ -52,12 +52,12 @@ export const DEFAULT_DESIGN = {
   shadowColor: "#000000",
   fontColor: "#000101",
   secondaryColor: "#ffffff",
-  font: "Roboto",
+  font: "Montserrat",
   template: 1, // Template 1, 2, 3, 4, 5
   textTransform: "Uppercase", // None, Uppercase, Lowercase, Capitalize
   textShadow: 0, // 0 - 4
   textOutline: 0, // 0 - 4
-  fontWeight: "Light",
+  fontWeight: "Bold",
   fontStyle: "Normal", // Italic
   fontSize: 22,
   position: 77,
