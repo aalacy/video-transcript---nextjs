@@ -191,7 +191,6 @@ export default function VideoPlayer(props) {
       id="video-player"
       sx={{
         position: "relative",
-        paddingTop: "56.25%",
       }}
     >
       <ReactPlayer
@@ -200,7 +199,7 @@ export default function VideoPlayer(props) {
         url={data?.output}
         controls
         playsinline
-        width="100%"
+        width={`${WIDTH}px`}
         height="100%"
         progressInterval={50}
         onProgress={handleProgress}
@@ -215,11 +214,6 @@ export default function VideoPlayer(props) {
               controlsList: "nofullscreen",
             },
           },
-        }}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
         }}
       />
 
