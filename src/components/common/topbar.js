@@ -27,6 +27,7 @@ import {
 import { DRAWER_WIDTH } from "@/constants";
 import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
+import TopBanner from "./top-banner";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -98,6 +99,7 @@ export default function Topbar({ setState, state, ...props }) {
         width: isNonMobile ? `calc(100% - ${DRAWER_WIDTH}px)` : 1,
       }}
     >
+      <TopBanner />
       <Toolbar
         variant="dense"
         sx={{

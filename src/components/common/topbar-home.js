@@ -2,6 +2,7 @@
 
 import {
   useMediaQuery,
+  Typography,
   Divider,
   AppBar,
   Toolbar,
@@ -20,6 +21,7 @@ import { styled } from "@mui/material/styles";
 import { useState } from "react";
 
 import Logo from "./logo";
+import TopBanner from "./top-banner";
 
 const LinkButton = styled(Button)(() => ({
   color: "ButtonText",
@@ -65,6 +67,7 @@ export default function TopbarHome() {
           bgcolor: "background.paper",
         }}
       >
+        <TopBanner />
         <Toolbar
           variant="dense"
           sx={{
