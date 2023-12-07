@@ -34,7 +34,6 @@ export default function VideoPlayer(props) {
     setPlayInfo({
       ...playInfo,
       playing: false,
-      seeking: true,
     });
     playerRef.current.seekTo(+startPos, "seconds");
   }, [startPos]);
@@ -93,7 +92,6 @@ export default function VideoPlayer(props) {
   };
 
   const handleProgress = (progress) => {
-    console.log("handleProgress", progress);
     if (!setSelectedCue || playInfo.seeking) return;
     setPlayInfo({ ...playInfo, ...progress, played: progress.played * 100 });
     updateCurrentCueBasedTime(progress.playedSeconds);
