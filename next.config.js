@@ -18,6 +18,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "cap-hacker.s3.wasabisys.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

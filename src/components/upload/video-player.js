@@ -35,6 +35,7 @@ export default function VideoPlayer(props) {
       playing: false,
     });
     playerRef.current.seekTo(+startPos, "seconds");
+    console.log("startPos", startPos);
   }, [startPos]);
 
   const updateCurrentCueBasedTime = (time) => {
@@ -97,6 +98,7 @@ export default function VideoPlayer(props) {
   };
 
   const handleSeek = (seek) => {
+    console.log("seek", seek);
     setPlayInfo({
       ...playInfo,
       seeking: true,
@@ -194,7 +196,6 @@ export default function VideoPlayer(props) {
         ref={playerRef}
         url={data?.output}
         controls
-        playsinline
         width={`${WIDTH}px`}
         height="100%"
         progressInterval={50}
