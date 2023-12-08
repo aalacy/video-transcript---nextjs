@@ -60,7 +60,7 @@ export default function TopbarHome() {
     <>
       <AppBar
         variant="outlined"
-        position="static"
+        position="fixed"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
           boxShadow: "none",
@@ -71,7 +71,6 @@ export default function TopbarHome() {
         <Toolbar
           variant="dense"
           sx={{
-            py: 1,
             ml: isNonMobile ? "inherit" : 1,
             width: 1,
             backgroundColor: "background.paper",

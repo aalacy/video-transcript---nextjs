@@ -99,7 +99,6 @@ export default function Topbar({ setState, state, ...props }) {
         width: isNonMobile ? `calc(100% - ${DRAWER_WIDTH}px)` : 1,
       }}
     >
-      <TopBanner />
       <Toolbar
         variant="dense"
         sx={{

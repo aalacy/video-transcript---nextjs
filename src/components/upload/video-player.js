@@ -30,7 +30,6 @@ export default function VideoPlayer(props) {
 
   useEffect(() => {
     if (!startPos) return;
-    console.log("startPos effect", startPos);
     setPlayInfo({
       ...playInfo,
       playing: false,
@@ -98,7 +97,6 @@ export default function VideoPlayer(props) {
   };
 
   const handleSeek = (seek) => {
-    console.log("handleSeek", seek);
     setPlayInfo({
       ...playInfo,
       seeking: true,
