@@ -30,6 +30,7 @@ export class FileService {
         formData.append("height", height);
         formData.append("key", key);
 
+        console.log("===============");
         await http.request({
           method: "POST",
           url,
@@ -37,6 +38,8 @@ export class FileService {
           headers: {
             "content-type": "multipart/form-data",
           },
+          onUploadProgress: (ProgressEvent) =>
+            setProgress(Number((chunkNumber + 1) * chunkProgress).toFixed(2)),
         });
         setProgress(Number((chunkNumber + 1) * chunkProgress).toFixed(2));
         chunkNumber++;
