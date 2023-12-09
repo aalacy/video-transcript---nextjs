@@ -1,6 +1,56 @@
+import { random } from "@/utils/byte-to-size.js";
 import http from "./http.js";
 
 export class FileService {
+  async resumableUpload(visitorId, fileData, setProgress) {
+    const { file, lang, width, height } = fileData;
+    const key = random();
+
+    const chunkSize = 5 * 1024 * 1024; // 5MB (adjust based on your requirements)
+    const totalChunks = Math.ceil(file.size / chunkSize);
+    const chunkProgress = 10 / totalChunks;
+    let chunkNumber = 0;
+    let start = 0;
+    let end = file.size > chunkSize ? chunkSize : file.size;
+
+    let url = `/api/file/upload?visitorId=${visitorId}`;
+
+    const uploadNextChunk = async () => {
+      if (chunkNumber < totalChunks) {
+        const chunk = file.slice(start, end);
+        const formData = new FormData();
+        formData.append("file", chunk);
+        formData.append("chunkNumber", chunkNumber);
+        formData.append("totalChunks", totalChunks);
+        formData.append("originalname", file.name);
+        formData.append("type", file.type);
+        formData.append("lang", lang);
+        formData.append("visitorId", visitorId);
+        formData.append("width", width);
+        formData.append("height", height);
+        formData.append("key", key);
+
+        await http.request({
+          method: "POST",
+          url,
+          data: formData,
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        });
+        setProgress(Number((chunkNumber + 1) * chunkProgress).toFixed(2));
+        chunkNumber++;
+        start = end;
+        end = start + chunkSize;
+        await uploadNextChunk();
+      } else {
+        setProgress(10);
+      }
+    };
+
+    await uploadNextChunk();
+  }
+
   upload(visitorId, fileData, setProgress) {
     const formData = new FormData();
     let url = `/api/file/upload?visitorId=${visitorId}`;

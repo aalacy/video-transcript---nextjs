@@ -2,8 +2,10 @@ import { SPECIAL_MARKS, SUBTITLES_LENGTH } from "@/constants";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat.js";
 import duration from "dayjs/plugin/duration.js";
+const localizedFormat = require("dayjs/plugin/localizedFormat");
 dayjs.extend(duration);
 dayjs.extend(customParseFormat);
+dayjs.extend(localizedFormat);
 
 function ParserError(message, error) {
   this.message = message;
@@ -343,3 +345,7 @@ export const generateCues2Vtt = (newCues) => {
   }
   return output;
 };
+
+export const formatDate = (date) => dayjs(date).format("L LT");
+
+export const formatOnlyDate = (date) => dayjs(date).format("L");

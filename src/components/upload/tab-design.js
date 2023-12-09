@@ -215,7 +215,8 @@ export default function DesignTabPanel(props) {
               }
               disabled={
                 formik?.values?.textShadow > 0 ||
-                formik?.values?.textOutline > 0
+                formik?.values?.textOutline > 0 ||
+                formik?.values?.template === 5
               }
               sx={{ gridColumn: "span 2" }}
             />

@@ -1,7 +1,4 @@
-import dayjs from "dayjs";
-const localizedFormat = require("dayjs/plugin/localizedFormat");
-
-dayjs.extend(localizedFormat);
+import { v1 as uuid } from "uuid";
 
 export const bytesToSize = (bytes, decimals = 2) => {
   if (bytes === 0) {
@@ -26,6 +23,4 @@ export const buffer2String = (buffer) => {
   return window.btoa(binary);
 };
 
-export const formatDate = (date) => dayjs(date).format("L LT");
-
-export const formatOnlyDate = (date) => dayjs(date).format("L");
+export const random = () => uuid();
