@@ -6,7 +6,7 @@ export class FileService {
     const { file, lang, width, height } = fileData;
     const key = random();
 
-    const chunkSize = 1 * 1024 * 1024; // 5MB (adjust based on your requirements)
+    const chunkSize = 3 * 1024 * 1024; // 5MB (adjust based on your requirements)
     const totalChunks = Math.ceil(file.size / chunkSize);
     const chunkProgress = 10 / totalChunks;
     let chunkNumber = 0;
