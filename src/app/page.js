@@ -90,7 +90,7 @@ export default function HomePage() {
     setLoading(true);
     setLoaded(false);
     try {
-      await client.resumableUpload(
+      await client.upload(
         visitorId,
         {
           file: files[0],
