@@ -90,7 +90,7 @@ export default function HomePage() {
     setLoading(true);
     setLoaded(false);
     try {
-      await client.upload(
+      await client.resumableUpload(
         visitorId,
         {
           file: files[0],
@@ -242,7 +242,7 @@ export default function HomePage() {
         </TextField>
       </Box>
       <FileDropzone
-        accept={{ "video/*": [".mp4", ".mov"] }}
+        accept={{ "video/*": [".mp4", ".mov", ".mpeg"] }}
         files={files}
         setFiles={setFiles}
         maxFiles={1}

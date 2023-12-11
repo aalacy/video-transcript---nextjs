@@ -1,5 +1,4 @@
 import { Box, CircularProgress, Container } from "@mui/material";
-import * as React from "react";
 
 export default function Loading() {
   return (

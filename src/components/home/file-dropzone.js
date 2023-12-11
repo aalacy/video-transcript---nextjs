@@ -95,6 +95,7 @@ export const FileDropzone = (props) => {
   const [startPos, setStartPos] = useState(0);
 
   const videoEventListener = (params) => {
+    console.log("params", params);
     const height = params.target.videoHeight;
     const width = params.target.videoWidth;
     setSize({ width, height });
@@ -121,7 +122,7 @@ export const FileDropzone = (props) => {
       document
         .getElementById("videoRef")
         ?.removeEventListener("loadedmetadata");
-  }, [acceptedFiles?.length]);
+  }, [files?.length]);
 
   const HomeCenterIcon = useCallback(
     ({ message }) => {
