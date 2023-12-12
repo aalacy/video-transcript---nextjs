@@ -7,16 +7,16 @@ export class FileService {
     const key = random();
 
     const chunkSize = 2 * 1024 * 1024; // 5MB (adjust based on your requirements)
-    const totalChunks = Math.ceil(file.size / chunkSize);
+    const totalChunks = Math.max(2, Math.ceil(file.size / chunkSize));
     const chunkProgress = 10 / totalChunks;
     let chunkNumber = 0;
     let start = 0;
-    let end = file.size > chunkSize ? chunkSize : file.size;
+    let end = chunkSize;
 
     let url = `/api/file/upload?visitorId=${visitorId}`;
 
     const uploadNextChunk = async () => {
-      if (chunkNumber < totalChunks) {
+      if (end <= file.size || chunkNumber < totalChunks) {
         const chunk = file.slice(start, end);
         const formData = new FormData();
         formData.append("file", chunk);
@@ -30,7 +30,6 @@ export class FileService {
         formData.append("height", height);
         formData.append("key", key);
 
-        console.log("===============");
         await http.request({
           method: "POST",
           url,
