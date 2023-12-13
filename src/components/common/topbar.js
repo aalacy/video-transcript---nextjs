@@ -95,7 +95,7 @@ export default function Topbar({ setState, state, ...props }) {
       sx={{
         zIndex: 100,
         boxShadow: "none",
-        bgColor: "background.paper",
+        bgcolor: "background.paper",
         width: isNonMobile ? `calc(100% - ${DRAWER_WIDTH}px)` : 1,
       }}
     >

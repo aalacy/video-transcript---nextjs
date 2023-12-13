@@ -59,11 +59,12 @@ export default function TopbarHome() {
   return (
     <>
       <AppBar
+        variant="outlined"
         position="fixed"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
           boxShadow: "none",
-          bgColor: "background.paper",
+          bgcolor: "background.paper",
         }}
       >
         <TopBanner />
