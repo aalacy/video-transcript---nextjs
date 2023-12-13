@@ -210,6 +210,14 @@ const dayObj = (timestamp) => {
   return hours * 3600 + minutes * 60 + seconds + mili;
 };
 
+function onStartedDownload(id) {
+  console.log(`Started downloading: ${id}`);
+}
+
+function onFailed(error) {
+  console.log(`Download failed: ${error}`);
+}
+
 export const downloadMedia = (fileName, output) => {
   const anchor = document.createElement("a");
   anchor.href = output;
