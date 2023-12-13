@@ -14,6 +14,7 @@ import {
   CircularProgress,
   Menu,
   MenuItem,
+  Tooltip,
 } from "@mui/material";
 import { styled, alpha } from "@mui/material/styles";
 import {
@@ -22,12 +23,12 @@ import {
   Download as DownloadIcon,
   NavigateNext as NavigateNextIcon,
   KeyboardArrowDown as KeyboardArrowDownIcon,
+  Save as SaveIcon,
 } from "@mui/icons-material";
 
 import { DRAWER_WIDTH } from "@/constants";
 import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
-import TopBanner from "./top-banner";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -91,11 +92,10 @@ export default function Topbar({ setState, state, ...props }) {
 
   return (
     <AppBar
-      position="fixed"
       sx={{
         zIndex: 100,
         boxShadow: "none",
-        bgcolor: "background.paper",
+        bgColor: "background.paper",
         width: isNonMobile ? `calc(100% - ${DRAWER_WIDTH}px)` : 1,
       }}
     >
@@ -106,6 +106,7 @@ export default function Topbar({ setState, state, ...props }) {
           py: 1,
           backgroundColor: "background.paper",
           justifyContent: "space-between",
+          alignItems: "end",
         }}
       >
         <Box>
@@ -133,31 +134,35 @@ export default function Topbar({ setState, state, ...props }) {
           ) : null}
         </Box>
         <Box sx={{ display: handleSave ? "inherit" : "none" }}>
-          <Button
-            onClick={handleSave}
-            variant="outlined"
-            sx={{ mr: 2 }}
-            size="small"
-            disabled={loading}
-            startIcon={loading ? <CircularProgress size={20} /> : null}
-          >
-            Save Project
-          </Button>
-          <Button
-            id="download-button"
-            startIcon={loading ? <CircularProgress size={20} /> : null}
-            disabled={loading}
-            size="small"
-            aria-controls={open ? "download-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            variant="contained"
-            disableElevation
-            onClick={handleClick}
-            endIcon={<KeyboardArrowDownIcon />}
-          >
-            Download
-          </Button>
+          <Tooltip title="Save Project">
+            <Button
+              onClick={handleSave}
+              variant="outlined"
+              sx={{ mr: 2 }}
+              size="small"
+              disabled={loading}
+              startIcon={loading ? <CircularProgress size={20} /> : null}
+            >
+              {isNonMobile ? "Save Project" : <SaveIcon />}
+            </Button>
+          </Tooltip>
+          <Tooltip title="Download">
+            <Button
+              id="download-button"
+              startIcon={loading ? <CircularProgress size={20} /> : null}
+              disabled={loading}
+              size="small"
+              aria-controls={open ? "download-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              variant="contained"
+              disableElevation
+              onClick={handleClick}
+              endIcon={<KeyboardArrowDownIcon />}
+            >
+              {isNonMobile ? "Download" : <DownloadIcon />}
+            </Button>
+          </Tooltip>
           <StyledMenu
             id="download-menu"
             MenuListProps={{

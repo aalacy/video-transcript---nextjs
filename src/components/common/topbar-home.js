@@ -64,7 +64,7 @@ export default function TopbarHome() {
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
           boxShadow: "none",
-          bgcolor: "background.paper",
+          bgColor: "background.paper",
         }}
       >
         <TopBanner />

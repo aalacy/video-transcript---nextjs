@@ -132,7 +132,7 @@ export default function RootLayout({ children }) {
           component="main"
           sx={{
             flexGrow: 1,
-            pt: hasLayout || hasHomeLayout ? ["48px", "56px", "64px"] : 0,
+            pt: hasLayout || hasHomeLayout ? ["88px", "56px", "64px"] : 0,
             ml: isNonMobile && hasLayout ? `${DRAWER_WIDTH}px` : 0,
             minHeight: 300,
             mb: 2,
