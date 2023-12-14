@@ -133,7 +133,7 @@ export const JWTLogin = (props) => {
       <Link
         color="secondary"
         href="/auth/forgot-password"
-        sx={{ mt: 1 }}
+        sx={{ mt: 2 }}
         variant="body2"
       >
         Forgot Password?

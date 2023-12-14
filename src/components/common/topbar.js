@@ -93,6 +93,7 @@ export default function Topbar({ setState, state, ...props }) {
   return (
     <AppBar
       position="fixed"
+      maxWidth="sm"
       sx={{
         zIndex: 100,
         boxShadow: "none",
@@ -106,8 +107,10 @@ export default function Topbar({ setState, state, ...props }) {
           width: 1,
           py: 1,
           backgroundColor: "background.paper",
-          justifyContent: "space-between",
+          justifyContent: isNonMobile ? "space-between" : "flex-start",
           alignItems: "end",
+          flexWrap: "wrap",
+          gap: 2,
         }}
       >
         <Box>
@@ -128,14 +131,26 @@ export default function Topbar({ setState, state, ...props }) {
               <Link underline="hover" color="inherit" href="/">
                 <HomeIcon />
               </Link>
-              <Typography variant="h6" color="black">
-                {title}
-              </Typography>
+              <Tooltip title={isNonMobile ? "" : title}>
+                <Typography
+                  variant="h6"
+                  color="black"
+                  sx={{
+                    textOverflow: "ellipsis",
+                    maxWidth: isNonMobile ? "inherit" : "140px",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {title}
+                </Typography>
+              </Tooltip>
             </Breadcrumbs>
           ) : null}
         </Box>
         <Box sx={{ display: handleSave ? "inherit" : "none", mr: 1 }}>
-          <Tooltip title="Save Project">
+          {isNonMobile ? (
             <Button
               onClick={handleSave}
               variant="outlined"
@@ -144,10 +159,19 @@ export default function Topbar({ setState, state, ...props }) {
               disabled={loading}
               startIcon={loading ? <CircularProgress size={20} /> : null}
             >
-              {isNonMobile ? "Save Project" : <SaveIcon />}
+              Save Project
             </Button>
-          </Tooltip>
-          <Tooltip title="Download">
+          ) : (
+            <IconButton
+              color="primary"
+              aria-label="save"
+              disabled={loading}
+              onClick={handleSave}
+            >
+              {loading ? <CircularProgress size={20} /> : <SaveIcon />}
+            </IconButton>
+          )}
+          {isNonMobile ? (
             <Button
               id="download-button"
               startIcon={loading ? <CircularProgress size={20} /> : null}
@@ -161,9 +185,21 @@ export default function Topbar({ setState, state, ...props }) {
               onClick={handleClick}
               endIcon={<KeyboardArrowDownIcon />}
             >
-              {isNonMobile ? "Download" : <DownloadIcon />}
+              Download
             </Button>
-          </Tooltip>
+          ) : (
+            <IconButton
+              color="primary"
+              aria-label="download"
+              aria-controls={open ? "download-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              disabled={loading}
+              onClick={handleClick}
+            >
+              {loading ? <CircularProgress size={20} /> : <DownloadIcon />}
+            </IconButton>
+          )}
           <StyledMenu
             id="download-menu"
             MenuListProps={{

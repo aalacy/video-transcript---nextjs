@@ -41,7 +41,14 @@ export default function LoginPage() {
           >
             <JWTLogin />
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", my: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              my: 2,
+            }}
+          >
             <Typography sx={{ mr: 1 }}>Don't have an account?</Typography>
             <Link href="/auth/signup">Sign up</Link>
           </Box>

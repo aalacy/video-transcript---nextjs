@@ -42,7 +42,14 @@ export default function SignupPage() {
           >
             <JWTRegister />
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", my: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "wrap",
+              my: 2,
+            }}
+          >
             <Typography sx={{ mr: 1 }}>Already have an account?</Typography>
             <Link href="/auth/login">Log in</Link>
           </Box>

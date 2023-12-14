@@ -25,7 +25,7 @@ export default function TopBanner() {
           flexWrap: "wrap",
         }}
       >
-        <Box display="flex" gap={1}>
+        <Box display="flex" flexWrap="wrap" gap={1} sx={{ px: 1 }}>
           <Typography variant="h6">Submagic Pro is Now Caphacker</Typography>
           <Link
             href="https://blog.caphacker.com/caphacker-submagic-pro-rebranded/"
