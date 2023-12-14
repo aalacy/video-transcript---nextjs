@@ -44,7 +44,7 @@ export default function DesignTabPanel(props) {
   }, [formik.values]);
 
   return (
-    <Card>
+    <Card sx={{ maxWidth: "sm" }}>
       <CardContent>
         <form onSubmit={formik.handleSubmit}>
           <Box
@@ -57,10 +57,10 @@ export default function DesignTabPanel(props) {
               },
             }}
           >
-            <Box sx={{ gridColumn: "span 2" }}>
+            <Box sx={{ gridColumn: "span 2", maxWidth: "sm" }}>
               <TemplateSelect formik={formik} />
             </Box>
-            <Box sx={{ gridColumn: "span 2" }}>
+            <Box sx={{ gridColumn: "span 2", maxWidth: "sm" }}>
               <FontSelect formik={formik} />
               <Stack direction="row" spacing={1}>
                 <FontWeightSelect formik={formik} />
@@ -75,6 +75,7 @@ export default function DesignTabPanel(props) {
                 borderColor: "GrayText",
                 p: 1,
                 borderRadius: 3,
+                maxWidth: "sm",
               }}
             >
               <Typography
@@ -143,6 +144,7 @@ export default function DesignTabPanel(props) {
                 borderColor: "GrayText",
                 p: 1,
                 borderRadius: 3,
+                maxWidth: "sm",
               }}
             >
               <Typography id="shadow-slider" variant="caption" color="GrayText">
@@ -218,7 +220,7 @@ export default function DesignTabPanel(props) {
                 formik?.values?.textOutline > 0 ||
                 formik?.values?.template === 5
               }
-              sx={{ gridColumn: "span 2" }}
+              sx={{ gridColumn: "span 2", maxWidth: "sm" }}
             />
             <MuiColorInput
               fullWidth
@@ -230,9 +232,9 @@ export default function DesignTabPanel(props) {
               onChange={(color) => formik.setFieldValue("fontColor", color)}
               error={!!formik.touched.fontColor && !!formik.errors.fontColor}
               helperText={formik.touched.fontColor && formik.errors.fontColor}
-              sx={{ gridColumn: "span 2" }}
+              sx={{ gridColumn: "span 2", maxWidth: "sm" }}
             />
-            <Stack sx={{ gridColumn: "span 2" }}>
+            <Stack sx={{ gridColumn: "span 2", maxWidth: "sm" }}>
               <TextField
                 fullWidth
                 type="number"
@@ -268,7 +270,7 @@ export default function DesignTabPanel(props) {
                 }}
               />
             </Stack>
-            <Stack sx={{ gridColumn: "span 2" }}>
+            <Stack sx={{ gridColumn: "span 2", maxWidth: "sm" }}>
               <TextField
                 fullWidth
                 type="number"
