@@ -108,7 +108,7 @@ export default function Topbar({ setState, state, ...props }) {
           py: 1,
           backgroundColor: "background.paper",
           justifyContent: isNonMobile ? "space-between" : "flex-start",
-          alignItems: "baseline",
+          alignItems: "flex-end",
           flexWrap: "wrap",
           gap: 2,
         }}
