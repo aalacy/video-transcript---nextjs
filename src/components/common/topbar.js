@@ -92,6 +92,7 @@ export default function Topbar({ setState, state, ...props }) {
 
   return (
     <AppBar
+      position="fixed"
       sx={{
         zIndex: 100,
         boxShadow: "none",
