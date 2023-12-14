@@ -18,7 +18,7 @@ export default function TopBanner() {
         sx={{
           color: "ButtonText",
           display: checked ? "flex" : "none",
-          gap: 2,
+          gap: 1,
           justifyContent: "center",
           alignItems: "center",
           position: "relative",

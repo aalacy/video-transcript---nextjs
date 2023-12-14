@@ -49,6 +49,7 @@ const menuList = [
     style: { color: "white", textDecoration: "none" },
     title: "Sign Up",
     variant: "contained",
+    color: "warning",
   },
 ];
 
@@ -82,17 +83,20 @@ export default function TopbarHome() {
           />
           {isNonMobile ? (
             <Box>
-              {menuList.map(({ href, title, style, target, variant }) => (
-                <LinkButton
-                  key={title}
-                  size="small"
-                  variant={variant || "text"}
-                >
-                  <Link href={href} style={style} target={target}>
-                    {title}
-                  </Link>
-                </LinkButton>
-              ))}
+              {menuList.map(
+                ({ href, title, style, target, variant, color }) => (
+                  <LinkButton
+                    key={title}
+                    size="small"
+                    variant={variant || "text"}
+                    color={color || "primary"}
+                  >
+                    <Link href={href} style={style} target={target}>
+                      <Typography fontWeight="bold">{title}</Typography>
+                    </Link>
+                  </LinkButton>
+                ),
+              )}
             </Box>
           ) : (
             <IconButton

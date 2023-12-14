@@ -1,0 +1,36 @@
+div.table {
+  border: 1px solid #ffbf4c;
+  border-radius: 1rem;
+  border-collapse: collapse;
+  display: flex;
+  align-items: center;
+}
+
+table {
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: left;
+  overflow: hidden;
+  table-layout: auto;
+  border-collapse: collapse;
+  width: 100%;
+  text-indent: 0;
+  box-shadow: 0px 0px 0px 3px #ffbf4c;
+}
+
+th,
+td {
+  border: 1px solid #03122033;
+}
+
+th,
+td {
+  padding: 16px 24px 16px 24px;
+}
+
+th:last-child,
+td:last-child {
+  background-color: #000000;
+  color: white;
+  border-color: rgb(209, 213, 219);
+}

@@ -18,16 +18,11 @@ export async function middleware(request) {
     } catch (error) {
       NextResponse.redirect(new URL("auth/login", request.url));
     }
-  } else {
-    // return NextResponse.rewrite(new URL('/', request.url))
   }
   return NextResponse.next();
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|_next/assets|favicon.ico|auth/signup|auth/login|auth/forgot-password|auth/reset-password).*)",
-    "/!upload/:path*",
-  ],
+  matcher: ["/((?!api|_next/static|_next/:*|favicon.ico|home|auth/:path*).*)"],
 };

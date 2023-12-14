@@ -179,7 +179,7 @@ export const AuthProvider = (props) => {
   }, []);
 
   const hasLayout = useMemo(() => {
-    return !pathname.includes("/auth");
+    return !pathname.includes("/auth") && pathname !== "/home";
   }, [pathname]);
 
   useEffect(() => {

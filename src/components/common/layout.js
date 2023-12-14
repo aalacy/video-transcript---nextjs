@@ -1,12 +1,12 @@
 "use client";
 
 import { useMediaQuery, Box, Container, Divider } from "@mui/material";
-
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, Suspense } from "react";
 import { io } from "socket.io-client";
 import toast from "react-hot-toast";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import "./global.css";
 
 import {
   DRAWER_WIDTH,
