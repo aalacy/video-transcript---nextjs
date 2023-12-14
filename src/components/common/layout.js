@@ -3,7 +3,7 @@
 import { useMediaQuery, Box, Container, Divider } from "@mui/material";
 
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Suspense } from "react";
 import { io } from "socket.io-client";
 import toast from "react-hot-toast";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -119,7 +119,7 @@ export default function RootLayout({ children }) {
   }, [pathname, user]);
 
   return (
-    <>
+    <Suspense>
       {hasLayout ? (
         <>
           <Topbar setState={setState} state={state} {...props} />
@@ -144,6 +144,6 @@ export default function RootLayout({ children }) {
         <Footer hasLayout={hasLayout} />
       </Container>
       <ConfirmDialog {...confirmMessage} />
-    </>
+    </Suspense>
   );
 }
