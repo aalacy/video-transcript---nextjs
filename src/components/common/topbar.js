@@ -134,12 +134,12 @@ export default function Topbar({ setState, state, ...props }) {
             </Breadcrumbs>
           ) : null}
         </Box>
-        <Box sx={{ display: handleSave ? "inherit" : "none" }}>
+        <Box sx={{ display: handleSave ? "inherit" : "none", mr: 1 }}>
           <Tooltip title="Save Project">
             <Button
               onClick={handleSave}
               variant="outlined"
-              sx={{ mr: 2 }}
+              sx={{ mr: 1 }}
               size="small"
               disabled={loading}
               startIcon={loading ? <CircularProgress size={20} /> : null}
