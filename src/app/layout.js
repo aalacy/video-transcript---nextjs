@@ -21,7 +21,7 @@ export default function DefaultRootLayout({ children, session }) {
       ></script>
       <body
         suppressHydrationWarning={true}
-        style={{ backgroundColor: "background.default" }}
+        style={{ backgroundColor: "white" }}
       >
         <Toaster position="top-center" />
         <ThemeRegistry>

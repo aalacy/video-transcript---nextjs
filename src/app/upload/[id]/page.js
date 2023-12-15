@@ -228,7 +228,7 @@ export default function UploadPage({ params }) {
           width: 1,
         }}
       >
-        <Grid item xs={12} sm={6} sx={{ mt: 3 }}>
+        <Grid item sm={12} md={6} sx={{ mt: 3, width: 1 }}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -262,7 +262,7 @@ export default function UploadPage({ params }) {
             />
           </CustomTabPanel>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item sm={12} md={6}>
           <VideoPlayer
             data={data}
             content={content}

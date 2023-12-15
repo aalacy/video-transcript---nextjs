@@ -1,8 +1,8 @@
 "use client";
 
 import {
-  useMediaQuery,
   Box,
+  useMediaQuery,
   Container as MuiContainer,
   Divider,
 } from "@mui/material";
@@ -54,9 +54,9 @@ const Container = styled(MuiContainer, {
 }));
 
 export default function RootLayout({ children }) {
-  const [state, setState] = useState(false);
-
   const isNonMobile = useMediaQuery("(min-width:640px)");
+
+  const [state, setState] = useState(true);
 
   const {
     user,
@@ -150,7 +150,11 @@ export default function RootLayout({ children }) {
         </>
       ) : null}
       {hasHomeLayout ? <TopbarHome /> : null}
-      <Container maxWidth="xl" sx={{ py: 2 }} open={state}>
+      <Container
+        maxWidth="xl"
+        sx={{ py: 2 }}
+        open={isNonMobile ? false : state}
+      >
         <Box
           component="main"
           sx={{
