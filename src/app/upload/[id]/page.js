@@ -262,7 +262,7 @@ export default function UploadPage({ params }) {
             />
           </CustomTabPanel>
         </Grid>
-        <Grid item sm={12} md={6}>
+        <Grid item sm={12} md={6} sx={{ width: 1 }}>
           <VideoPlayer
             data={data}
             content={content}

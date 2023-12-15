@@ -204,10 +204,9 @@ export default function VideoPlayer(props) {
         onPause={() => setPlayInfo({ ...playInfo, playing: false })}
         onEnded={() => setPlayInfo({ ...playInfo, playing: false })}
         config={{
-          file: {
-            attributes: {
-              controlsList: "nofullscreen",
-            },
+          attributes: {
+            controlsList: "nofullscreen",
+            disablePictureInPicture: true,
           },
         }}
         style={{
