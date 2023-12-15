@@ -3,9 +3,9 @@
 import { Container, Box, Card, Divider, Typography } from "@mui/material";
 
 import { JWTLogin } from "@/components/auth/jwt-login";
-import Logo from "@/components/common/logo";
 import GoogleAuthBtn from "@/components/auth/google-auth-btn";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginPage() {
   return (
@@ -23,7 +23,16 @@ export default function LoginPage() {
         }}
       >
         <Card elevation={16} sx={{ p: 4, py: "30px" }}>
-          <Logo />
+          <Link href="/">
+            <Image
+              className="w-[100px] md:w-[150px]"
+              src="/assets/logo.png"
+              alt="logo"
+              width={150}
+              height={150}
+              style={{ margin: "0 auto" }}
+            />
+          </Link>
           <Box
             sx={{
               alignItems: "center",

@@ -92,7 +92,7 @@ export default function EditableTranscriptionPanel(props) {
   }, [selectedCue]);
 
   return (
-    <Card sx={{ alignSelf: "baseline" }}>
+    <Card sx={{ alignSelf: "baseline", width: 1 }}>
       <CardContent sx={{ overflow: "auto", maxHeight: 460 }}>
         <List disablePadding>
           {newCues?.map(({ identifier, cues }) => (

@@ -1,10 +1,7 @@
 "use client";
 
-import { Box, Typography, Button, Grid } from "@mui/material";
+import { Button } from "@mui/material";
 import Image from "next/image";
-
-import { YelloBottom } from "@/icons/yellow-bottom";
-import { Pattern } from "@/icons/pattern";
 
 export default function Generate() {
   return (
@@ -27,9 +24,9 @@ export default function Generate() {
             <p className="text-sm md:text-[24px] text-left font-poppins text-gray-400 line-clamp-3">
               Save TIME and EFFORT and MONEY with our easy-to-use tool.
             </p>
-            <button className="bg-[#FFBF4C] px-2 md:px-[24px] py-1 md:py-[12px] font-semibold rounded-lg">
+            <Button variant="contained" href="/auth/signup" color="warning">
               Sign up
-            </button>
+            </Button>
           </div>
           <div className="flex flex-col w-full md:w-1/2">
             <Image

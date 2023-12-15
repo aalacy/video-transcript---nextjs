@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Successful() {
   return (
@@ -23,8 +24,8 @@ export default function Successful() {
           />
         </div>
       </div>
-      <button className="bg-[#FFBF4C] px-2 md:px-[24px] py-1 md:py-[12px] font-semibold rounded-lg w-full max-w-[580px] ">
-        Sign up Now
+      <button className="bg-[#FFBF4C] px-2 md:px-[24px] py-1 md:py-[12px] font-semibold rounded-lg w-full max-w-[580px]">
+        <Link href="/auth/signup">Sign up Now</Link>
       </button>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import SwipeableViews from "react-swipeable-views";
-import { Tabs, Tab, Box } from "@mui/material";
+import { Tabs, Tab, Box, Grid } from "@mui/material";
 import toast from "react-hot-toast";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -35,8 +35,8 @@ import EditableTranscriptionPanel from "@/components/upload/tab-editable-transcr
 
 const a11yProps = (index) => {
   return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 };
 
@@ -48,6 +48,22 @@ const tabStyle = {
     boxShadow: 2,
   },
 };
+
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <>{children}</>}
+    </div>
+  );
+}
 
 const client = new FileService();
 
@@ -204,15 +220,15 @@ export default function UploadPage({ params }) {
     <>
       <title>Cap Hacker - Upload</title>
       <ProgressModal loading={loading} progress={progress} />
-      <Box
+      <Grid
+        container
         sx={{
           display: canShow ? "flex" : "none",
           flexWrap: "wrap-reverse",
-          justifyContent: "center",
-          gap: 3,
+          width: 1,
         }}
       >
-        <Box maxWidth="sm">
+        <Grid item xs={12} sm={6} sx={{ mt: 3 }}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -227,7 +243,7 @@ export default function UploadPage({ params }) {
             <Tab label="Transcription" sx={tabStyle} {...a11yProps(0)} />
             <Tab label="Design" sx={tabStyle} {...a11yProps(1)} />
           </Tabs>
-          <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
+          <CustomTabPanel index={0} value={value}>
             <EditableTranscriptionPanel
               newCues={newCues}
               setStartPos={setStartPos}
@@ -236,23 +252,28 @@ export default function UploadPage({ params }) {
               setContent={setContent}
               content={content}
             />
+          </CustomTabPanel>
+          <CustomTabPanel index={1} value={value}>
             <DesignTabPanel
               index={1}
+              value={1}
               setMetadata={setMetadata}
               formik={formik}
             />
-          </SwipeableViews>
-        </Box>
-        <VideoPlayer
-          data={data}
-          content={content}
-          setSelectedCue={setSelectedCue}
-          startPos={startPos}
-          setStartPos={setStartPos}
-          selectedCue={selectedCue}
-          metadata={metadata}
-        />
-      </Box>
+          </CustomTabPanel>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <VideoPlayer
+            data={data}
+            content={content}
+            setSelectedCue={setSelectedCue}
+            startPos={startPos}
+            setStartPos={setStartPos}
+            selectedCue={selectedCue}
+            metadata={metadata}
+          />
+        </Grid>
+      </Grid>
     </>
   );
 }

@@ -42,21 +42,19 @@ export default function Sidebar({ setState, state }) {
     <Drawer
       sx={{
         width: DRAWER_WIDTH,
-        zIndex: 102,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: DRAWER_WIDTH,
           boxSizing: "border-box",
-          height: "auto",
-          bottom: 0,
         },
       }}
-      variant={isNonMobile ? "permanent" : "temporary"}
+      variant={isNonMobile ? "persistent" : "temporary"}
       anchor="left"
       open={state}
-      onClose={() => setState(false)}
     >
-      <Logo size="small" />
+      <Link href="/">
+        <Logo size="small" />
+      </Link>
       <List
         sx={{
           overflow: "auto",

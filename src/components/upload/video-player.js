@@ -210,6 +210,9 @@ export default function VideoPlayer(props) {
             },
           },
         }}
+        style={{
+          margin: "0 auto",
+        }}
       />
 
       <Box

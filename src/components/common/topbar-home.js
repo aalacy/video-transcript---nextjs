@@ -12,8 +12,6 @@ import {
   List,
   ListItem,
   ListItemButton,
-  ListItemText,
-  ListItemIcon,
   Box,
 } from "@mui/material";
 import Link from "next/link";
@@ -22,7 +20,6 @@ import { Menu as MenuIcon, Close as CloseIcon } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 
-import Logo from "./logo";
 import { DRAWER_WIDTH } from "@/constants";
 
 const LinkButton = styled(Button)(() => ({
@@ -83,14 +80,15 @@ export default function TopbarHome() {
             justifyContent: "space-between",
           }}
         >
-          <Image
-            className="w-[100px] md:w-[150px]"
-            src="/assets/logo.png"
-            alt="logo"
-            width={150}
-            height={150}
-          />
-
+          <Link href="/">
+            <Image
+              className="w-[100px] md:w-[150px]"
+              src="/assets/logo.png"
+              alt="logo"
+              width={150}
+              height={150}
+            />
+          </Link>
           {isNonMobile ? (
             <Box>
               {menuList.map(
@@ -157,13 +155,15 @@ export default function TopbarHome() {
               href="/"
               sx={{ justifyContent: "space-between" }}
             >
-              <Image
-                className="w-[100px] md:w-[150px]"
-                src="/assets/logo.png"
-                alt="logo"
-                width={150}
-                height={150}
-              />
+              <Link href="/">
+                <Image
+                  className="w-[100px] md:w-[150px]"
+                  src="/assets/logo.png"
+                  alt="logo"
+                  width={150}
+                  height={150}
+                />
+              </Link>
               <IconButton onClick={handleDrawerToggle}>
                 <CloseIcon />
               </IconButton>

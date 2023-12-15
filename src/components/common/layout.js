@@ -1,6 +1,12 @@
 "use client";
 
-import { useMediaQuery, Box, Container, Divider } from "@mui/material";
+import {
+  useMediaQuery,
+  Box,
+  Container as MuiContainer,
+  Divider,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState, Suspense } from "react";
 import { io } from "socket.io-client";
@@ -30,8 +36,25 @@ socket.on("connect_error", () => {
 });
 socket.on("disconnect", () => console.error("server disconnected"));
 
+const Container = styled(MuiContainer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(["margin", "width"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: DRAWER_WIDTH,
+  }),
+}));
+
 export default function RootLayout({ children }) {
-  const [state, setState] = useState(true);
+  const [state, setState] = useState(false);
 
   const isNonMobile = useMediaQuery("(min-width:640px)");
 
@@ -127,14 +150,12 @@ export default function RootLayout({ children }) {
         </>
       ) : null}
       {hasHomeLayout ? <TopbarHome /> : null}
-      <Container maxWidth="xl" sx={{ py: 2 }}>
+      <Container maxWidth="xl" sx={{ py: 2 }} open={state}>
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             pt: hasLayout || hasHomeLayout ? ["88px", "56px", "64px"] : 0,
-            ml: isNonMobile && hasLayout ? `${DRAWER_WIDTH}px` : 0,
-            minHeight: 300,
             mb: 2,
           }}
         >

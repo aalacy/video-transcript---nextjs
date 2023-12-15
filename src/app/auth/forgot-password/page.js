@@ -1,8 +1,9 @@
 "use client";
 
 import { Container, Box, Card, Typography } from "@mui/material";
+import Image from "next/image";
+import Link from "next/link";
 
-import Logo from "@/components/common/logo";
 import JWTForgotPassword from "@/components/auth/jwt-forgot-password";
 
 export default function ForgotPassword() {
@@ -21,7 +22,16 @@ export default function ForgotPassword() {
         }}
       >
         <Card elevation={16} sx={{ p: 4, py: "30px" }}>
-          <Logo />
+          <Link href="/">
+            <Image
+              className="w-[100px] md:w-[150px]"
+              src="/assets/logo.png"
+              alt="logo"
+              width={150}
+              height={150}
+              style={{ margin: "0 auto" }}
+            />
+          </Link>
           <Box
             sx={{
               textAlign: "center",

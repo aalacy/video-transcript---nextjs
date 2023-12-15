@@ -4,7 +4,7 @@ import Link from "next/link";
 import {
   useMediaQuery,
   Divider,
-  AppBar,
+  AppBar as MuiAppBar,
   Toolbar,
   Typography,
   IconButton,
@@ -73,6 +73,23 @@ const StyledMenu = styled((props) => (
   },
 }));
 
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(["margin", "width"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: DRAWER_WIDTH,
+  }),
+}));
+
 export default function Topbar({ setState, state, ...props }) {
   const isNonMobile = useMediaQuery("(min-width:640px)");
 
@@ -92,12 +109,11 @@ export default function Topbar({ setState, state, ...props }) {
 
   return (
     <AppBar
+      open={state}
       position="fixed"
       sx={{
-        zIndex: 100,
         boxShadow: "none",
         bgcolor: "background.paper",
-        width: isNonMobile ? `calc(100% - ${DRAWER_WIDTH}px)` : 1,
       }}
     >
       <Toolbar
@@ -112,13 +128,13 @@ export default function Topbar({ setState, state, ...props }) {
           gap: 2,
         }}
       >
-        <Box>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={() => setState(!state)}
-            sx={{ mr: 1, display: isNonMobile ? "none" : "inherit" }}
+            sx={{ mr: 1 }}
           >
             <MenuIcon color="primary" />
           </IconButton>
@@ -148,7 +164,7 @@ export default function Topbar({ setState, state, ...props }) {
             </Breadcrumbs>
           ) : null}
         </Box>
-        <Box sx={{ display: handleSave ? "inherit" : "none", mr: 1 }}>
+        <Box sx={{ display: handleSave ? "flex" : "none", mr: 1 }}>
           {isNonMobile ? (
             <Button
               onClick={handleSave}
@@ -180,7 +196,6 @@ export default function Topbar({ setState, state, ...props }) {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
               variant="contained"
-              disableElevation
               onClick={handleClick}
               endIcon={<KeyboardArrowDownIcon />}
             >
