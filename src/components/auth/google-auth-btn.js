@@ -17,6 +17,11 @@ export default function GoogleAuthBtn() {
     try {
       setLoading(true);
       const { data } = await AuthService.googleRegister(value);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "signup",
+        authentication_method: "google",
+      });
       Cookies.set("accessToken", data.data.accessToken);
       router.push("/");
     } catch (error) {

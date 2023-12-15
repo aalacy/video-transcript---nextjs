@@ -82,6 +82,11 @@ export const JWTRegister = (props) => {
         await register(data);
 
         if (isMounted()) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: "signup",
+            authentication_method: "email",
+          });
           const returnUrl = searchParams.get("returnUrl") || "/";
           router.push(returnUrl);
         }

@@ -56,6 +56,11 @@ export const JWTLogin = (props) => {
         await login(values.email, values.password, values.shouldRememberMe);
 
         if (isMounted()) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: "login",
+            authentication_method: "email",
+          });
           const returnUrl = searchParams.get("returnUrl") || "/";
           router.push(returnUrl);
         }
