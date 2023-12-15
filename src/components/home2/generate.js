@@ -42,7 +42,7 @@ export default function Generate() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="mx-[-20px]">
         <Image
           src="/assets/bg.jpg"
           alt="background"
