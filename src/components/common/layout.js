@@ -153,7 +153,7 @@ export default function RootLayout({ children }) {
       <Container
         maxWidth="xl"
         sx={{ py: 2 }}
-        open={isNonMobile ? false : state}
+        open={isAuthenticated ? state : false}
       >
         <Box
           component="main"
