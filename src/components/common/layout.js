@@ -83,6 +83,10 @@ export default function RootLayout({ children }) {
   }, [pathname, user]);
 
   useEffect(() => {
+    setState(isNonMobile);
+  }, [isNonMobile]);
+
+  useEffect(() => {
     socket.on("monster", async (data) => {
       const {
         status,
