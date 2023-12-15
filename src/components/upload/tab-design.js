@@ -50,17 +50,17 @@ export default function DesignTabPanel(props) {
           <Box
             display="grid"
             gap="30px"
-            gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+            gridTemplateColumns="repeat(2, minmax(0, 1fr))"
             sx={{
               "& > div": {
-                gridColumn: isNonMobile ? undefined : "span 4",
+                gridColumn: isNonMobile ? undefined : "span 2",
               },
             }}
           >
-            <Box sx={{ gridColumn: "span 2", maxWidth: "sm" }}>
+            <Box sx={{ gridColumn: "span 1", maxWidth: "sm" }}>
               <TemplateSelect formik={formik} />
             </Box>
-            <Box sx={{ gridColumn: "span 2", maxWidth: "sm" }}>
+            <Box sx={{ gridColumn: "span 1", maxWidth: "sm" }}>
               <FontSelect formik={formik} />
               <Stack direction="row" spacing={1}>
                 <FontWeightSelect formik={formik} />
@@ -70,7 +70,7 @@ export default function DesignTabPanel(props) {
             </Box>
             <Stack
               sx={{
-                gridColumn: "span 2",
+                gridColumn: "span 1",
                 border: 1,
                 borderColor: "GrayText",
                 p: 1,
@@ -134,12 +134,12 @@ export default function DesignTabPanel(props) {
                   formik?.values?.template === 4 ||
                   formik?.values?.template === 5
                 }
-                sx={{ gridColumn: "span 2" }}
+                sx={{ gridColumn: "span 1" }}
               />
             </Stack>
             <Stack
               sx={{
-                gridColumn: "span 2",
+                gridColumn: "span 1",
                 border: 1,
                 borderColor: "GrayText",
                 p: 1,
@@ -195,7 +195,7 @@ export default function DesignTabPanel(props) {
                   formik?.values?.template === 4 ||
                   formik?.values?.template === 5
                 }
-                sx={{ gridColumn: "span 2" }}
+                sx={{ gridColumn: "span 1" }}
               />
             </Stack>
             <MuiColorInput
@@ -220,7 +220,7 @@ export default function DesignTabPanel(props) {
                 formik?.values?.textOutline > 0 ||
                 formik?.values?.template === 5
               }
-              sx={{ gridColumn: "span 2", maxWidth: "sm" }}
+              sx={{ gridColumn: "span 1", maxWidth: "sm" }}
             />
             <MuiColorInput
               fullWidth
@@ -232,9 +232,9 @@ export default function DesignTabPanel(props) {
               onChange={(color) => formik.setFieldValue("fontColor", color)}
               error={!!formik.touched.fontColor && !!formik.errors.fontColor}
               helperText={formik.touched.fontColor && formik.errors.fontColor}
-              sx={{ gridColumn: "span 2", maxWidth: "sm" }}
+              sx={{ gridColumn: "span 1", maxWidth: "sm" }}
             />
-            <Stack sx={{ gridColumn: "span 2", maxWidth: "sm" }}>
+            <Stack sx={{ gridColumn: "span 1", maxWidth: "sm" }}>
               <TextField
                 fullWidth
                 type="number"
@@ -270,7 +270,7 @@ export default function DesignTabPanel(props) {
                 }}
               />
             </Stack>
-            <Stack sx={{ gridColumn: "span 2", maxWidth: "sm" }}>
+            <Stack sx={{ gridColumn: "span 1", maxWidth: "sm" }}>
               <TextField
                 fullWidth
                 type="number"
