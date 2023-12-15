@@ -174,6 +174,7 @@ export const FileDropzone = (props) => {
             borderRadius: 4,
             borderStyle: "dashed",
             borderColor: "divider",
+            borderWidth: 1,
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
