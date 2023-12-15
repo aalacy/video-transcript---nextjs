@@ -8,20 +8,22 @@ import {
   Toolbar,
   IconButton,
   Button,
-  Drawer,
+  SwipeableDrawer,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
+  ListItemIcon,
   Box,
 } from "@mui/material";
 import Link from "next/link";
-import { Menu as MenuIcon } from "@mui/icons-material";
+import Image from "next/image";
+import { Menu as MenuIcon, Close as CloseIcon } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
 
 import Logo from "./logo";
-import TopBanner from "./top-banner";
+import { DRAWER_WIDTH } from "@/constants";
 
 const LinkButton = styled(Button)(() => ({
   color: "ButtonText",
@@ -55,7 +57,11 @@ const menuList = [
 
 export default function TopbarHome() {
   const isNonMobile = useMediaQuery("(min-width:640px)");
-  const [state, setState] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   return (
     <>
@@ -67,20 +73,24 @@ export default function TopbarHome() {
           bgcolor: "background.paper",
         }}
       >
-        <TopBanner />
         <Toolbar
           variant="dense"
           sx={{
             ml: isNonMobile ? "inherit" : 1,
             width: 1,
+            py: 1,
             backgroundColor: "background.paper",
             justifyContent: "space-between",
           }}
         >
-          <Logo
-            size={isNonMobile ? "medium" : "small"}
-            width={isNonMobile ? "auto" : "100px"}
+          <Image
+            className="w-[100px] md:w-[150px]"
+            src="/assets/logo.png"
+            alt="logo"
+            width={150}
+            height={150}
           />
+
           {isNonMobile ? (
             <Box>
               {menuList.map(
@@ -100,52 +110,81 @@ export default function TopbarHome() {
             </Box>
           ) : (
             <IconButton
-              color="inherit"
               aria-label="open drawer"
               edge="start"
-              onClick={() => setState(!state)}
+              onClick={handleDrawerToggle}
               sx={{ mr: 1, display: isNonMobile ? "none" : "inherit" }}
             >
-              <MenuIcon color="primary" />
+              <MenuIcon color="ButtonText" />
             </IconButton>
           )}
         </Toolbar>
         <Divider />
       </AppBar>
-      <Drawer
-        disableScrollLock={true}
-        sx={{
-          display: isNonMobile ? "none" : "inherit",
-          maxHeight: "200px",
-          zIndex: (theme) => theme.zIndex.drawer,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            maxHeight: "200px",
-            marginTop: "56px",
-            p: 1,
-            px: 3,
-          },
-        }}
-        variant={isNonMobile ? "permanent" : "temporary"}
-        anchor="top"
-        open={state}
-        onClose={() => setState(false)}
+      <Box
+        component="nav"
+        sx={{ width: { sm: DRAWER_WIDTH }, flexShrink: { sm: 0 } }}
+        aria-label="Top menu"
       >
-        <List
+        <SwipeableDrawer
+          anchor="right"
+          variant={isNonMobile ? "permanent" : "temporary"}
+          open={mobileOpen}
+          onOpen={() => console.log("onOpen")}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          transitionDuration={500}
           sx={{
-            overflow: "auto",
+            zIndex: (theme) => theme.zIndex.drawer * 100,
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: DRAWER_WIDTH,
+            },
           }}
         >
-          {menuList.map(({ href, title, target }) => (
-            <ListItem key={href} disablePadding>
-              <ListItemButton component={Link} href={href} target={target}>
-                <ListItemText primary={title} sx={{ textAlign: "right" }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+          <List
+            sx={{
+              overflow: "auto",
+              pl: 2,
+            }}
+          >
+            <ListItemButton
+              disableGutters
+              component="a"
+              href="/"
+              sx={{ justifyContent: "space-between" }}
+            >
+              <Image
+                className="w-[100px] md:w-[150px]"
+                src="/assets/logo.png"
+                alt="logo"
+                width={150}
+                height={150}
+              />
+              <IconButton onClick={handleDrawerToggle}>
+                <CloseIcon />
+              </IconButton>
+            </ListItemButton>
+            {menuList.map(({ href, title, target, variant, style, color }) => (
+              <ListItem key={href} disableGutters>
+                <LinkButton
+                  key={title}
+                  size="small"
+                  variant={variant || "text"}
+                  color={color || "primary"}
+                >
+                  <Link href={href} style={style} target={target}>
+                    <Typography fontWeight="bold">{title}</Typography>
+                  </Link>
+                </LinkButton>
+              </ListItem>
+            ))}
+          </List>
+        </SwipeableDrawer>
+      </Box>
     </>
   );
 }

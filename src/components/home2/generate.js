@@ -9,64 +9,48 @@ import { Pattern } from "@/icons/pattern";
 export default function Generate() {
   return (
     <>
-      <Box
-        display="flex"
-        justifyContent="space-around"
-        sx={{
-          flexWrap: "wrap",
-          maxWidth: "md",
-          margin: "0 auto",
-          gap: 2,
-          mt: 9,
-        }}
-      >
-        <Grid container spacing={10}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h2" display="inline" zIndex={10}>
-              AI Video Caption Generator Free Without Watermark
-            </Typography>
-            <YelloBottom sx={{ width: 1, mt: -1 }} />
-            <Typography
-              color="GrayText"
-              textAlign="center"
-              variant="h6"
-              fontWeight="light"
-              mt={2}
-            >
+      <div className="px-8 py-4 md:px-[128px] md:py-[75px]  flex flex-col justify-between items-center">
+        <div className="flex flex-col md:flex-row gap-[20px] md:gap-[74px]">
+          <div className="flex flex-col md:w-1/2 justify-between gap-4 ">
+            <div>
+              <h2 className="text-[20px] md:text-[48px] text-left font-poppins font-bold line-clamp-3 ">
+                AI Video Caption Generator Free Without Watermark
+              </h2>
+              <Image
+                src="/assets/title.png"
+                alt="title"
+                className=""
+                width={300}
+                height={100}
+              />
+            </div>
+            <p className="text-sm md:text-[24px] text-left font-poppins text-gray-400 line-clamp-3">
               Save TIME and EFFORT and MONEY with our easy-to-use tool.
-            </Typography>
-            <Button
-              variant="contained"
-              color="warning"
-              sx={{ display: "block", width: 1, mt: 2 }}
-            >
+            </p>
+            <button className="bg-[#FFBF4C] px-2 md:px-[24px] py-1 md:py-[12px] font-semibold rounded-lg">
               Sign up
-            </Button>
-          </Grid>
-          <Grid item xs={12} md={6} sx={{ width: 1 }}>
+            </button>
+          </div>
+          <div className="flex flex-col w-full md:w-1/2">
             <Image
               src="/assets/first.png"
               alt="first"
-              width={460}
-              height={354}
-              sizes="100vw"
-              style={{
-                width: "100%",
-                height: "auto",
-              }}
+              className="w-[560px]"
+              width={560}
+              height={454}
             />
-          </Grid>
-        </Grid>
-      </Box>
-      <Pattern
-        sx={{
-          width: 1,
-          fontSize: 250,
-          margin: "0 auto",
-          mt: -7,
-          height: "130px",
-        }}
-      />
+          </div>
+        </div>
+      </div>
+      <div>
+        <Image
+          src="/assets/bg.jpg"
+          alt="background"
+          className="w-full "
+          width={800}
+          height={80}
+        />
+      </div>
     </>
   );
 }

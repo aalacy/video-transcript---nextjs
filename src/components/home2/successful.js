@@ -1,51 +1,31 @@
-import { Box, Typography, Button } from "@mui/material";
 import Image from "next/image";
 
 export default function Successful() {
   return (
-    <>
-      <Box
-        display="flex"
-        justifyContent="space-around"
-        sx={{
-          flexWrap: "wrap",
-          maxWidth: "md",
-          margin: "0 auto",
-          gap: 2,
-          mt: 9,
-        }}
-      >
-        <Box sx={{ maxWidth: "sm", textAlign: "center" }}>
-          <Typography variant="h3" display="inline" zIndex={10}>
-            Successful Creators Always Caption Their Videos!
-          </Typography>
-          <Typography my={2}>
-            When did you see a video from a big creator without captions,
-            probably never! That's because captions make their videos engaging
-            and go viral
-          </Typography>
-        </Box>
-        <Image
-          src="/assets/poster.png"
-          alt="Successful"
-          width={1100}
-          height={653}
-          sizes="100vw"
-          style={{
-            width: "100%",
-            height: "auto",
-          }}
-        />
-        <Box sx={{ maxWidth: "sm", width: 1, mt: 6 }}>
-          <Button
-            variant="contained"
-            color="warning"
-            sx={{ display: "block", width: 1, mt: 2 }}
-          >
-            Sign up Now
-          </Button>
-        </Box>
-      </Box>
-    </>
+    <div className="px-4 py-4 md:px-[128px] md:py-[75px]  flex flex-col justify-between items-center gap-4 md:gap-8 ">
+      <div className="flex flex-col justify-between md:mx-[200px] gap-[16px]">
+        <h1 className="text-center font-poppins text-[20px] md:text-[40px]  font-semibold text-black">
+          Successful Creators Always Caption Their Videos!{" "}
+        </h1>
+        <p className="text-center font-poppins text-[10px] md:text-[20px] text-[#031220]   md:line-clamp-3">
+          When did you see a video from a big creator without captions, probably
+          never! That's because captions make their videos engaging and go viral
+        </p>
+      </div>
+      <div className="flex flex-row justify-between gap-2 md:gap-0">
+        <div className="card-bg min-h-[200px] md:min-h-[653px]">
+          <Image
+            src="/assets/poster.png"
+            alt="poster"
+            className="w-full"
+            width={1100}
+            height={653}
+          />
+        </div>
+      </div>
+      <button className="bg-[#FFBF4C] px-2 md:px-[24px] py-1 md:py-[12px] font-semibold rounded-lg w-full max-w-[580px] ">
+        Sign up Now
+      </button>
+    </div>
   );
 }

@@ -13,18 +13,16 @@ import {
 } from "@/constants";
 import { FileDropzone } from "@/components/home/file-dropzone";
 import { useAuth } from "@/hooks/use-auth";
-import HowItWorks from "@/components/home/how-it-works";
-import CreateContentLike from "@/components/home/create-content-like";
-import CapHackerProVsTraditional from "@/components/home/compare";
-import UnmatchedFeatures from "@/components/home/unmatched-features";
-import About from "@/components/home/about";
 import Faq from "@/components/home/faq";
 import { gtm } from "@/utils/gtm";
 import { YelloBottom } from "@/icons/yellow-bottom";
 import { FreeStarIcon } from "@/icons/free-star";
-import { Pattern } from "@/icons/pattern";
-import GetMoreFeatures from "@/components/home/get-more-features";
 import { generateRawVtt } from "@/utils";
+import HowItWorks2 from "@/components/home2/how-it-works";
+import Successful from "@/components/home2/successful";
+import FreeAndBetter from "@/components/home2/free-and-better";
+import Features from "@/components/home2/features";
+import Generate from "@/components/home2/generate";
 
 const client = new FileService();
 
@@ -171,109 +169,116 @@ export default function HomePage() {
       <meta property="og:locale" content="en" />
       <meta property="og:site_name" content="Cap Hacker" />
       <link rel="canonical" href="https://caphacker.com/" />
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        sx={{
-          maxWidth: "sm",
-          margin: "0 auto",
-          mb: 2,
-          gap: 3,
-          mt: 5,
-        }}
-      >
-        <Box>
-          <Box
-            sx={{
-              position: "relative",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              width: "fit-content",
-              margin: "0 auto",
-            }}
-          >
-            <Typography variant="h4" display="inline" zIndex={10}>
-              AI Video Caption Generator Free
-            </Typography>
-            <FreeStarIcon
-              sx={{
-                fontSize: 106,
-                position: "absolute",
-                top: "-32px",
-                right: "-20px",
-              }}
-            />
-          </Box>
-          <Typography variant="h4" sx={{ textAlign: "center" }} zIndex={10}>
-            Without Watermark
-          </Typography>
-          <YelloBottom sx={{ width: 1, mt: -1 }} />
-        </Box>
-        <Typography
-          color="GrayText"
-          textAlign="center"
-          variant="h6"
-          fontWeight="light"
-        >
-          Unlock the magic of effortless captioning with Cap Hacker – the free
-          online caption generator for your videos.
-        </Typography>
-        <TextField
-          select
-          fullWidth
-          type="text"
-          size="small"
-          disabled={loading}
-          label={`* Language (${isoLangs.length} options)`}
-          onChange={handleChange}
-          value={lang}
-          name="lang"
-          sx={{
-            display: showDownload ? "none" : "inherit",
-          }}
-        >
-          {isoLangs.map((lang) => (
-            <MenuItem key={lang.code} value={lang.code}>
-              {lang.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Box>
-      <FileDropzone
-        accept={{ "video/*": [".mp4", ".mov", ".mpeg"] }}
-        files={files}
-        setFiles={setFiles}
-        maxFiles={1}
-        maxSize={maxSize}
-        onDrop={handleDrop}
-        onRemove={handleRemove}
-        onRemoveAll={handleRemoveAll}
-        onUpload={onUpload}
-        handleExport={handleExport}
-        setError={setError}
-        loaded={loaded}
-        setLoaded={setLoaded}
-        setSize={setSize}
-        newCues={newCues}
-        setNewCues={setNewCues}
-        setCurFile={setCurFile}
-        setContent={setContent}
-        content={content}
-      />
-      <Pattern sx={{ width: 1, fontSize: 250, margin: "0 auto", mt: -7 }} />
+
       {!isAuthenticated ? (
         <>
-          <HowItWorks />
-          <GetMoreFeatures />
-          <CreateContentLike />
-          <CapHackerProVsTraditional />
-          <UnmatchedFeatures />
-          <About />
+          <Generate />
+
+          <HowItWorks2 />
+
+          <Successful />
+
+          <FreeAndBetter />
+
+          <Features />
+
           <Faq />
         </>
-      ) : null}
+      ) : (
+        <>
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            sx={{
+              maxWidth: "sm",
+              margin: "0 auto",
+              mb: 2,
+              gap: 3,
+              mt: 5,
+            }}
+          >
+            <Box>
+              <Box
+                sx={{
+                  position: "relative",
+                  textAlign: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "fit-content",
+                  margin: "0 auto",
+                }}
+              >
+                <Typography variant="h4" display="inline" zIndex={10}>
+                  AI Video Caption Generator Free
+                </Typography>
+                <FreeStarIcon
+                  sx={{
+                    fontSize: 106,
+                    position: "absolute",
+                    top: "-32px",
+                    right: "-20px",
+                  }}
+                />
+              </Box>
+              <Typography variant="h4" sx={{ textAlign: "center" }} zIndex={10}>
+                Without Watermark
+              </Typography>
+              <YelloBottom sx={{ width: 1, mt: -1 }} />
+            </Box>
+            <Typography
+              color="GrayText"
+              textAlign="center"
+              variant="h6"
+              fontWeight="light"
+            >
+              Unlock the magic of effortless captioning with Cap Hacker – the
+              free online caption generator for your videos.
+            </Typography>
+            <TextField
+              select
+              fullWidth
+              type="text"
+              size="small"
+              disabled={loading}
+              label={`* Language (${isoLangs.length} options)`}
+              onChange={handleChange}
+              value={lang}
+              name="lang"
+              sx={{
+                display: showDownload ? "none" : "inherit",
+              }}
+            >
+              {isoLangs.map((lang) => (
+                <MenuItem key={lang.code} value={lang.code}>
+                  {lang.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
+          <FileDropzone
+            accept={{ "video/*": [".mp4", ".mov", ".mpeg"] }}
+            files={files}
+            setFiles={setFiles}
+            maxFiles={1}
+            maxSize={maxSize}
+            onDrop={handleDrop}
+            onRemove={handleRemove}
+            onRemoveAll={handleRemoveAll}
+            onUpload={onUpload}
+            handleExport={handleExport}
+            setError={setError}
+            loaded={loaded}
+            setLoaded={setLoaded}
+            setSize={setSize}
+            newCues={newCues}
+            setNewCues={setNewCues}
+            setCurFile={setCurFile}
+            setContent={setContent}
+            content={content}
+          />
+        </>
+      )}
     </>
   );
 }
