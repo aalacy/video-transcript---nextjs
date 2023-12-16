@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Button, Box } from "@mui/material";
 
 export default function Successful() {
   return (
@@ -18,15 +18,26 @@ export default function Successful() {
           <Image
             src="/assets/poster.png"
             alt="poster"
-            className="w-full"
             width={1100}
             height={653}
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
           />
         </div>
       </div>
-      <button className="bg-[#FFBF4C] px-2 md:px-[24px] py-1 md:py-[12px] font-semibold rounded-lg w-full max-w-[580px]">
-        <Link href="/auth/signup">Sign up Now</Link>
-      </button>
+      <Box maxWidth="sm" sx={{ width: 1 }}>
+        <Button
+          variant="contained"
+          href="/auth/signup"
+          color="warning"
+          sx={{ width: 1 }}
+        >
+          Sign up
+        </Button>
+      </Box>
     </div>
   );
 }

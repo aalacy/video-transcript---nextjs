@@ -13,7 +13,11 @@ export default function HowItWorks2() {
           <Image
             src="/assets/step1.png"
             alt="logo"
-            className="w-[180px] md:w-[314px] h-[180px] md:h-[314px]"
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
             width={314}
             height={100}
           />
@@ -29,7 +33,11 @@ export default function HowItWorks2() {
           <Image
             src="/assets/step2.png"
             alt="logo"
-            className="w-[180px] md:w-[314px] h-[180px] md:h-[314px]"
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
             width={314}
             height={100}
           />
@@ -45,7 +53,11 @@ export default function HowItWorks2() {
           <Image
             src="/assets/step3.png"
             alt="logo"
-            className="w-[180px] md:w-[314px] h-[180px] md:h-[314px]"
+            sizes="100vw"
+            style={{
+              width: "100%",
+              height: "auto",
+            }}
             width={314}
             height={100}
           />

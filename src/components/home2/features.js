@@ -17,6 +17,9 @@ export default function Features() {
               className=" max-w-[530px] w-[200px] md:w-[530px]"
               width={530}
               height={410}
+              style={{
+                height: "auto",
+              }}
             />
             <div className="">
               <p className="text-center text-[12px] md:text-[24px] font-bold">
@@ -37,6 +40,9 @@ export default function Features() {
               className="max-w-[530px] w-[200px] md:w-[530px]"
               width={530}
               height={410}
+              style={{
+                height: "auto",
+              }}
             />
             <div className="">
               <p className="text-center text-[12px] md:text-[24px] font-bold">
@@ -56,6 +62,9 @@ export default function Features() {
               className="max-w-[894px] w-[200px] md:w-[894px]"
               width={894}
               height={410}
+              style={{
+                height: "auto",
+              }}
             />
             <div className="">
               <p className="text-center text-[12px] md:text-[24px] font-bold">
@@ -75,6 +84,9 @@ export default function Features() {
               className="max-w-[530px] w-[200px] md:w-[530px]"
               width={530}
               height={410}
+              style={{
+                height: "auto",
+              }}
             />
             <div className="">
               <p className="text-center text-[12px] md:text-[24px] font-bold">
@@ -93,6 +105,9 @@ export default function Features() {
               className="max-w-[530px] w-[200px] md:w-[530px]"
               width={530}
               height={410}
+              style={{
+                height: "auto",
+              }}
             />
             <div className="">
               <p className="text-center text-[12px] md:text-[24px] font-bold">

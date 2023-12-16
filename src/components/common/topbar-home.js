@@ -21,6 +21,7 @@ import { styled } from "@mui/material/styles";
 import { useState } from "react";
 
 import { DRAWER_WIDTH } from "@/constants";
+import Logo from "./logo";
 
 const LinkButton = styled(Button)(() => ({
   color: "ButtonText",
@@ -81,13 +82,7 @@ export default function TopbarHome() {
           }}
         >
           <Link href="/">
-            <Image
-              className="w-[100px] md:w-[150px]"
-              src="/assets/logo.png"
-              alt="logo"
-              width={150}
-              height={150}
-            />
+            <Logo />
           </Link>
           {isNonMobile ? (
             <Box>
@@ -155,15 +150,7 @@ export default function TopbarHome() {
               href="/"
               sx={{ justifyContent: "space-between" }}
             >
-              <Link href="/">
-                <Image
-                  className="w-[100px] md:w-[150px]"
-                  src="/assets/logo.png"
-                  alt="logo"
-                  width={150}
-                  height={150}
-                />
-              </Link>
+              <Logo />
               <IconButton onClick={handleDrawerToggle}>
                 <CloseIcon />
               </IconButton>

@@ -16,7 +16,11 @@ export default function Generate() {
               <Image
                 src="/assets/title.png"
                 alt="title"
-                className=""
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  height: "auto",
+                }}
                 width={300}
                 height={100}
               />
@@ -32,7 +36,11 @@ export default function Generate() {
             <Image
               src="/assets/first.png"
               alt="first"
-              className="w-[560px]"
+              sizes="100vw"
+              style={{
+                width: "100%",
+                height: "auto",
+              }}
               width={560}
               height={454}
             />
@@ -46,6 +54,10 @@ export default function Generate() {
           className="w-full "
           width={800}
           height={80}
+          style={{
+            height: "auto",
+          }}
+          priority
         />
       </div>
     </>
