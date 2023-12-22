@@ -48,7 +48,7 @@ export default function FreeAndBetter() {
                   Watermarked Results & Limited
                 </td>
                 <td className="p-2 border border-gray-300 bg-black text-white">
-                  Watermarked Results & Limited
+                  No Watermark & Unlimited
                 </td>
               </tr>
               <tr>
